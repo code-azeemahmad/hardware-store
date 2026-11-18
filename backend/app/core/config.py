@@ -1,0 +1,55 @@
+from typing import List, Union
+from pydantic import AnyHttpUrl, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+        case_sensitive=True,
+    )
+
+    APP_ENV: str = "development"
+    DEBUG: bool = True
+
+    # Database
+    DATABASE_URL: str = (
+        "postgresql+psycopg://hardware_user:hardware_secure_dev_pass_2026@hardware-postgres:5432/hardware_db"
+    )
+
+    # Security
+    SECRET_KEY: str = "dev_secret_hardware_store_key_change_in_production_min32chars!"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    INVITATION_TOKEN_EXPIRE_HOURS: int = 72
+
+    # CORS
+    ALLOWED_ORIGINS: Union[List[str], str] = ["http://localhost:8080", "http://127.0.0.1:8080"]
+
+    @field_validator("ALLOWED_ORIGINS", mode="before")
+    @classmethod
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",") if i.strip()]
+        elif isinstance(v, list):
+            return v
+        return []
+
+    # Media Storage
+    MEDIA_STORAGE_PATH: str = "/data/media"
+
+    # Public URLs
+    PUBLIC_SITE_URL: str = "http://localhost:8080"
+    PUBLIC_API_URL: str = "http://localhost:8080/api/v1"
+
+    # Store Defaults
+    STORE_NAME_EN: str = "Naseer Plywood & Hardware"
+    STORE_NAME_UR: str = "نصیر پلائی ووڈ اینڈ ہارڈویئر"
+    STORE_PHONE: str = "+92-304-5030046"
+    STORE_WHATSAPP: str = "+923045030046"
+    STORE_ADDRESS_EN: str = "Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Pakistan"
+    STORE_ADDRESS_UR: str = "نزد نیو کینٹ ہسپتال کینال روڈ / جنرل بس اسٹینڈ روڈ، سرگودھا، پاکستان"
+
+
+settings = Settings()

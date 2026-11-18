@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { BLOG_POSTS, type BlogPost } from '../../data/catalogue';
+
+export function getStaticPaths() {
+  return BLOG_POSTS.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const lang = 'en';
+---
+
+<BaseLayout
+  title={`${post.titleEn} | Naseer Plywood & Hardware Guides`}
+  description={post.excerptEn}
+  lang={lang}
+>
+  <article class="article-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/blog/">Guides</a>
+        <span class="sep">/</span>
+        <span class="current">{post.titleEn}</span>
+      </nav>
+
+      <!-- Article Header -->
+      <header class="article-header">
+        <span class="category-tag">{post.categoryEn}</span>
+        <h1 class="article-title">{post.titleEn}</h1>
+        <div class="article-meta">
+          <span>Published on {post.date}</span>
+          <span class="dot">•</span>
+          <span>{post.readTimeEn}</span>
+          <span class="dot">•</span>
+          <span>Written by Naseer Hardware Editorial Desk</span>
+        </div>
+      </header>
+
+      <!-- Featured Image -->
+      <div class="featured-image-wrap">
+        <img src={post.imageUrl} alt={post.titleEn} class="featured-image" />
+      </div>
+
+      <!-- Article Content -->
+      <div class="article-content">
+        <div class="lead-box">
+          <p>{post.excerptEn}</p>
+        </div>
+
+        {post.contentEn.map((para) => (
+          <p class="content-paragraph">{para}</p>
+        ))}
+
+        <!-- Advice Box -->
+        <div class="expert-box">
+          <h3>Need Project Specific Advice?</h3>
+          <p>
+            Visit our showroom on Canal Road, Sargodha, or message our team with your architectural drawings and material requirements.
+          </p>
+          <a
+            href="https://wa.me/923045030046"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="article-wa-btn"
+          >
+            Ask Questions on WhatsApp (+92 304 5030046)
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-page {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .article-header {
+    max-width: 820px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  .category-tag {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary-red);
+    background-color: #fee2e2;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+  }
+  .article-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .article-meta {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  .dot {
+    margin: 0 0.5rem;
+  }
+  .featured-image-wrap {
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+  .featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .article-content {
+    max-width: 780px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #334155;
+  }
+  .lead-box {
+    background-color: var(--color-surface-light);
+    border-left: 4px solid var(--color-primary-red);
+    padding: 1.25rem 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-surface-black);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+  .content-paragraph {
+    margin-bottom: 1.5rem;
+  }
+  .expert-box {
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 3.5rem;
+  }
+  .expert-box h3 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .expert-box p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.75rem;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .article-wa-btn {
+    display: inline-flex;
+    background-color: #25d366;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .article-wa-btn:hover {
+    background-color: #1eb956;
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import AnnouncementBar from '../components/astro/AnnouncementBar.astro';
+import Header from '../components/astro/Header.astro';
+import Footer from '../components/astro/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: 'en' | 'ur';
+}
+
+const {
+  title,
+  description = 'High quality hardware, kitchen accessories, bathroom fittings and premium plywood catalogue in Sargodha, Pakistan.',
+  lang = 'en',
+} = Astro.props;
+
+const isRTL = lang === 'ur';
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost:8080');
+const alternateURL = new URL(
+  lang === 'en'
+    ? `/ur${Astro.url.pathname === '/' ? '/' : Astro.url.pathname}`
+    : Astro.url.pathname.replace(/^\/ur(\/|$)/, '/') || '/',
+  Astro.site || 'http://localhost:8080'
+);
+---
+
+<!doctype html>
+<html lang={lang} dir={isRTL ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title} | {lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang={lang === 'en' ? 'ur' : 'en'} href={alternateURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+  </head>
+  <body>
+    <AnnouncementBar lang={lang} />
+    <Header lang={lang} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

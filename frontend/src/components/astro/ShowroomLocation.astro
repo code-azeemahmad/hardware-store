@@ -1,0 +1,242 @@
+---
+import { ui } from '../../i18n/ui';
+
+interface Props {
+  lang?: 'en' | 'ur';
+}
+
+const { lang = 'en' } = Astro.props;
+const isUrdu = lang === 'ur';
+---
+
+<section class="section showroom-map-section" aria-label="Showroom Location">
+  <div class="container">
+    <div class="showroom-header">
+      <h2 class="showroom-title">{ui[lang]['section.showroom']}</h2>
+      <p class="showroom-subtitle">{ui[lang]['section.showroomSub']}</p>
+    </div>
+
+    <div class="showroom-layout">
+      <!-- Location Details Card -->
+      <div class="location-card">
+        <div class="card-badge">{isUrdu ? 'مرکزی شوروم' : 'Main Showroom'}</div>
+        <h3 class="location-name">{isUrdu ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}</h3>
+
+        <div class="location-detail-item">
+          <span class="detail-icon">📍</span>
+          <div>
+            <strong>{isUrdu ? 'پتہ:' : 'Address:'}</strong>
+            <p>
+              {isUrdu 
+                ? 'نزد نیو کینٹ ہسپتال، کینال روڈ / جنرل بس اسٹینڈ روڈ، سرگودھا، پنجاب، پاکستان' 
+                : 'Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Punjab, Pakistan'}
+            </p>
+          </div>
+        </div>
+
+        <div class="location-detail-item">
+          <span class="detail-icon">📞</span>
+          <div>
+            <strong>{isUrdu ? 'فون اور واٹس ایپ:' : 'Phone & WhatsApp:'}</strong>
+            <p dir="ltr">
+              <a href="tel:+923045030046">+92-304-5030046</a> / <a href="tel:+923177030847">+92-317-7030847</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="location-detail-item">
+          <span class="detail-icon">🕒</span>
+          <div>
+            <strong>{ui[lang]['footer.openingHours']}:</strong>
+            <p>{ui[lang]['footer.openingHoursText']}</p>
+          </div>
+        </div>
+
+        <div class="location-actions">
+          <a
+            href="https://maps.google.com/?q=Canal+Road+Sargodha+Pakistan"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="map-btn map-btn-primary"
+          >
+            {ui[lang]['action.openMaps']}
+          </a>
+          <a
+            href="https://wa.me/923045030046"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="map-btn map-btn-whatsapp"
+          >
+            {ui[lang]['action.whatsapp']}
+          </a>
+        </div>
+      </div>
+
+      <!-- Embedded Google Map -->
+      <div class="map-frame-wrapper">
+        <iframe
+          title="Naseer Plywood & Hardware Location Map"
+          src="https://maps.google.com/maps?q=Canal+Road,+Sargodha,+Punjab,+Pakistan&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="google-map-iframe"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .showroom-map-section {
+    padding-block: 4.5rem;
+    background-color: var(--color-surface-muted);
+  }
+
+  .showroom-header {
+    text-align: center;
+    max-width: 650px;
+    margin-inline: auto;
+    margin-bottom: 3rem;
+  }
+
+  .showroom-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-weight: 800;
+    color: var(--color-secondary-black);
+    margin-bottom: 0.5rem;
+  }
+
+  .showroom-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .showroom-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 992px) {
+    .showroom-layout {
+      grid-template-columns: 1fr 1.35fr;
+    }
+  }
+
+  .location-card {
+    padding: clamp(2rem, 3vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card-badge {
+    display: inline-block;
+    background-color: var(--color-primary-red);
+    color: #FFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+  }
+
+  .location-name {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--color-secondary-black);
+    margin-bottom: 1.5rem;
+  }
+
+  .location-detail-item {
+    display: flex;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .detail-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .location-detail-item strong {
+    color: var(--color-secondary-black);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .location-detail-item p {
+    color: #555555;
+    margin: 0;
+  }
+
+  .location-detail-item a {
+    color: var(--color-text-dark);
+    font-weight: 600;
+  }
+
+  .location-detail-item a:hover {
+    color: var(--color-primary-red);
+  }
+
+  .location-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .map-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .map-btn-primary {
+    background-color: var(--color-secondary-black);
+    color: #FFF;
+  }
+
+  .map-btn-primary:hover {
+    background-color: var(--color-primary-red);
+  }
+
+  .map-btn-whatsapp {
+    background-color: var(--color-whatsapp);
+    color: #FFF;
+  }
+
+  .map-btn-whatsapp:hover {
+    background-color: var(--color-whatsapp-hover);
+  }
+
+  .map-frame-wrapper {
+    min-height: 380px;
+    position: relative;
+    background-color: #E5E5E5;
+  }
+
+  .google-map-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

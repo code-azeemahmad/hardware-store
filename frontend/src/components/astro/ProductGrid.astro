@@ -1,0 +1,104 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  viewAllHref?: string;
+  lang?: 'en' | 'ur';
+}
+
+const { title, subtitle, viewAllHref, lang = 'en' } = Astro.props;
+const isUrdu = lang === 'ur';
+---
+
+<section class="section product-grid-section">
+  <div class="container">
+    <div class="grid-header">
+      <div class="header-text">
+        <h2 class="grid-title">{title}</h2>
+        {subtitle && <p class="grid-subtitle">{subtitle}</p>}
+      </div>
+    </div>
+
+    <!-- Product Grid Slot -->
+    <div class="product-cards-grid">
+      <slot />
+    </div>
+
+    {viewAllHref && (
+      <div class="grid-footer">
+        <a href={viewAllHref} class="view-all-pill-btn">
+          {isUrdu ? 'سب دیکھیں' : 'View all'}
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .product-grid-section {
+    padding-block: 4rem;
+  }
+
+  .grid-header {
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+    margin-bottom: 2.75rem;
+  }
+
+  .grid-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 800;
+    color: var(--color-secondary-black);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .grid-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .product-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 576px) {
+    .product-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .product-cards-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .grid-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .view-all-pill-btn {
+    display: inline-block;
+    padding: 0.75rem 2.5rem;
+    background-color: var(--color-secondary-black);
+    color: var(--color-surface-white);
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .view-all-pill-btn:hover {
+    background-color: var(--color-primary-red);
+    transform: translateY(-2px);
+  }
+</style>

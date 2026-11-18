@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { BLOG_POSTS } from '../../../data/catalogue';
+
+const lang = 'ur';
+---
+
+<BaseLayout
+  title="ہارڈویئر اور پلائی ووڈ گائیڈز | نصیر پلائی ووڈ اینڈ ہارڈویئر"
+  description="کمرشل بمقابلہ میرین پلائی ووڈ، اسمارٹ ڈیجیٹل ڈور لاکس اور جدید کچن فٹنگز کے انتخاب کے لیے مفید معلوماتی مضامین۔"
+  lang={lang}
+>
+  <div class="blog-index-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/ur/">ہوم</a>
+        <span class="sep">/</span>
+        <span class="current">مفید گائیڈز و مضامین</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="blog-header">
+        <span class="badge-subtitle">ماہرانہ رہنمائی</span>
+        <h1 class="page-title">ہارڈویئر و پلائی ووڈ خریدنے کے لیے رہنمائی</h1>
+        <div class="red-line"></div>
+        <p class="page-subtitle">
+          گھر کی تعمیر یا تزئین و آرائش کے دوران درست میٹیریل، پائیدار تالوں اور اصلی واٹر پروف شیٹس کے انتخاب کے لیے جامع گائیڈز۔
+        </p>
+      </header>
+
+      <!-- Blog Cards Grid -->
+      <div class="blog-grid">
+        {BLOG_POSTS.map((post) => (
+          <article class="blog-card">
+            <a href={`/ur/blog/${post.slug}/`} class="blog-card-img-link">
+              <img src={post.imageUrl} alt={post.titleUr} class="blog-card-img" />
+              <span class="blog-cat-badge">{post.categoryUr}</span>
+            </a>
+
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-date">{post.date}</span>
+                <span class="meta-dot">•</span>
+                <span class="blog-read-time">{post.readTimeUr}</span>
+              </div>
+
+              <h2 class="blog-card-title">
+                <a href={`/ur/blog/${post.slug}/`}>{post.titleUr}</a>
+              </h2>
+
+              <p class="blog-card-excerpt">{post.excerptUr}</p>
+
+              <a href={`/ur/blog/${post.slug}/`} class="read-more-link">
+                مکمل مضمون پڑھیں ←
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-index-page {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .blog-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3.5rem;
+  }
+  .badge-subtitle {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primary-red);
+    background-color: #fee2e2;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.75rem;
+  }
+  .page-title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 0.5rem;
+  }
+  .red-line {
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-primary-red);
+    margin: 0.75rem auto 1.5rem;
+  }
+  .page-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  @media (max-width: 960px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .blog-card {
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .blog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  .blog-card-img-link {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    display: block;
+    overflow: hidden;
+  }
+  .blog-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-medium);
+  }
+  .blog-card:hover .blog-card-img {
+    transform: scale(1.04);
+  }
+  .blog-cat-badge {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+  }
+  .blog-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .blog-meta {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .meta-dot {
+    margin: 0 0.4rem;
+  }
+  .blog-card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 0.75rem;
+  }
+  .blog-card-title a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  .blog-card-title a:hover {
+    color: var(--color-primary-red);
+  }
+  .blog-card-excerpt {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+  .read-more-link {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-primary-red);
+    text-decoration: none;
+  }
+  .read-more-link:hover {
+    text-decoration: underline;
+  }
+</style>

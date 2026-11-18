@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { BRANDS } from '../../../data/catalogue';
+
+const lang = 'ur';
+---
+
+<BaseLayout
+  title="تصدیق شدہ برانڈز اور مینوفیکچررز | نصیر پلائی ووڈ اینڈ ہارڈویئر"
+  description="نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا پر دستیاب مستند اور معیاری ڈور لاکس، کچن و باتھ روم فٹنگز اور میرین پلائی ووڈ برانڈز۔"
+  lang={lang}
+>
+  <div class="brands-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/ur/">ہوم</a>
+        <span class="sep">/</span>
+        <span class="current">برانڈز</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="brands-header">
+        <span class="badge-subtitle">آفیشل شوروم ڈسٹری بیوٹر</span>
+        <h1 class="page-title">مستند برانڈز اور پارٹنرز</h1>
+        <div class="red-line"></div>
+        <p class="page-subtitle">
+          ہم ملک اور بیرون ملک کی مستند کمپنیوں کے ساتھ کام کرتے ہیں تاکہ آپ کے گھر اور پراجیکٹ کے لیے صرف معیاری اور دیرپا میٹیریل فراہم کیا جا سکے۔
+        </p>
+      </header>
+
+      <!-- Brands Grid -->
+      <div class="brands-grid">
+        {BRANDS.map((brand) => (
+          <div class="brand-card">
+            <div class="brand-card-header">
+              <div class="brand-avatar">
+                <span>{brand.name.slice(0, 2).toUpperCase()}</span>
+              </div>
+              <div class="brand-meta">
+                <h2 class="brand-name">{brand.name}</h2>
+                <span class="brand-cat">{brand.category}</span>
+              </div>
+            </div>
+
+            <p class="brand-desc">{brand.descriptionUr}</p>
+
+            <div class="brand-card-footer">
+              <span class="brand-origin">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                </svg>
+                {brand.country}
+              </span>
+
+              <a
+                href={`https://wa.me/923045030046?text=${encodeURIComponent(`السلام علیکم! مجھے اس برانڈ کا کیٹلاگ اور ریٹ لسٹ درکار ہے: ${brand.name}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="brand-wa-link"
+              >
+                واٹس ایپ پر ریٹس لیں
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Trust Note Section -->
+      <section class="brands-trust-banner">
+        <h2>کیا آپ کو کوئی مخصوص برانڈ یا ماڈل درکار ہے؟</h2>
+        <p>اگر آپ کے پاس آرکیٹیکٹ کی میٹیریل لسٹ یا مخصوص ماڈل کا نام ہے تو ہم وہ برانڈ فوری فراہم کر سکتے ہیں۔</p>
+        <a href="https://wa.me/923045030046" class="btn-wa" target="_blank" rel="noopener noreferrer">
+          واٹس ایپ پر لسٹ بھیجیں (+92 304 5030046)
+        </a>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .brands-page {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .brands-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3.5rem;
+  }
+  .badge-subtitle {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primary-red);
+    background-color: #fee2e2;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.75rem;
+  }
+  .page-title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 0.5rem;
+  }
+  .red-line {
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-primary-red);
+    margin: 0.75rem auto 1.5rem;
+  }
+  .page-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+  }
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+    margin-bottom: 4rem;
+  }
+  @media (max-width: 1024px) {
+    .brands-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .brands-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .brand-card {
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .brand-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-primary-red);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+  .brand-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .brand-avatar {
+    width: 52px;
+    height: 52px;
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-surface-black);
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+  }
+  .brand-cat {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary-red);
+  }
+  .brand-desc {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .brand-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9rem;
+  }
+  .brand-origin {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-text-muted);
+  }
+  .brand-wa-link {
+    color: #16a34a;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .brand-wa-link:hover {
+    text-decoration: underline;
+  }
+  .brands-trust-banner {
+    background-color: var(--color-surface-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .brands-trust-banner h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 0.75rem;
+  }
+  .brands-trust-banner p {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 650px;
+    margin: 0 auto 1.75rem;
+    line-height: 1.8;
+  }
+  .btn-wa {
+    display: inline-flex;
+    background-color: #25d366;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+  }
+</style>

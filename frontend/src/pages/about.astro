@@ -1,0 +1,385 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialBar from '../components/astro/SocialBar.astro';
+
+const lang = 'en';
+---
+
+<BaseLayout
+  title="About Us | Naseer Plywood & Hardware Sargodha"
+  description="Discover Naseer Plywood & Hardware, Sargodha's premier wholesale and retail distributor of architectural hardware, imported sinks, and certified marine plywood."
+  lang={lang}
+>
+  <div class="about-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span class="current">About Us</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="about-header">
+        <span class="badge-subtitle">ESTABLISHED PHYSICAL SHOWROOM</span>
+        <h1 class="page-title">About Naseer Plywood & Hardware</h1>
+        <div class="red-line"></div>
+        <p class="lead-text">
+          Delivering genuine architectural door locks, premium kitchen fittings, luxury bathroom vanities, and certified boiling water-proof marine plywood across Sargodha and Punjab.
+        </p>
+      </header>
+
+      <!-- Two-Column Story Section -->
+      <section class="story-section">
+        <div class="story-text">
+          <h2>Our Legacy & Showroom Commitment</h2>
+          <p>
+            Located conveniently on Canal Road (near General Bus Stand Road) in Sargodha, <strong>نصیر پلائی ووڈ اینڈ ہارڈویئر (Naseer Plywood & Hardware)</strong> has grown into a trusted destination for contractors, interior designers, master carpenters, and discerning homeowners.
+          </p>
+          <p>
+            Unlike generic online stores that sell unverified catalogue images, our business is built upon a massive physical warehouse and showroom floor where customers can touch, test, and inspect every product—from live biometric smart locks and heavy brass door handles to 100% boiling water-proof (IS:710) gurjan core marine plywood.
+          </p>
+          <p>
+            We eliminate the guesswork in construction by guaranteeing authentic brands, accurate thickness gauges, and transparent wholesale trade rates.
+          </p>
+        </div>
+
+        <div class="story-image-wrap">
+          <img
+            src="/images/gate.jpg"
+            alt="Naseer Plywood & Hardware Showroom Exterior, Sargodha"
+            class="story-img"
+          />
+          <div class="caption-overlay">
+            <span>Canal Road Showroom, Sargodha</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Core Pillars Grid -->
+      <section class="pillars-section">
+        <h2 class="section-title">Why Contractors & Homeowners Choose Us</h2>
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-icon">01</div>
+            <h3>100% Genuine Certified Goods</h3>
+            <p>We source directly from authorized manufacturers and reputable importers. Zero counterfeit locks or substandard core boards.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">02</div>
+            <h3>Transparent Trade Pricing</h3>
+            <p>Wholesale price parity for contractors, builders, and large commercial projects, backed by honest retail rates for homeowners.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">03</div>
+            <h3>Technical Wood & Hardware Guidance</h3>
+            <p>Our experienced counter staff helps you calculate exact hinge counts, drawer load ratings, and correct plywood grades.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">04</div>
+            <h3>Safe Handling & Rapid Transport</h3>
+            <p>Equipped for careful loading of heavy 8x4 sheet goods, ceramic sanitary fixtures, and delicate acrylic laminates.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery Grid of Real Shop Displays -->
+      <section class="shop-gallery-section">
+        <h2 class="section-title">Inside Our Sargodha Showroom</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="/images/crafts.jpg" alt="Locks, Handles, and Architectural Hardware Displays" />
+            <div class="gallery-info">
+              <h4>Security & Hardware Selection</h4>
+              <p>Biometric locks, designer door levers, and brass handles</p>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="/images/shelf.jpg" alt="Kitchen Sinks, Appliances, and Sanitary Fixtures" />
+            <div class="gallery-info">
+              <h4>Kitchen & Bathroom Fixtures</h4>
+              <p>Handmade 304 sinks, faucets, vanities, and built-in appliances</p>
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="/images/wood.jpg" alt="Commercial and Marine Plywood Stacks" />
+            <div class="gallery-info">
+              <h4>Timber & Sheet Materials</h4>
+              <p>Commercial MR plywood, Marine BWP boards, and MDF sheets</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Banner -->
+      <section class="about-cta-banner">
+        <h2>Planning a Renovation or New Construction Project?</h2>
+        <p>Visit our showroom or send your material list on WhatsApp for an immediate itemized quotation.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/923045030046" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+            Inquire on WhatsApp (+92 304 5030046)
+          </a>
+          <a href="/contact/" class="btn-contact">
+            View Showroom Directions
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <SocialBar lang={lang} />
+</BaseLayout>
+
+<style>
+  .about-page {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .about-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3.5rem;
+  }
+  .badge-subtitle {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-primary-red);
+    background-color: #fee2e2;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.75rem;
+  }
+  .page-title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .red-line {
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-primary-red);
+    margin: 0.75rem auto 1.5rem;
+  }
+  .lead-text {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+  .story-section {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+  @media (max-width: 900px) {
+    .story-section {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+  .story-text h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 1.25rem;
+  }
+  .story-text p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+  .story-image-wrap {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+  .story-img {
+    width: 100%;
+    height: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+  }
+  .caption-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: #ffffff;
+    padding: 1.5rem 1.25rem 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .pillars-section {
+    margin-bottom: 5rem;
+  }
+  .section-title {
+    font-size: 1.95rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 1024px) {
+    .pillars-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .pillars-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .pillar-card {
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem 1.5rem;
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+  }
+  .pillar-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-primary-red);
+  }
+  .pillar-icon {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--color-primary-red);
+    margin-bottom: 1rem;
+  }
+  .pillar-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-surface-black);
+    margin-bottom: 0.75rem;
+  }
+  .pillar-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .shop-gallery-section {
+    margin-bottom: 5rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 800px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .gallery-item {
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+  .gallery-info {
+    padding: 1.25rem;
+  }
+  .gallery-info h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-surface-black);
+    margin-bottom: 0.25rem;
+  }
+  .gallery-info p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .about-cta-banner {
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2rem;
+    text-align: center;
+  }
+  .about-cta-banner h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .about-cta-banner p {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .btn-whatsapp {
+    background-color: #25d366;
+    color: #ffffff;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .btn-whatsapp:hover {
+    background-color: #1eb956;
+  }
+  .btn-contact {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .btn-contact:hover {
+    background-color: #ffffff;
+    color: var(--color-surface-black);
+  }
+</style>

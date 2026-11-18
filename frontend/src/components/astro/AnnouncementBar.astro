@@ -1,0 +1,56 @@
+---
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  lang: 'en' | 'ur';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<aside class="announcement-wrapper" aria-label="Announcements">
+  <!-- Bar 1: Showroom Alert (Red) -->
+  <div class="announcement-bar red-bar">
+    <div class="container bar-content">
+      <span>{t('announcement.showroom')}</span>
+    </div>
+  </div>
+
+  <!-- Bar 2: Currency / Price Alert (Black) -->
+  <div class="announcement-bar black-bar">
+    <div class="container bar-content">
+      <span>{t('announcement.currency')}</span>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .announcement-wrapper {
+    width: 100%;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .announcement-bar {
+    padding: 0.5rem 1rem;
+    line-height: 1.3;
+  }
+
+  .red-bar {
+    background-color: var(--color-primary-red);
+    color: var(--color-surface-white);
+  }
+
+  .black-bar {
+    background-color: var(--color-secondary-black);
+    color: var(--color-surface-white);
+  }
+
+  .bar-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

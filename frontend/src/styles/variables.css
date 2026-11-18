@@ -1,0 +1,35 @@
+:root {
+  /* Brand Palette from Reference Audit */
+  --color-primary-red: #E21B23;
+  --color-primary-red-hover: #c4141b;
+  --color-secondary-black: #111111;
+  --color-surface-white: #FFFFFF;
+  --color-surface-muted: #F5F5F5;
+  --color-surface-card: #FFFFFF;
+  --color-text-dark: #333333;
+  --color-text-muted: #767676;
+  --color-border: #E8E8E8;
+  --color-border-dark: #333333;
+
+  /* Conversion CTA Color */
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #1EBE5D;
+
+  /* Typography */
+  --font-family-latin: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', Tahoma, sans-serif;
+
+  /* Dimensions & Spacing */
+  --container-max-width: 1440px;
+  --header-height: 80px;
+  --announcement-bar-height: 38px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.25s ease-in-out;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}

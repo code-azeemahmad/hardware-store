@@ -1,0 +1,314 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { EnquiryForm } from '../../components/react/EnquiryForm';
+import ShowroomLocation from '../../components/astro/ShowroomLocation.astro';
+
+const lang = 'ur';
+---
+
+<BaseLayout
+  title="ہم سے رابطہ کریں | نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا"
+  description="نصیر پلائی ووڈ اینڈ ہارڈویئر، کینال روڈ سرگودھا۔ فون 0304-5030046 یا واٹس ایپ پر فوری رابطہ کریں برائے ہول سیل اور ریٹیل قیمت۔"
+  lang={lang}
+>
+  <div class="contact-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/ur/">ہوم</a>
+        <span class="sep">/</span>
+        <span class="current">رابطہ کریں</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="contact-header">
+        <h1 class="page-title">ہم سے رابطہ کریں</h1>
+        <div class="red-line"></div>
+        <p class="page-subtitle">
+          پراڈکٹس کی معلومات، ہول سیل پرائس لسٹ یا شوروم کے وزٹ کے لیے ہم سے رابطہ فرمائیں۔ ہماری ٹیم آپ کی رہنمائی کے لیے ہمہ وقت تیار ہے۔
+        </p>
+      </header>
+
+      <!-- 4-Column Quick Contact Bar -->
+      <div class="contact-methods-grid">
+        <div class="method-card">
+          <div class="icon-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <h2 class="method-title">فون پر فوری رابطہ</h2>
+          <p class="method-text">اسٹاک اور آرڈرز کے لیے کال کریں</p>
+          <a href="tel:03045030046" class="method-action">5030046-0304</a>
+          <a href="tel:03177030847" class="method-subaction">7030847-0317</a>
+        </div>
+
+        <div class="method-card">
+          <div class="icon-circle whatsapp-color">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.514 0-10 4.486-10 10 0 1.945.565 3.755 1.537 5.289l-1.637 5.979 6.136-1.61c1.476.883 3.204 1.342 4.964 1.342 5.514 0 10-4.486 10-10s-4.486-10-10-10z"/>
+            </svg>
+          </div>
+          <h2 class="method-title">واٹس ایپ آرڈرز</h2>
+          <p class="method-text">تصاویر اور تفصیلات بھیجیں</p>
+          <a href="https://wa.me/923045030046" target="_blank" rel="noopener noreferrer" class="method-action whatsapp-link">
+            +92 304 5030046
+          </a>
+        </div>
+
+        <div class="method-card">
+          <div class="icon-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <h2 class="method-title">شوروم ایڈریس</h2>
+          <p class="method-text">کینال روڈ / بس اسٹینڈ روڈ</p>
+          <span class="method-action static-text">سرگودھا، پنجاب</span>
+        </div>
+
+        <div class="method-card">
+          <div class="icon-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h2 class="method-title">شوروم کے اوقات</h2>
+          <p class="method-text">پیر تا ہفتہ</p>
+          <span class="method-action static-text">صبح 9:00 تا رات 8:30</span>
+        </div>
+      </div>
+
+      <!-- Two-Column Contact Form & Direct Map View -->
+      <div class="contact-body-grid">
+        <div class="contact-form-column">
+          <EnquiryForm client:load lang={lang} />
+        </div>
+
+        <div class="contact-info-column">
+          <div class="showroom-card">
+            <h2 class="card-heading">شوروم تشریف لائیں</h2>
+            <p class="card-p">
+              کنٹریکٹرز، انٹیرئیر ڈیزائنرز اور گھر تعمیر کرنے والوں کے لیے مکمل ورائٹی، اسمارٹ لاکس کا لائیو ڈسپلے اور اصلی میرین پلائی ووڈ کا سب سے بڑا اسٹاک۔
+            </p>
+
+            <div class="feature-item">
+              <span class="bullet-check">✓</span>
+              <div>
+                <strong>مفت تکنیکی رہنمائی</strong>
+                <p>صحیح لکڑی اور معیاری فٹنگز کے انتخاب میں ماہرانہ مشورہ۔</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <span class="bullet-check">✓</span>
+              <div>
+                <strong>پروجیکٹ ہول سیل ریٹس</strong>
+                <p>بڑے پروجیکٹس کے لیے خصوصی ڈسکاؤنٹ اور سائیٹ ڈیلیوری۔</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <span class="bullet-check">✓</span>
+              <div>
+                <strong>محفوظ لوڈنگ و ٹرانسپورٹ</strong>
+                <p>پلائی ووڈ شیٹس اور سینیٹری اشیاء کی محفوظ لوڈنگ کی سہولت۔</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Embedded Showroom Map Section -->
+  <ShowroomLocation lang={lang} />
+</BaseLayout>
+
+<style>
+  .contact-page {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .page-title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 0.5rem;
+  }
+  .red-line {
+    width: 50px;
+    height: 3px;
+    background-color: var(--color-primary-red);
+    margin: 0.75rem auto 1.25rem;
+  }
+  .page-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  .contact-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+  @media (max-width: 1024px) {
+    .contact-methods-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .contact-methods-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .method-card {
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .method-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+  .icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #fef2f2;
+    color: var(--color-primary-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .icon-circle.whatsapp-color {
+    background-color: #dcfce7;
+    color: #16a34a;
+  }
+  .method-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-surface-black);
+    margin-bottom: 0.35rem;
+  }
+  .method-text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+  .method-action {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-primary-red);
+    text-decoration: none;
+  }
+  .method-action.whatsapp-link {
+    color: #16a34a;
+  }
+  .method-action.static-text {
+    color: var(--color-surface-black);
+  }
+  .method-subaction {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-top: 0.25rem;
+  }
+  .contact-body-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 3.5rem;
+  }
+  @media (max-width: 900px) {
+    .contact-body-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .showroom-card {
+    background-color: var(--color-surface-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem;
+  }
+  .card-heading {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 1rem;
+  }
+  .card-p {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.75rem;
+  }
+  .feature-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .bullet-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #dcfce7;
+    color: #15803d;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+  .feature-item strong {
+    display: block;
+    font-size: 1.05rem;
+    color: var(--color-surface-black);
+    margin-bottom: 0.2rem;
+  }
+  .feature-item p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

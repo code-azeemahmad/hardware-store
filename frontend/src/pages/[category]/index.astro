@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/astro/ProductCard.astro';
+import { CATEGORIES, getProductsByCategory, type Category } from '../../data/catalogue';
+
+export function getStaticPaths() {
+  return CATEGORIES.map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+const lang = 'en';
+const products = getProductsByCategory(category.slug);
+---
+
+<BaseLayout
+  title={`${category.nameEn} | Naseer Plywood & Hardware Catalogue`}
+  description={category.descriptionEn}
+  lang={lang}
+>
+  <!-- Category Header & Breadcrumb -->
+  <section class="category-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span class="current">{category.nameEn}</span>
+      </nav>
+
+      <h1 class="category-title">{category.nameEn}</h1>
+      <p class="category-desc">{category.descriptionEn}</p>
+
+      <!-- Subcategory quick links -->
+      <div class="subcat-pills">
+        {category.subcategories.map((sub) => (
+          <a href={`/${category.slug}/${sub.slug}/`} class="subcat-pill">
+            {sub.nameEn}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Sort Bar (Matching reference/bestsellingitemsgrid.pdf) -->
+  <section class="filter-toolbar-section">
+    <div class="container filter-toolbar">
+      <div class="filter-left">
+        <span class="filter-count">
+          Showing <strong>{products.length}</strong> products
+        </span>
+      </div>
+
+      <div class="filter-right">
+        <label class="sort-label">
+          <span>Sort by:</span>
+          <select class="sort-select" aria-label="Sort products">
+            <option value="featured">Featured Showroom Selection</option>
+            <option value="bestseller">Best Selling First</option>
+            <option value="name-asc">Alphabetical: A to Z</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <main class="container catalogue-grid-wrap">
+    {products.length > 0 ? (
+      <div class="product-cards-grid">
+        {products.map((p) => (
+          <ProductCard
+            title={p.titleEn}
+            category={p.subcategoryNameEn}
+            brand={p.brand}
+            slug={p.slug}
+            imageUrl={p.imageUrl}
+            lang={lang}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="empty-state">
+        <p>No products currently displayed in this category. Contact us for custom orders.</p>
+      </div>
+    )}
+
+    <!-- Reference Pagination Controls -->
+    <nav class="pagination-bar" aria-label="Pagination">
+      <span class="page-num active">1</span>
+      <span class="page-num">2</span>
+      <span class="page-num">3</span>
+      <span class="page-arrow" aria-label="Next page">&gt;</span>
+    </nav>
+  </main>
+
+  <!-- Bottom Detailed Information / Trade Buyer Advice -->
+  <section class="category-seo-section">
+    <div class="container">
+      <div class="seo-card">
+        <h2>Wholesale & Retail {category.nameEn} Supplies in Sargodha</h2>
+        <p>
+          At <strong>Naseer Plywood & Hardware</strong>, we supply certified contractors, architects, carpenters, and homeowners with trade-grade {category.nameEn.toLowerCase()} solutions. Visit our Canal Road showroom to inspect genuine display mockups, or click the WhatsApp button on any item for wholesale quote sheets and stock checks.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .category-header {
+    background-color: var(--color-surface-light);
+    border-bottom: 1px solid var(--color-border);
+    padding: 2.5rem 0 2rem;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .category-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .category-desc {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    max-width: 800px;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .subcat-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .subcat-pill {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-surface-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-surface-black);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .subcat-pill:hover {
+    border-color: var(--color-primary-red);
+    color: var(--color-primary-red);
+    background-color: #fff1f2;
+  }
+  .filter-toolbar-section {
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-surface-white);
+    padding: 1rem 0;
+  }
+  .filter-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .filter-count {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+  .filter-count strong {
+    color: var(--color-surface-black);
+  }
+  .sort-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  .sort-select {
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    background-color: var(--color-surface-white);
+    color: var(--color-surface-black);
+    outline: none;
+  }
+  .sort-select:focus {
+    border-color: var(--color-primary-red);
+  }
+  .catalogue-grid-wrap {
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+  }
+  .product-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  @media (max-width: 1024px) {
+    .product-cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .product-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .product-cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .pagination-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  .page-num, .page-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-surface-black);
+    cursor: pointer;
+    user-select: none;
+  }
+  .page-num.active {
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+    border-color: var(--color-surface-black);
+  }
+  .category-seo-section {
+    background-color: var(--color-surface-light);
+    border-top: 1px solid var(--color-border);
+    padding: 3rem 0;
+  }
+  .seo-card {
+    max-width: 900px;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+  }
+  .seo-card h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-surface-black);
+    margin-bottom: 0.75rem;
+  }
+</style>

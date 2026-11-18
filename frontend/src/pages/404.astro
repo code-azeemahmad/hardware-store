@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lang = 'en';
+---
+
+<BaseLayout
+  title="404 Page Not Found | Naseer Plywood & Hardware"
+  description="The page you are looking for might have been moved or removed. Browse our kitchen, hardware, bathroom, and plywood catalogue."
+  lang={lang}
+>
+  <div class="not-found-page">
+    <div class="container text-center">
+      <div class="error-code">404</div>
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-desc">
+        We could not find the page or product you were looking for. It may have been updated, renamed, or moved.
+      </p>
+
+      <div class="links-suggestions">
+        <a href="/" class="btn-primary">Return to Homepage</a>
+        <a href="/search/" class="btn-secondary">Search Catalogue</a>
+        <a href="https://wa.me/923045030046" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          Ask on WhatsApp (+92 304 5030046)
+        </a>
+      </div>
+
+      <div class="quick-category-links">
+        <span class="quick-label">Or explore our showroom collections:</span>
+        <div class="pills-row">
+          <a href="/kitchen/" class="cat-link">Kitchen Sinks & Faucets</a>
+          <a href="/hardware/" class="cat-link">Door Locks & Handles</a>
+          <a href="/bathroom/" class="cat-link">Vanities & Commodes</a>
+          <a href="/plywood/" class="cat-link">Marine & Commercial Plywood</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found-page {
+    padding: 6rem 0;
+  }
+  .text-center {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  .error-code {
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--color-primary-red);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+  }
+  .error-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 1rem;
+  }
+  .error-desc {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+  }
+  .links-suggestions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+  .btn-primary {
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-red);
+  }
+  .btn-secondary {
+    background-color: var(--color-surface-light);
+    color: var(--color-surface-black);
+    border: 1px solid var(--color-border);
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .btn-whatsapp {
+    background-color: #25d366;
+    color: #ffffff;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .quick-category-links {
+    border-top: 1px solid var(--color-border);
+    padding-top: 2.5rem;
+  }
+  .quick-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+  .pills-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .cat-link {
+    padding: 0.45rem 1rem;
+    background-color: var(--color-surface-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-surface-black);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .cat-link:hover {
+    border-color: var(--color-primary-red);
+    color: var(--color-primary-red);
+  }
+</style>

@@ -1,0 +1,518 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProductCard from '../../../components/astro/ProductCard.astro';
+import { EnquiryForm } from '../../../components/react/EnquiryForm';
+import {
+  PRODUCTS,
+  getRelatedProducts,
+  type Product,
+} from '../../../data/catalogue';
+
+export function getStaticPaths() {
+  return PRODUCTS.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const lang = 'ur';
+const relatedProducts = getRelatedProducts(product.slug, product.categorySlug, 4);
+
+const whatsappHref = `https://wa.me/923045030046?text=${encodeURIComponent(
+  `السلام علیکم نصیر پلائی ووڈ اینڈ ہارڈویئر! مجھے اس پراڈکٹ کی قیمت اور اسٹاک جاننا ہے: "${product.titleUr}" (SKU: ${product.sku})۔`
+)}`;
+---
+
+<BaseLayout
+  title={`${product.titleUr} | نصیر پلائی ووڈ اینڈ ہارڈویئر`}
+  description={product.descriptionUr.slice(0, 160)}
+  lang={lang}
+>
+  <div class="product-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/ur/">ہوم</a>
+        <span class="sep">/</span>
+        <a href={`/ur/${product.categorySlug}/`}>{product.categoryNameUr}</a>
+        <span class="sep">/</span>
+        <a href={`/ur/${product.categorySlug}/${product.subcategorySlug}/`}>
+          {product.subcategoryNameUr}
+        </a>
+        <span class="sep">/</span>
+        <span class="current">{product.titleUr}</span>
+      </nav>
+
+      <!-- Main Two-Column Layout -->
+      <div class="product-main-grid">
+        <!-- Left: Product Media Gallery -->
+        <div class="product-gallery">
+          <div class="main-image-wrap">
+            <img
+              src={product.imageUrl}
+              alt={product.titleUr}
+              class="main-image"
+              loading="eager"
+            />
+            <div class="brand-badge-overlay">
+              <span>{product.brand}</span>
+            </div>
+          </div>
+
+          <!-- Thumbnail Strip -->
+          <div class="thumbnail-strip">
+            {product.gallery.map((img, idx) => (
+              <button
+                type="button"
+                class={`thumb-btn ${idx === 0 ? 'active' : ''}`}
+                aria-label={`دیکھیں تصویر ${idx + 1}`}
+              >
+                <img src={img} alt={`${product.titleUr} thumbnail ${idx + 1}`} />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Right: Product Information & Inquiries -->
+        <div class="product-details">
+          <!-- Vendor / Brand Badge -->
+          <div class="product-brand-tag">{product.brand.toUpperCase()}</div>
+
+          <!-- Title -->
+          <h1 class="product-title">{product.titleUr}</h1>
+
+          <!-- Meta Row: SKU & Stock Status -->
+          <div class="product-meta-row">
+            <span class="sku-badge">ایس کے یو: <strong>{product.sku}</strong></span>
+            {product.inStock && (
+              <span class="stock-badge in-stock">
+                <span class="pulse-dot"></span> شوروم پر دستیاب (سرگودھا)
+              </span>
+            )}
+          </div>
+
+          <!-- Price & Inquiry Notice Box -->
+          <div class="price-request-box">
+            <div class="price-badge-header">
+              <span class="price-label">قیمت واٹس ایپ پر دستیاب</span>
+              <span class="price-note">ہول سیل اور ریٹیل ریٹس</span>
+            </div>
+            <p class="price-disclaimer">
+              مارکیٹ اور لوہے / لکڑی کے نرخوں میں اتار چڑھاؤ کے پیش نظر، براہ کرم آج کے بہترین ریٹس اور رعایت کے لیے واٹس ایپ یا فون پر رابطہ فرمائیں۔
+            </p>
+          </div>
+
+          <!-- Primary Call to Actions -->
+          <div class="action-buttons-group">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="whatsapp-primary-btn"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.514 0-10 4.486-10 10 0 1.945.565 3.755 1.537 5.289l-1.637 5.979 6.136-1.61c1.476.883 3.204 1.342 4.964 1.342 5.514 0 10-4.486 10-10s-4.486-10-10-10z"/>
+              </svg>
+              <span>واٹس ایپ پر قیمت معلوم کریں</span>
+            </a>
+
+            <a href="tel:03045030046" class="phone-secondary-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>کال کریں: 5030046-0304</span>
+            </a>
+          </div>
+
+          <!-- Product Description -->
+          <div class="product-description-wrap">
+            <h2 class="section-subheading">تفصیلات و تعارف</h2>
+            <p class="description-text">{product.descriptionUr}</p>
+          </div>
+
+          <!-- Key Highlights Bulleted List -->
+          {product.featuresUr.length > 0 && (
+            <div class="product-features-wrap">
+              <h2 class="section-subheading">خصوصیات اور فوائد</h2>
+              <ul class="features-list">
+                {product.featuresUr.map((feat) => (
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E21B23" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <!-- Specifications Table -->
+          <div class="product-specs-wrap">
+            <h2 class="section-subheading">ٹیکنیکل تفصیلات</h2>
+            <table class="specs-table">
+              <tbody>
+                {Object.entries(product.specsUr).map(([key, val]) => (
+                  <tr>
+                    <th scope="row">{key}</th>
+                    <td>{val}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Online Enquiry Form Section -->
+      <section class="enquiry-form-section">
+        <EnquiryForm
+          client:load
+          lang={lang}
+          prefilledProduct={`${product.titleUr} (SKU: ${product.sku})`}
+        />
+      </section>
+
+      <!-- Related Products: "You may also like" -->
+      {relatedProducts.length > 0 && (
+        <section class="related-products-section">
+          <div class="related-header">
+            <h2 class="related-title">متعلقہ پراڈکٹس</h2>
+            <div class="red-line"></div>
+          </div>
+          <div class="related-grid">
+            {relatedProducts.map((rel) => (
+              <ProductCard
+                title={rel.titleUr}
+                category={rel.subcategoryNameUr}
+                brand={rel.brand}
+                slug={rel.slug}
+                imageUrl={rel.imageUrl}
+                lang={lang}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .product-page {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .breadcrumb a {
+    color: var(--color-surface-black);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-primary-red);
+  }
+  .breadcrumb .sep {
+    color: var(--color-border-hover);
+  }
+  .product-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 3.5rem;
+    margin-bottom: 3.5rem;
+  }
+  @media (max-width: 900px) {
+    .product-main-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+  .product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .main-image-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background-color: var(--color-surface-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .brand-badge-overlay {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: rgba(17, 17, 17, 0.88);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+  .thumbnail-strip {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .thumb-btn {
+    width: 76px;
+    height: 76px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+  }
+  .thumb-btn.active {
+    border-color: var(--color-primary-red);
+  }
+  .thumb-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .product-brand-tag {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .product-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    line-height: 1.35;
+    margin-bottom: 1rem;
+  }
+  .product-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  .sku-badge {
+    color: var(--color-text-muted);
+  }
+  .sku-badge strong {
+    color: var(--color-surface-black);
+  }
+  .stock-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: #15803d;
+    background-color: #dcfce7;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #16a34a;
+    border-radius: 50%;
+  }
+  .price-request-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-right: 4px solid var(--color-primary-red);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.75rem;
+  }
+  .price-badge-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .price-label {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary-red);
+  }
+  .price-note {
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: #e2e8f0;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    color: #334155;
+  }
+  .price-disclaimer {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .action-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .whatsapp-primary-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: #25d366;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 1rem 1.75rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+  .whatsapp-primary-btn:hover {
+    background-color: #1eb956;
+    transform: translateY(-2px);
+  }
+  .phone-secondary-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    background-color: var(--color-surface-white);
+    color: var(--color-surface-black);
+    border: 1px solid var(--color-surface-black);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .phone-secondary-btn:hover {
+    background-color: var(--color-surface-black);
+    color: #ffffff;
+  }
+  .section-subheading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-surface-black);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .product-description-wrap {
+    margin-bottom: 1.75rem;
+  }
+  .description-text {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+  }
+  .product-features-wrap {
+    margin-bottom: 1.75rem;
+  }
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .features-list li svg {
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+  .product-specs-wrap {
+    margin-bottom: 2rem;
+  }
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  .specs-table th, .specs-table td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: right;
+  }
+  .specs-table th {
+    width: 38%;
+    font-weight: 600;
+    color: var(--color-surface-black);
+    background-color: var(--color-surface-light);
+  }
+  .specs-table td {
+    color: var(--color-text-muted);
+  }
+  .enquiry-form-section {
+    margin: 3.5rem 0;
+  }
+  .related-products-section {
+    margin-top: 4rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+  .related-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .related-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-surface-black);
+    margin-bottom: 0.5rem;
+  }
+  .red-line {
+    width: 48px;
+    height: 3px;
+    background-color: var(--color-primary-red);
+    margin: 0 auto;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 1024px) {
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
