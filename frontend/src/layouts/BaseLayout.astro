@@ -17,13 +17,29 @@ const {
 } = Astro.props;
 
 const isRTL = lang === 'ur';
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost:8080');
-const alternateURL = new URL(
-  lang === 'en'
-    ? `/ur${Astro.url.pathname === '/' ? '/' : Astro.url.pathname}`
-    : Astro.url.pathname.replace(/^\/ur(\/|$)/, '/') || '/',
-  Astro.site || 'http://localhost:8080'
-);
+
+// Canonical and Reciprocal Hreflang URLs
+const siteBase = Astro.site?.toString() || 'http://localhost:8080';
+const currentPath = Astro.url.pathname;
+
+let englishPath = '/';
+let urduPath = '/ur/';
+
+if (lang === 'ur') {
+  urduPath = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+  const stripped = currentPath.replace(/^\/ur(\/|$)/, '/');
+  englishPath = stripped.endsWith('/') ? stripped : `${stripped}/`;
+  if (!englishPath.startsWith('/')) englishPath = `/${englishPath}`;
+} else {
+  englishPath = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+  urduPath = currentPath === '/' ? '/ur/' : `/ur${currentPath.startsWith('/') ? '' : '/'}${currentPath}`;
+  if (!urduPath.endsWith('/')) urduPath = `${urduPath}/`;
+}
+
+const canonicalURL = new URL(currentPath, siteBase);
+const englishURL = new URL(englishPath, siteBase);
+const urduURL = new URL(urduPath, siteBase);
+const fullTitle = `${title} | ${lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}`;
 ---
 
 <!doctype html>
@@ -34,16 +50,66 @@ const alternateURL = new URL(
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{title} | {lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="alternate" hreflang={lang === 'en' ? 'ur' : 'en'} href={alternateURL} />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <!-- Reciprocal Bilingual Hreflang Annotations (English, Urdu, x-default) -->
+    <link rel="alternate" hreflang="en" href={englishURL.href} />
+    <link rel="alternate" hreflang="ur" href={urduURL.href} />
+    <link rel="alternate" hreflang="x-default" href={englishURL.href} />
+
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:locale" content={lang === 'ur' ? 'ur_PK' : 'en_PK'} />
+    <meta property="og:locale:alternate" content={lang === 'ur' ? 'en_PK' : 'ur_PK'} />
+    <meta property="og:site_name" content={lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا' : 'Naseer Plywood & Hardware Sargodha'} />
+
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Structured Data (JSON-LD): Store / HomeGoodsStore -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HomeGoodsStore",
+      "name": lang === 'ur' ? "نصیر پلائی ووڈ اینڈ ہارڈویئر" : "Naseer Plywood & Hardware",
+      "telephone": "+923045030046",
+      "url": canonicalURL.href,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Canal Road, Near New Cantt Hospital / General Bus Stand Road",
+        "addressLocality": "Sargodha",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 32.0836,
+        "longitude": 72.6711
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
+          "opens": "09:00",
+          "closes": "20:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Friday",
+          "opens": "09:00",
+          "closes": "13:00"
+        }
+      ],
+      "priceRange": "$$"
+    })} />
   </head>
   <body>
     <AnnouncementBar lang={lang} />

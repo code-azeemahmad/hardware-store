@@ -48,3 +48,17 @@ class AdminInvitation(Base, TimestampMixin):
     invited_by: Mapped[AdminUser] = relationship(
         "AdminUser", back_populates="sent_invitations", foreign_keys=[invited_by_id]
     )
+
+
+class AdminRefreshToken(Base, TimestampMixin):
+    __tablename__ = "admin_refresh_tokens"
+
+    token_hash: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("admin_users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    is_revoked: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    replaced_by_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
+
+    user: Mapped[AdminUser] = relationship("AdminUser", backref="refresh_tokens")

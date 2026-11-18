@@ -18,6 +18,12 @@ class Category(Base, TimestampMixin):
     sort_order: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     is_published: Mapped[bool] = mapped_column(Boolean, default=True, index=True, nullable=False)
 
+    # Localized SEO Metadata
+    meta_title_en: Mapped[str | None] = mapped_column(String(300), nullable=True)
+    meta_title_ur: Mapped[str | None] = mapped_column(String(300), nullable=True)
+    meta_description_en: Mapped[str | None] = mapped_column(Text, nullable=True)
+    meta_description_ur: Mapped[str | None] = mapped_column(Text, nullable=True)
+
     parent_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("categories.id", ondelete="SET NULL"), nullable=True, index=True
     )

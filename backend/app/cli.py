@@ -3,6 +3,7 @@ import sys
 from app.core.security import get_password_hash
 from app.db.session import SessionLocal
 from app.models.user import AdminRole, AdminUser
+from app.db.seed import seed_database
 
 
 def create_admin(email: str, password: str, full_name: str, role: str = "super_admin"):
@@ -34,8 +35,19 @@ def create_admin(email: str, password: str, full_name: str, role: str = "super_a
         db.close()
 
 
+def run_seed():
+    db = SessionLocal()
+    try:
+        counts = seed_database(db)
+        print("Database seeded successfully:")
+        for k, v in counts.items():
+            print(f"  - {k}: {v}")
+    finally:
+        db.close()
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Hardware Store Admin Management CLI")
+    parser = argparse.ArgumentParser(description="Hardware Store Management CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     create_parser = subparsers.add_parser("create-admin", help="Create an initial admin user")
@@ -44,9 +56,13 @@ def main():
     create_parser.add_argument("--name", default="Super Administrator", help="Admin full name")
     create_parser.add_argument("--role", default="super_admin", help="Admin role")
 
+    subparsers.add_parser("seed-db", help="Seed database with initial categories, brands, and products")
+
     args = parser.parse_args()
     if args.command == "create-admin":
         create_admin(args.email, args.password, args.name, args.role)
+    elif args.command == "seed-db":
+        run_seed()
 
 
 if __name__ == "__main__":

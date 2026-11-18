@@ -19,44 +19,44 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
   const reviews: Review[] = [
     {
-      initial: 'Y',
-      name: isUrdu ? 'یاسر انیس' : 'Yasir Anees',
+      initial: 'M',
+      name: isUrdu ? 'ملک ارشد (بلڈنگ کنٹریکٹر، سرگودھا)' : 'Malik Arshad (Building Contractor, Sargodha)',
       avatarColor: '#1A73E8',
       rating: 5,
       date: isUrdu ? '2 ہفتے قبل' : '2 weeks ago',
       quote: isUrdu
-        ? 'پروڈکٹس کا بہترین مجموعہ اور ان کا اسٹاف کسٹمرز کو سامان منتخب کرنے میں بہت مددگار ہے۔ سرگودھا میں ہارڈویئر کے لیے بہترین دکان۔'
-        : 'A good range of products and staff is very keen to guide customers. Best wholesale hardware and plywood rates in Sargodha.',
+        ? 'نصیر ہارڈویئر کینال روڈ سے ہم اپنی تمام سائیٹس کے لیے ڈور لاکس، قبضے اور سنک لیتے ہیں۔ ریٹس ہول سیل ہیں اور کوالٹی بالکل اصلی ہے۔'
+        : 'We procure architectural door locks, hinges, and sinks for our Sargodha construction sites from Naseer Hardware on Canal Road. Genuine wholesale pricing and certified quality.',
     },
     {
-      initial: 'G',
-      name: isUrdu ? 'غزالہ ملک' : 'Ghazala Malik',
+      initial: 'H',
+      name: isUrdu ? 'حاجی محمد اسلم (ووڈ ورکر و کارپینٹر)' : 'Haji M. Aslam (Master Woodcraft, Sargodha)',
       avatarColor: '#EA4335',
       rating: 5,
       date: isUrdu ? '1 ماہ قبل' : '1 month ago',
       quote: isUrdu
-        ? 'نہایت مناسب قیمتیں، اعلیٰ معیار کا سامان۔ کچن سنک اور ڈور ہینڈلز کی وسیع ورائٹی موجود ہے۔'
-        : 'Very economical prices, value for goods. They have the most complete sanitary fittings and cabinet handles collection.',
+        ? 'ان کے پاس میرین پلائی ووڈ 710 گریڈ کی اصلی واٹر پروف شیٹس کا بہترین اسٹاک ہے۔ کچن فرنیچر کے لیے لکڑی میں کبھی شکایت نہیں آئی۔'
+        : 'Best stock of genuine 710 BWP boiling water-proof marine plywood in Sargodha. Never had any delamination or core void issues for kitchen cabinetry.',
+    },
+    {
+      initial: 'T',
+      name: isUrdu ? 'طارق محمود (رہائشی، کینٹ سرگودھا)' : 'Tariq Mahmood (Homeowner, Cantt Sargodha)',
+      avatarColor: '#FBBC05',
+      rating: 5,
+      date: isUrdu ? '2 ماہ قبل' : '2 months ago',
+      quote: isUrdu
+        ? 'اپنے نئے گھر کے لیے ڈیجیٹل اسمارٹ لاک اور باتھ روم وینٹی خریدی۔ شوروم پر اسٹاف نے بہترین گائیڈ کیا اور قیمتیں مارکیٹ سے مناسب تھیں۔'
+        : 'Purchased biometric smart door locks and floating bathroom vanities for our new home. Excellent technical guidance and transparent prices at their Canal Road showroom.',
     },
     {
       initial: 'S',
-      name: isUrdu ? 'شاہد شاہد' : 'Shahid Shahid',
-      avatarColor: '#FBBC05',
+      name: isUrdu ? 'سرگودھا انٹیرئیر ڈیزائن اسٹوڈیو' : 'Sargodha Interior Design Studio',
+      avatarColor: '#34A853',
       rating: 5,
       date: isUrdu ? '3 ماہ قبل' : '3 months ago',
       quote: isUrdu
-        ? 'ان کا شوروم شاندار ہے اور قیمتیں بالکل جائز ہیں۔ میرین پلائی ووڈ اور سینیٹری کا لاجواب اسٹاک ہے۔'
-        : 'Their showroom is excellent, and their prices are very reasonable. High-quality waterproof marine plywood and fittings.',
-    },
-    {
-      initial: 'M',
-      name: isUrdu ? 'محمد عرفان (بلڈر)' : 'M. Irfan (Contractor)',
-      avatarColor: '#34A853',
-      rating: 5,
-      date: isUrdu ? '4 ماہ قبل' : '4 months ago',
-      quote: isUrdu
-        ? 'ہم تمام پراجیکٹس کے لیے پلائی ووڈ، ایم ڈی ایف شیٹس اور لاکس یہیں سے لیتے ہیں۔ ہمیشہ قابل اعتماد کوالٹی۔'
-        : 'Reliable supplier for construction and interior projects. Timely supply of bulk commercial plywood and hardware.',
+        ? 'جدید کچن پینٹری یونٹس اور میٹ فنش ہینڈلز کی وسیع ورائٹی موجود ہے۔ کلائنٹس کو شوروم وزٹ کرا کے تسلی کروانا بہت آسان رہتا ہے۔'
+        : 'Wide collection of modular kitchen accessories, tall pantry pullouts, and architectural brass pulls. Our go-to showroom for interior design clients.',
     },
   ];
 
@@ -144,7 +144,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
         {/* CTA Button matching reference */}
         <div className="reviews-footer">
           <a
-            href="https://maps.google.com"
+            href="https://maps.google.com/?q=Canal+Road+Sargodha+Punjab+Pakistan"
             target="_blank"
             rel="noopener noreferrer"
             className="google-reviews-btn"
@@ -154,6 +154,11 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
             </svg>
             <span>{ui[lang]['action.viewReviews']}</span>
           </a>
+          <p className="sample-disclaimer-note">
+            {isUrdu
+              ? '* ابتدائی نمونہ فیڈ بیک برائے لے آؤٹ۔ نصیر پلائی ووڈ اینڈ ہارڈویئر کے تصدیق شدہ گوگل ریویوز کینال روڈ شوروم پروفائل سے منسلک ہیں۔'
+              : '* Sample demonstration feedback for layout preview. Verified customer reviews linked to Canal Road Sargodha showroom profile.'}
+          </p>
         </div>
       </div>
 
@@ -310,8 +315,11 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
         .reviews-footer {
           display: flex;
-          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.75rem;
           margin-top: 3rem;
+          text-align: center;
         }
 
         .google-reviews-btn {
@@ -331,6 +339,14 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
         .google-reviews-btn:hover {
           background-color: #1557B0;
           transform: translateY(-2px);
+        }
+
+        .sample-disclaimer-note {
+          font-size: 0.8rem;
+          color: var(--color-text-muted);
+          font-style: italic;
+          max-width: 600px;
+          margin: 0;
         }
       `}</style>
     </section>

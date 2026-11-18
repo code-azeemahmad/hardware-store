@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     # Security
     SECRET_KEY: str = "dev_secret_hardware_store_key_change_in_production_min32chars!"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     INVITATION_TOKEN_EXPIRE_HOURS: int = 72
 
     # CORS
