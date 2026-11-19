@@ -10,6 +10,8 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
   const [isOpen, setIsOpen] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
   const basePath = lang === 'ur' ? '/ur' : '';
   const isUrdu = lang === 'ur';
 
@@ -19,7 +21,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
       title: ui[lang]['nav.kitchen'],
       href: `${basePath}/kitchen/`,
       items: [
-        { title: ui[lang]['mega.kitchen.sinks'], href: `${basePath}/kitchen/sinks/` },
+        { title: ui[lang]['mega.kitchen.sinks'], href: `${basePath}/kitchen/kitchen-sinks/` },
         { title: ui[lang]['mega.kitchen.faucets'], href: `${basePath}/kitchen/faucets/` },
         { title: ui[lang]['mega.kitchen.accessories'], href: `${basePath}/kitchen/accessories/` },
         { title: ui[lang]['mega.kitchen.handles'], href: `${basePath}/kitchen/handles/` },
@@ -34,7 +36,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
       items: [
         { title: ui[lang]['mega.hardware.doorHandles'], href: `${basePath}/hardware/door-handles/` },
         { title: ui[lang]['mega.hardware.cabinetHandles'], href: `${basePath}/hardware/cabinet-handles/` },
-        { title: ui[lang]['mega.hardware.locks'], href: `${basePath}/hardware/locks/` },
+        { title: ui[lang]['mega.hardware.locks'], href: `${basePath}/hardware/door-locks/` },
         { title: ui[lang]['mega.hardware.hinges'], href: `${basePath}/hardware/hinges/` },
         { title: ui[lang]['mega.hardware.channels'], href: `${basePath}/hardware/channels/` },
         { title: ui[lang]['mega.hardware.general'], href: `${basePath}/hardware/general/` },
@@ -58,8 +60,8 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
       title: ui[lang]['nav.plywood'],
       href: `${basePath}/plywood/`,
       items: [
-        { title: ui[lang]['mega.plywood.commercial'], href: `${basePath}/plywood/commercial/` },
-        { title: ui[lang]['mega.plywood.marine'], href: `${basePath}/plywood/marine/` },
+        { title: ui[lang]['mega.plywood.commercial'], href: `${basePath}/plywood/commercial-plywood/` },
+        { title: ui[lang]['mega.plywood.marine'], href: `${basePath}/plywood/marine-plywood/` },
         { title: ui[lang]['mega.plywood.mdf'], href: `${basePath}/plywood/mdf/` },
         { title: ui[lang]['mega.plywood.laminates'], href: `${basePath}/plywood/laminates/` },
         { title: ui[lang]['mega.plywood.blockboard'], href: `${basePath}/plywood/blockboard/` },
@@ -68,10 +70,11 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
     },
   ];
 
-  // Lock body scroll when drawer is open
+  // Lock body scroll and manage focus when drawer is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      closeBtnRef.current?.focus();
     } else {
       document.body.style.overflow = '';
     }
@@ -83,13 +86,38 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
   // Handle Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false);
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
     };
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
+
+  // Trap focus inside drawer
+  const handleKeyDownTrap = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'Tab' || !drawerRef.current) return;
+    const focusable = drawerRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        last.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === last) {
+        first.focus();
+        e.preventDefault();
+      }
+    }
+  };
 
   const toggleAccordion = (catId: string) => {
     setExpandedCategory(expandedCategory === catId ? null : catId);
@@ -100,6 +128,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
       {/* Mobile Hamburger Trigger */}
       <button
         type="button"
+        ref={triggerRef}
         className="mobile-hamburger-btn"
         aria-label="Open Navigation Menu"
         aria-expanded={isOpen}
@@ -116,7 +145,10 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
       {isOpen && (
         <div
           className="drawer-overlay"
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false);
+            triggerRef.current?.focus();
+          }}
           aria-hidden="true"
         />
       )}
@@ -128,6 +160,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
         role="dialog"
         aria-modal="true"
         aria-label="Mobile Navigation"
+        onKeyDown={handleKeyDownTrap}
       >
         {/* Drawer Header */}
         <div className="drawer-header">
@@ -140,9 +173,13 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           </div>
           <button
             type="button"
+            ref={closeBtnRef}
             className="drawer-close-btn"
             aria-label="Close Navigation Menu"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              triggerRef.current?.focus();
+            }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -239,13 +276,21 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
               target="_blank"
               rel="noopener noreferrer"
               className="drawer-whatsapp-btn"
+              data-analytics-event="whatsapp_click"
+              data-source="mobile_drawer"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.514 0-10 4.486-10 10 0 1.945.565 3.755 1.537 5.289l-1.637 5.979 6.136-1.61c1.476.883 3.204 1.342 4.964 1.342 5.514 0 10-4.486 10-10s-4.486-10-10-10z"/>
               </svg>
               <span>{ui[lang]['action.whatsapp']}</span>
             </a>
-            <a href="tel:+923045030046" className="drawer-call-btn" dir="ltr">
+            <a
+              href="tel:+923045030046"
+              className="drawer-call-btn"
+              dir="ltr"
+              data-analytics-event="call_click"
+              data-phone="03045030046"
+            >
               📞 +92-304-5030046
             </a>
           </div>

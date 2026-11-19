@@ -4,12 +4,18 @@ import { EnquiryForm } from '../../components/react/EnquiryForm';
 import ShowroomLocation from '../../components/astro/ShowroomLocation.astro';
 
 const lang = 'ur';
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: 'رابطہ کریں', url: '/ur/contact/' },
+];
 ---
 
 <BaseLayout
   title="ہم سے رابطہ کریں | نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا"
   description="نصیر پلائی ووڈ اینڈ ہارڈویئر، کینال روڈ سرگودھا۔ فون 0304-5030046 یا واٹس ایپ پر فوری رابطہ کریں برائے ہول سیل اور ریٹیل قیمت۔"
   lang={lang}
+  breadcrumbs={breadcrumbs}
 >
   <div class="contact-page">
     <div class="container">
@@ -39,8 +45,8 @@ const lang = 'ur';
           </div>
           <h2 class="method-title">فون پر فوری رابطہ</h2>
           <p class="method-text">اسٹاک اور آرڈرز کے لیے کال کریں</p>
-          <a href="tel:03045030046" class="method-action">5030046-0304</a>
-          <a href="tel:03177030847" class="method-subaction">7030847-0317</a>
+          <a href="tel:03045030046" class="method-action" data-analytics-event="call_click" data-phone="03045030046">5030046-0304</a>
+          <a href="tel:03177030847" class="method-subaction" data-analytics-event="call_click" data-phone="03177030847">7030847-0317</a>
         </div>
 
         <div class="method-card">
@@ -51,7 +57,14 @@ const lang = 'ur';
           </div>
           <h2 class="method-title">واٹس ایپ آرڈرز</h2>
           <p class="method-text">تصاویر اور تفصیلات بھیجیں</p>
-          <a href="https://wa.me/923045030046" target="_blank" rel="noopener noreferrer" class="method-action whatsapp-link">
+          <a
+            href="https://wa.me/923045030046"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="method-action whatsapp-link"
+            data-analytics-event="whatsapp_click"
+            data-source="contact_page_card"
+          >
             +92 304 5030046
           </a>
         </div>

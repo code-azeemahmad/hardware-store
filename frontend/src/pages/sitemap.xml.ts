@@ -5,8 +5,12 @@ import {
 } from '../lib/api';
 import { BLOG_POSTS } from '../data/catalogue';
 
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
 export const GET: APIRoute = async () => {
-  const siteUrl = 'https://naseerhardware.pk';
+  const siteUrl = (process.env.PUBLIC_SITE_URL || 'https://naseerhardware.pk').replace(/\/$/, '');
 
   interface RouteItem {
     pathEn: string;
@@ -21,7 +25,6 @@ export const GET: APIRoute = async () => {
     { pathEn: '/contact/', pathUr: '/ur/contact/', priority: '0.9', changefreq: 'monthly' },
     { pathEn: '/brands/', pathUr: '/ur/brands/', priority: '0.8', changefreq: 'weekly' },
     { pathEn: '/blog/', pathUr: '/ur/blog/', priority: '0.8', changefreq: 'weekly' },
-    { pathEn: '/search/', pathUr: '/ur/search/', priority: '0.7', changefreq: 'weekly' },
   ];
 
   const categories = await fetchPublishedCategories();

@@ -5,12 +5,19 @@ import { fetchPublishedProducts } from '../lib/api';
 
 const lang = 'en';
 const PRODUCTS = await fetchPublishedProducts();
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Search', url: '/search/' },
+];
 ---
 
 <BaseLayout
   title="Search Products & Catalogue | Naseer Plywood & Hardware"
-  description="Search the complete Naseer Plywood & Hardware catalogue: architectural door locks, kitchen sinks, mixer faucets, and certified marine plywood."
+  description="Search the complete Naseer Plywood & Hardware catalogue: architectural door locks, kitchen sinks, mixer faucets, and commercial & marine plywood in Sargodha."
   lang={lang}
+  breadcrumbs={breadcrumbs}
+  noindex={true}
 >
   <div class="search-page">
     <div class="container">

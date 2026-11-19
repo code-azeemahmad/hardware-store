@@ -7,13 +7,13 @@
   --color-surface-muted: #F5F5F5;
   --color-surface-card: #FFFFFF;
   --color-text-dark: #333333;
-  --color-text-muted: #767676;
+  --color-text-muted: #595959;
   --color-border: #E8E8E8;
   --color-border-dark: #333333;
 
-  /* Conversion CTA Color */
-  --color-whatsapp: #25D366;
-  --color-whatsapp-hover: #1EBE5D;
+  /* Conversion CTA Color - WCAG AA High Contrast (6.95:1 on white text) */
+  --color-whatsapp: #0d6e38;
+  --color-whatsapp-hover: #0b5c2e;
 
   /* Typography */
   --font-family-latin: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;

@@ -20,7 +20,21 @@ html {
 /* Urdu Language & RTL Font Support */
 html[lang="ur"], [dir="rtl"] {
   font-family: var(--font-family-urdu);
-  line-height: 1.8;
+  line-height: 1.9;
+}
+
+html[lang="ur"] h1, html[lang="ur"] h2, html[lang="ur"] h3, html[lang="ur"] h4,
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4 {
+  line-height: 1.85;
+}
+
+html[lang="ur"] p, [dir="rtl"] p {
+  line-height: 2.1;
+}
+
+/* Bidirectional Icon Mirroring Utility */
+[dir="rtl"] .icon-mirror-rtl {
+  transform: scaleX(-1);
 }
 
 body {
@@ -65,5 +79,32 @@ img, svg {
 /* Focus styles for accessibility */
 :focus-visible {
   outline: 2px solid var(--color-primary-red);
+  outline-offset: 2px;
+}
+
+/* Accessible Skip to Content Link (WCAG 2.1 AA) */
+.skip-to-content {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  background-color: var(--color-primary-red);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  z-index: 99999;
+  border-radius: 4px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: top 0.15s ease-in-out;
+}
+
+[dir="rtl"] .skip-to-content {
+  left: auto;
+  right: 1rem;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+  outline: 2px solid #ffffff;
   outline-offset: 2px;
 }

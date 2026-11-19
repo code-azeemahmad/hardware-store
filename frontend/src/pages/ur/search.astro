@@ -5,12 +5,19 @@ import { fetchPublishedProducts } from '../../lib/api';
 
 const lang = 'ur';
 const PRODUCTS = await fetchPublishedProducts();
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: 'تلاش', url: '/ur/search/' },
+];
 ---
 
 <BaseLayout
   title="پراڈکٹ کیٹلاگ تلاش کریں | نصیر پلائی ووڈ اینڈ ہارڈویئر"
   description="نصیر پلائی ووڈ اینڈ ہارڈویئر کے مکمل کیٹلاگ میں ڈور لاکس، کچن سنک، باتھ روم وینٹیز اور میرین پلائی ووڈ تلاش کریں۔"
   lang={lang}
+  breadcrumbs={breadcrumbs}
+  noindex={true}
 >
   <div class="search-page">
     <div class="container">

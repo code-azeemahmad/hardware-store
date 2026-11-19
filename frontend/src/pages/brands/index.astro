@@ -4,12 +4,18 @@ import { fetchPublishedBrands } from '../../lib/api';
 
 const lang = 'en';
 const BRANDS = await fetchPublishedBrands();
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Brands', url: '/brands/' },
+];
 ---
 
 <BaseLayout
-  title="Authorized Brands & Manufacturers | Naseer Plywood & Hardware"
-  description="Explore authorized architectural hardware, security lock, kitchen appliance, and certified plywood brands distributed by Naseer Plywood & Hardware in Sargodha."
+  title="Authorized Hardware & Plywood Brands | Naseer Plywood & Hardware"
+  description="Explore authorized architectural hardware, security lock, kitchen appliance, and plywood brands distributed by Naseer Plywood & Hardware in Sargodha."
   lang={lang}
+  breadcrumbs={breadcrumbs}
 >
   <div class="brands-page">
     <div class="container">
@@ -26,7 +32,7 @@ const BRANDS = await fetchPublishedBrands();
         <h1 class="page-title">Authorized Brands & Partners</h1>
         <div class="red-line"></div>
         <p class="page-subtitle">
-          We partner with industry-leading domestic and international manufacturers to deliver certified materials, genuine warranties, and superior architectural craftsmanship.
+          We partner with industry-leading domestic and international manufacturers to deliver genuine materials, reliable warranties, and superior architectural craftsmanship.
         </p>
       </header>
 
@@ -60,6 +66,8 @@ const BRANDS = await fetchPublishedBrands();
                 target="_blank"
                 rel="noopener noreferrer"
                 class="brand-wa-link"
+                data-analytics-event="whatsapp_click"
+                data-brand-name={brand.name}
               >
                 Inquire on WhatsApp
               </a>
@@ -72,7 +80,14 @@ const BRANDS = await fetchPublishedBrands();
       <section class="brands-trust-banner">
         <h2>Looking for a Specific Brand or Specification?</h2>
         <p>If you have an architect's specification sheet or builder bill of quantities (BOQ), our sourcing desk can supply the exact brand match.</p>
-        <a href="https://wa.me/923045030046" class="btn-wa" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://wa.me/923045030046"
+          class="btn-wa"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-event="whatsapp_click"
+          data-source="brands_boq_banner"
+        >
           Send Your Material BOQ (+92 304 5030046)
         </a>
       </section>

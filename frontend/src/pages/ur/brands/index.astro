@@ -4,12 +4,18 @@ import { fetchPublishedBrands } from '../../../lib/api';
 
 const lang = 'ur';
 const BRANDS = await fetchPublishedBrands();
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: 'برانڈز', url: '/ur/brands/' },
+];
 ---
 
 <BaseLayout
-  title="تصدیق شدہ برانڈز اور مینوفیکچررز | نصیر پلائی ووڈ اینڈ ہارڈویئر"
+  title="باضابطہ برانڈز اور پارٹنرز | نصیر پلائی ووڈ اینڈ ہارڈویئر"
   description="نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا پر دستیاب مستند اور معیاری ڈور لاکس، کچن و باتھ روم فٹنگز اور میرین پلائی ووڈ برانڈز۔"
   lang={lang}
+  breadcrumbs={breadcrumbs}
 >
   <div class="brands-page">
     <div class="container">
@@ -60,6 +66,8 @@ const BRANDS = await fetchPublishedBrands();
                 target="_blank"
                 rel="noopener noreferrer"
                 class="brand-wa-link"
+                data-analytics-event="whatsapp_click"
+                data-brand-name={brand.name}
               >
                 واٹس ایپ پر ریٹس لیں
               </a>
@@ -72,7 +80,14 @@ const BRANDS = await fetchPublishedBrands();
       <section class="brands-trust-banner">
         <h2>کیا آپ کو کوئی مخصوص برانڈ یا ماڈل درکار ہے؟</h2>
         <p>اگر آپ کے پاس آرکیٹیکٹ کی میٹیریل لسٹ یا مخصوص ماڈل کا نام ہے تو ہم وہ برانڈ فوری فراہم کر سکتے ہیں۔</p>
-        <a href="https://wa.me/923045030046" class="btn-wa" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://wa.me/923045030046"
+          class="btn-wa"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-event="whatsapp_click"
+          data-source="brands_boq_banner"
+        >
           واٹس ایپ پر لسٹ بھیجیں (+92 304 5030046)
         </a>
       </section>

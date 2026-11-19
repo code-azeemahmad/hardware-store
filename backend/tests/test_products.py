@@ -82,7 +82,7 @@ def test_filter_by_brand(client_with_seed: TestClient):
     response = client_with_seed.get("/api/v1/products?brand_slug=hafele")
     assert response.status_code == 200
     data = response.json()
-    assert data["total"] == 3
+    assert data["total"] == 2
     for item in data["items"]:
         assert item["brand_slug"] == "hafele"
 

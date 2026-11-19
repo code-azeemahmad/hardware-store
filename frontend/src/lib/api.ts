@@ -330,7 +330,7 @@ function mapApiDetailToProduct(detail: ApiProductDetail): Product {
     subcategorySlug: subCat.slug,
     subcategoryNameEn: subCat.name_en,
     subcategoryNameUr: subCat.name_ur,
-    brand: detail.brand?.name || detail.brand_name || fallback?.brand || 'Naseer Signature',
+    brand: detail.brand?.name || detail.brand_name || undefined,
     priceType: detail.price_on_request || !detail.price ? 'onRequest' : 'fixed',
     price: detail.price ? parseFloat(detail.price) : null,
     currency: 'PKR',

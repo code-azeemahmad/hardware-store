@@ -42,7 +42,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
         const titleMatch = isUrdu
           ? p.titleUr.toLowerCase().includes(qLower) || p.titleEn.toLowerCase().includes(qLower)
           : p.titleEn.toLowerCase().includes(qLower);
-        const brandMatch = p.brand.toLowerCase().includes(qLower);
+        const brandMatch = p.brand ? p.brand.toLowerCase().includes(qLower) : false;
         const skuMatch = p.sku.toLowerCase().includes(qLower);
         const tagMatch = p.tags.some((t) => t.toLowerCase().includes(qLower));
         const categoryMatch = p.categoryNameEn.toLowerCase().includes(qLower);

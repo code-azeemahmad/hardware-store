@@ -18,12 +18,37 @@ interface Props {
 const { category } = Astro.props;
 const lang = 'en';
 const products = await getProductsByCategory(category.slug);
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: category.nameEn, url: `/${category.slug}/` },
+];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `${category.nameEn} | Naseer Plywood & Hardware`,
+  "description": category.descriptionEn,
+  "url": `/${category.slug}/`,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((p, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "url": `/products/${p.slug}/`,
+      "name": p.titleEn,
+    })),
+  },
+};
 ---
 
 <BaseLayout
   title={`${category.nameEn} | Naseer Plywood & Hardware Catalogue`}
   description={category.descriptionEn}
   lang={lang}
+  breadcrumbs={breadcrumbs}
+  collectionSchema={collectionSchema}
 >
   <!-- Category Header & Breadcrumb -->
   <section class="category-header">
@@ -71,7 +96,8 @@ const products = await getProductsByCategory(category.slug);
   </section>
 
   <!-- Product Grid -->
-  <main class="container catalogue-grid-wrap">
+  <div class="container catalogue-grid-wrap">
+    <h2 class="sr-only">Available Products in {category.nameEn}</h2>
     {products.length > 0 ? (
       <div class="product-cards-grid">
         {products.map((p) => (
@@ -98,7 +124,7 @@ const products = await getProductsByCategory(category.slug);
       <span class="page-num">3</span>
       <span class="page-arrow" aria-label="Next page">&gt;</span>
     </nav>
-  </main>
+  </div>
 
   <!-- Bottom Detailed Information / Trade Buyer Advice -->
   <section class="category-seo-section">
@@ -106,7 +132,7 @@ const products = await getProductsByCategory(category.slug);
       <div class="seo-card">
         <h2>Wholesale & Retail {category.nameEn} Supplies in Sargodha</h2>
         <p>
-          At <strong>Naseer Plywood & Hardware</strong>, we supply certified contractors, architects, carpenters, and homeowners with trade-grade {category.nameEn.toLowerCase()} solutions. Visit our Canal Road showroom to inspect genuine display mockups, or click the WhatsApp button on any item for wholesale quote sheets and stock checks.
+          At <strong>Naseer Plywood & Hardware</strong>, we supply trade contractors, architects, carpenters, and homeowners with trade-grade {category.nameEn.toLowerCase()} solutions. Visit our Canal Road showroom to inspect genuine display mockups, or click the WhatsApp button on any item for wholesale quote sheets and stock checks.
         </p>
       </div>
     </div>

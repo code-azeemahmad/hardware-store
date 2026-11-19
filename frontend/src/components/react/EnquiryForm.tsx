@@ -79,6 +79,21 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
       }
 
       setStatus('success');
+
+      // Dispatch analytics conversion event (GTM dataLayer + CustomEvent, zero PII)
+      if (typeof window !== 'undefined') {
+        const eventPayload = {
+          event: 'enquiry_submit',
+          channel: 'website_form',
+          product_name: prefilledProduct || undefined,
+          timestamp: new Date().toISOString(),
+        };
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(eventPayload);
+        window.dispatchEvent(
+          new CustomEvent('naseer:analytics', { detail: eventPayload })
+        );
+      }
     } catch (err: unknown) {
       setStatus('error');
       setErrorMessage(
@@ -130,6 +145,8 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="whatsapp-followup-btn"
+            data-analytics-event="whatsapp_click"
+            data-source="enquiry_form_success"
           >
             {isUrdu ? 'واٹس ایپ پر فوری بات کریں' : 'Chat on WhatsApp Now'}
           </a>
@@ -205,14 +222,16 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 
           {prefilledProduct && (
             <div className="form-group">
-              <label className="form-label">
+              <label htmlFor="enquiry-product" className="form-label">
                 {isUrdu ? 'پراڈکٹ' : 'Selected Product'}
               </label>
               <input
+                id="enquiry-product"
                 type="text"
                 readOnly
                 value={prefilledProduct}
                 className="form-input readonly-input"
+                aria-label={isUrdu ? 'پراڈکٹ' : 'Selected Product'}
               />
             </div>
           )}
@@ -368,7 +387,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           align-items: center;
           gap: 0.5rem;
           padding: 0.85rem 1.25rem;
-          background-color: #25d366;
+          background-color: var(--color-whatsapp, #0d6e38);
           color: #ffffff;
           font-size: 0.9rem;
           font-weight: 600;
@@ -377,7 +396,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           transition: background-color var(--transition-fast);
         }
         .whatsapp-direct-btn:hover {
-          background-color: #1eb956;
+          background-color: var(--color-whatsapp-hover, #0b5c2e);
         }
         .enquiry-alert {
           padding: 0.75rem 1rem;

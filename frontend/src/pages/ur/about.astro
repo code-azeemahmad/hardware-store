@@ -3,12 +3,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SocialBar from '../../components/astro/SocialBar.astro';
 
 const lang = 'ur';
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: 'ہمارے متعلق', url: '/ur/about/' },
+];
 ---
 
 <BaseLayout
   title="ہمارے متعلق | نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا"
   description="نصیر پلائی ووڈ اینڈ ہارڈویئر، سرگودھا کا سب سے بڑا اور قابل اعتماد ہارڈویئر، ڈور لاکس، کچن سنک اور میرین پلائی ووڈ کا مرکز۔"
   lang={lang}
+  breadcrumbs={breadcrumbs}
 >
   <div class="about-page">
     <div class="container">
@@ -48,6 +54,10 @@ const lang = 'ur';
           <img
             src="/images/gate.jpg"
             alt="نصیر پلائی ووڈ اینڈ ہارڈویئر شوروم، سرگودھا"
+            width="800"
+            height="500"
+            loading="lazy"
+            decoding="async"
             class="story-img"
           />
           <div class="caption-overlay">

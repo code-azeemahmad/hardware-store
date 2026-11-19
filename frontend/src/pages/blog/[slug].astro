@@ -15,12 +15,20 @@ interface Props {
 
 const { post } = Astro.props;
 const lang = 'en';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides & Articles', url: '/blog/' },
+  { name: post.titleEn, url: `/blog/${post.slug}/` },
+];
 ---
 
 <BaseLayout
   title={`${post.titleEn} | Naseer Plywood & Hardware Guides`}
   description={post.excerptEn}
   lang={lang}
+  breadcrumbs={breadcrumbs}
+  ogImage={post.imageUrl}
 >
   <article class="article-page">
     <div class="container">
@@ -48,7 +56,15 @@ const lang = 'en';
 
       <!-- Featured Image -->
       <div class="featured-image-wrap">
-        <img src={post.imageUrl} alt={post.titleEn} class="featured-image" />
+        <img
+          src={post.imageUrl}
+          alt={post.titleEn}
+          width="1200"
+          height="630"
+          loading="eager"
+          decoding="async"
+          class="featured-image"
+        />
       </div>
 
       <!-- Article Content -->

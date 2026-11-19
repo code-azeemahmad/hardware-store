@@ -4,12 +4,27 @@ import AnnouncementBar from '../components/astro/AnnouncementBar.astro';
 import Header from '../components/astro/Header.astro';
 import Footer from '../components/astro/Footer.astro';
 
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 interface Props {
   title: string;
   description?: string;
   lang?: 'en' | 'ur';
   canonicalPath?: string;
   redirectUrl?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  productSchema?: Record<string, unknown>;
+  collectionSchema?: Record<string, unknown>;
+  noindex?: boolean;
+  ogImage?: string;
+  preloadHeroImage?: string;
 }
 
 const {
@@ -18,12 +33,18 @@ const {
   lang = 'en',
   canonicalPath,
   redirectUrl,
+  breadcrumbs,
+  productSchema,
+  collectionSchema,
+  noindex = false,
+  ogImage = '/images/shelf.jpg',
+  preloadHeroImage,
 } = Astro.props;
 
 const isRTL = lang === 'ur';
 
 // Canonical and Reciprocal Hreflang URLs
-const siteBase = Astro.site?.toString() || 'http://localhost:8080';
+const siteBase = (process.env.PUBLIC_SITE_URL || Astro.site?.toString() || 'https://naseerhardware.pk').replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
 const effectivePath = canonicalPath || currentPath;
 
@@ -44,9 +65,48 @@ if (lang === 'ur') {
 const canonicalURL = new URL(effectivePath, siteBase);
 const englishURL = new URL(englishPath, siteBase);
 const urduURL = new URL(urduPath, siteBase);
+const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteBase).href;
+
 const fullTitle = title.includes('Naseer') || title.includes('نصیر')
   ? title
   : `${title} | ${lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}`;
+
+const isSearchPage = currentPath.includes('/search');
+const shouldNoIndex = noindex || isSearchPage;
+const gscVerification = process.env.PUBLIC_GSC_VERIFICATION;
+
+// Schema.org Structured Data: Store (Verified fields only - unconfirmed fields omitted)
+const storeSchema = {
+  "@context": "https://schema.org",
+  "@type": "HomeGoodsStore",
+  "@id": `${siteBase}/#store`,
+  "name": lang === 'ur' ? "نصیر پلائی ووڈ اینڈ ہارڈویئر" : "Naseer Plywood & Hardware",
+  "alternateName": lang === 'ur' ? "Naseer Plywood & Hardware Sargodha" : "نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا",
+  "description": description,
+  "telephone": "+923045030046",
+  "url": siteBase,
+  "logo": `${siteBase}/favicon.svg`,
+  "image": `${siteBase}/images/shelf.jpg`,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Canal Road, Near New Cantt Hospital / General Bus Stand Road",
+    "addressLocality": "Sargodha",
+    "addressRegion": "Punjab",
+    "addressCountry": "PK"
+  }
+};
+
+// Schema.org Structured Data: Breadcrumbs
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbs.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": item.url.startsWith('http') ? item.url : `${siteBase}${item.url}`
+  }))
+} : null;
 ---
 
 <!doctype html>
@@ -59,6 +119,23 @@ const fullTitle = title.includes('Naseer') || title.includes('نصیر')
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+
+    <!-- LCP Hero Image Preload Optimization -->
+    {preloadHeroImage && (
+      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" type="image/jpeg" />
+    )}
+
+    <!-- Search Engine Indexing Control -->
+    {shouldNoIndex ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    )}
+
+    <!-- Google Search Console Verification -->
+    {gscVerification && (
+      <meta name="google-site-verification" content={gscVerification} />
+    )}
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL.href} />
@@ -77,6 +154,7 @@ const fullTitle = title.includes('Naseer') || title.includes('نصیر')
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:image" content={ogImageURL} />
     <meta property="og:locale" content={lang === 'ur' ? 'ur_PK' : 'en_PK'} />
     <meta property="og:locale:alternate" content={lang === 'ur' ? 'en_PK' : 'ur_PK'} />
     <meta property="og:site_name" content={lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا' : 'Naseer Plywood & Hardware Sargodha'} />
@@ -85,49 +163,43 @@ const fullTitle = title.includes('Naseer') || title.includes('نصیر')
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Structured Data (JSON-LD): Store / HomeGoodsStore -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "HomeGoodsStore",
-      "name": lang === 'ur' ? "نصیر پلائی ووڈ اینڈ ہارڈویئر" : "Naseer Plywood & Hardware",
-      "telephone": "+923045030046",
-      "url": canonicalURL.href,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Canal Road, Near New Cantt Hospital / General Bus Stand Road",
-        "addressLocality": "Sargodha",
-        "addressRegion": "Punjab",
-        "addressCountry": "PK"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 32.0836,
-        "longitude": 72.6711
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
-          "opens": "09:00",
-          "closes": "20:30"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Friday",
-          "opens": "09:00",
-          "closes": "13:00"
-        }
-      ],
-      "priceRange": "$$"
-    })} />
+    <script type="application/ld+json" set:html={JSON.stringify(storeSchema)} />
+
+    <!-- Structured Data (JSON-LD): BreadcrumbList -->
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+
+    <!-- Structured Data (JSON-LD): Product Entity -->
+    {productSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+    )}
+
+    <!-- Structured Data (JSON-LD): CollectionPage / ItemList -->
+    {collectionSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+    )}
   </head>
   <body>
+    <!-- WCAG 2.1 AA Skip to Content Link -->
+    <a href="#main-content" class="skip-to-content">
+      {lang === 'ur' ? 'مرکزی مواد پر جائیں' : 'Skip to main content'}
+    </a>
+
     <AnnouncementBar lang={lang} />
     <Header lang={lang} />
     <main id="main-content">
       <slot />
     </main>
     <Footer lang={lang} />
+
+    <!-- Lightweight Analytics & Conversion Tracker -->
+    <script>
+      import { initConversionTracking } from '../lib/analytics';
+      initConversionTracking();
+    </script>
   </body>
 </html>

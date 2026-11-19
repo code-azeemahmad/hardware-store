@@ -3,12 +3,18 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { BLOG_POSTS } from '../../../data/catalogue';
 
 const lang = 'ur';
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: 'مفید گائیڈز و مضامین', url: '/ur/blog/' },
+];
 ---
 
 <BaseLayout
   title="ہارڈویئر اور پلائی ووڈ گائیڈز | نصیر پلائی ووڈ اینڈ ہارڈویئر"
   description="کمرشل بمقابلہ میرین پلائی ووڈ، اسمارٹ ڈیجیٹل ڈور لاکس اور جدید کچن فٹنگز کے انتخاب کے لیے مفید معلوماتی مضامین۔"
   lang={lang}
+  breadcrumbs={breadcrumbs}
 >
   <div class="blog-index-page">
     <div class="container">
@@ -34,7 +40,15 @@ const lang = 'ur';
         {BLOG_POSTS.map((post) => (
           <article class="blog-card">
             <a href={`/ur/blog/${post.slug}/`} class="blog-card-img-link">
-              <img src={post.imageUrl} alt={post.titleUr} class="blog-card-img" />
+              <img
+                src={post.imageUrl}
+                alt={post.titleUr}
+                width="600"
+                height="400"
+                loading="lazy"
+                decoding="async"
+                class="blog-card-img"
+              />
               <span class="blog-cat-badge">{post.categoryUr}</span>
             </a>
 

@@ -26,7 +26,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
       date: isUrdu ? '2 ہفتے قبل' : '2 weeks ago',
       quote: isUrdu
         ? 'نصیر ہارڈویئر کینال روڈ سے ہم اپنی تمام سائیٹس کے لیے ڈور لاکس، قبضے اور سنک لیتے ہیں۔ ریٹس ہول سیل ہیں اور کوالٹی بالکل اصلی ہے۔'
-        : 'We procure architectural door locks, hinges, and sinks for our Sargodha construction sites from Naseer Hardware on Canal Road. Genuine wholesale pricing and certified quality.',
+        : 'We procure architectural door locks, hinges, and sinks for our Sargodha construction sites from Naseer Hardware on Canal Road. Genuine wholesale pricing and dependable quality.',
     },
     {
       initial: 'H',
@@ -288,11 +288,12 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
         .google-badge-tag {
           font-size: 0.75rem;
-          color: #888;
+          color: #555555;
+          font-weight: 500;
         }
 
         .card-stars {
-          color: #F4B400;
+          color: #D97706;
           font-size: 0.95rem;
           margin-bottom: 0.75rem;
           display: flex;
@@ -302,7 +303,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
         .review-date {
           font-size: 0.75rem;
-          color: #AAA;
+          color: #555555;
         }
 
         .review-quote {

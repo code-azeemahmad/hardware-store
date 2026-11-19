@@ -37,10 +37,10 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         {
           columnTitle: isUrdu ? 'سنک اور ٹونٹیاں' : 'Sinks & Faucets',
           items: [
-            { title: ui[lang]['mega.kitchen.sinks'], href: `${basePath}/kitchen/sinks/` },
+            { title: ui[lang]['mega.kitchen.sinks'], href: `${basePath}/kitchen/kitchen-sinks/` },
             { title: ui[lang]['mega.kitchen.faucets'], href: `${basePath}/kitchen/faucets/` },
-            { title: isUrdu ? 'سنگل باؤل سنک' : 'Single Bowl Sinks', href: `${basePath}/kitchen/sinks/?type=single` },
-            { title: isUrdu ? 'ڈبل باؤل سنک' : 'Double Bowl Sinks', href: `${basePath}/kitchen/sinks/?type=double` },
+            { title: isUrdu ? 'سنگل باؤل سنک' : 'Single Bowl Sinks', href: `${basePath}/kitchen/kitchen-sinks/?type=single` },
+            { title: isUrdu ? 'ڈبل باؤل سنک' : 'Double Bowl Sinks', href: `${basePath}/kitchen/kitchen-sinks/?type=double` },
           ],
         },
         {
@@ -79,9 +79,9 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         {
           columnTitle: isUrdu ? 'لاک اور سیکورٹی' : 'Locks & Security',
           items: [
-            { title: ui[lang]['mega.hardware.locks'], href: `${basePath}/hardware/locks/` },
-            { title: isUrdu ? 'اسمارٹ ڈیجیٹل لاکس' : 'Smart Digital Door Locks', href: `${basePath}/hardware/locks/?type=smart` },
-            { title: isUrdu ? 'مورٹائز ڈور لاکس' : 'Mortise Heavy Locks', href: `${basePath}/hardware/locks/?type=mortise` },
+            { title: ui[lang]['mega.hardware.locks'], href: `${basePath}/hardware/door-locks/` },
+            { title: isUrdu ? 'اسمارٹ ڈیجیٹل لاکس' : 'Smart Digital Door Locks', href: `${basePath}/hardware/door-locks/?type=smart` },
+            { title: isUrdu ? 'مورٹائز ڈور لاکس' : 'Mortise Heavy Locks', href: `${basePath}/hardware/door-locks/?type=mortise` },
           ],
         },
         {
@@ -134,9 +134,9 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         {
           columnTitle: isUrdu ? 'پلائی ووڈ کی اقسام' : 'Plywood Grades',
           items: [
-            { title: ui[lang]['mega.plywood.commercial'], href: `${basePath}/plywood/commercial/` },
-            { title: ui[lang]['mega.plywood.marine'], href: `${basePath}/plywood/marine/` },
-            { title: isUrdu ? 'بی ڈبلیو آر واٹر پروف شیٹس' : 'BWR Waterproof Boards', href: `${basePath}/plywood/marine/?grade=bwr` },
+            { title: ui[lang]['mega.plywood.commercial'], href: `${basePath}/plywood/commercial-plywood/` },
+            { title: ui[lang]['mega.plywood.marine'], href: `${basePath}/plywood/marine-plywood/` },
+            { title: isUrdu ? 'بی ڈبلیو آر واٹر پروف شیٹس' : 'BWR Waterproof Boards', href: `${basePath}/plywood/marine-plywood/?grade=bwr` },
           ],
         },
         {
@@ -182,13 +182,12 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
 
   return (
     <nav className="mega-nav-wrapper" ref={menuRef} aria-label="Desktop Navigation">
-      <ul className="mega-nav-list" role="menubar">
+      <ul className="mega-nav-list">
         {/* Home Item */}
-        <li role="none">
+        <li>
           <a
             href={basePath || '/'}
             className={`mega-nav-link ${currentPath === (basePath || '/') ? 'active' : ''}`}
-            role="menuitem"
           >
             {ui[lang]['nav.home']}
           </a>
@@ -202,7 +201,6 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           return (
             <li
               key={category.id}
-              role="none"
               className="mega-menu-parent"
               onMouseEnter={() => setActiveMenu(category.id)}
               onMouseLeave={() => setActiveMenu(null)}
@@ -234,7 +232,6 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
               {isOpen && (
                 <div
                   className="mega-dropdown-panel"
-                  role="menu"
                   aria-label={ui[lang][category.nameKey]}
                 >
                   <div className="mega-dropdown-container">
@@ -281,22 +278,20 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         })}
 
         {/* Contact Us Item */}
-        <li role="none">
+        <li>
           <a
             href={`${basePath}/contact/`}
             className={`mega-nav-link ${currentPath.includes('/contact') ? 'active' : ''}`}
-            role="menuitem"
           >
             {ui[lang]['nav.contact']}
           </a>
         </li>
 
         {/* About Us Item */}
-        <li role="none">
+        <li>
           <a
             href={`${basePath}/about/`}
             className={`mega-nav-link ${currentPath.includes('/about') ? 'active' : ''}`}
-            role="menuitem"
           >
             {ui[lang]['nav.about']}
           </a>

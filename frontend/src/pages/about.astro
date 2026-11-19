@@ -3,12 +3,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SocialBar from '../components/astro/SocialBar.astro';
 
 const lang = 'en';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'About Us', url: '/about/' },
+];
 ---
 
 <BaseLayout
   title="About Us | Naseer Plywood & Hardware Sargodha"
-  description="Discover Naseer Plywood & Hardware, Sargodha's premier wholesale and retail distributor of architectural hardware, imported sinks, and certified marine plywood."
+  description="Discover Naseer Plywood & Hardware, Sargodha's premier wholesale and retail distributor of architectural hardware, imported sinks, and commercial & marine plywood."
   lang={lang}
+  breadcrumbs={breadcrumbs}
 >
   <div class="about-page">
     <div class="container">
@@ -25,7 +31,7 @@ const lang = 'en';
         <h1 class="page-title">About Naseer Plywood & Hardware</h1>
         <div class="red-line"></div>
         <p class="lead-text">
-          Delivering genuine architectural door locks, premium kitchen fittings, luxury bathroom vanities, and certified boiling water-proof marine plywood across Sargodha and Punjab.
+          Delivering genuine architectural door locks, premium kitchen fittings, luxury bathroom vanities, and boiling water-proof marine plywood across Sargodha and Punjab.
         </p>
       </header>
 
@@ -48,6 +54,10 @@ const lang = 'en';
           <img
             src="/images/gate.jpg"
             alt="Naseer Plywood & Hardware Showroom Exterior, Sargodha"
+            width="800"
+            height="500"
+            loading="lazy"
+            decoding="async"
             class="story-img"
           />
           <div class="caption-overlay">
@@ -62,7 +72,7 @@ const lang = 'en';
         <div class="pillars-grid">
           <div class="pillar-card">
             <div class="pillar-icon">01</div>
-            <h3>100% Genuine Certified Goods</h3>
+            <h3>100% Genuine Quality Goods</h3>
             <p>We source directly from authorized manufacturers and reputable importers. Zero counterfeit locks or substandard core boards.</p>
           </div>
 

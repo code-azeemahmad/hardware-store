@@ -18,12 +18,37 @@ interface Props {
 const { category } = Astro.props;
 const lang = 'ur';
 const products = await getProductsByCategory(category.slug);
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: category.nameUr, url: `/ur/${category.slug}/` },
+];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `${category.nameUr} | نصیر پلائی ووڈ اینڈ ہارڈویئر`,
+  "description": category.descriptionUr,
+  "url": `/ur/${category.slug}/`,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((p, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "url": `/ur/products/${p.slug}/`,
+      "name": p.titleUr,
+    })),
+  },
+};
 ---
 
 <BaseLayout
   title={`${category.nameUr} | نصیر پلائی ووڈ اینڈ ہارڈویئر کیٹلاگ`}
   description={category.descriptionUr}
   lang={lang}
+  breadcrumbs={breadcrumbs}
+  collectionSchema={collectionSchema}
 >
   <!-- Category Header & Breadcrumb -->
   <section class="category-header">
@@ -71,7 +96,8 @@ const products = await getProductsByCategory(category.slug);
   </section>
 
   <!-- Product Grid -->
-  <main class="container catalogue-grid-wrap">
+  <div class="container catalogue-grid-wrap">
+    <h2 class="sr-only">{category.nameUr} میں دستیاب پراڈکٹس</h2>
     {products.length > 0 ? (
       <div class="product-cards-grid">
         {products.map((p) => (
@@ -98,7 +124,7 @@ const products = await getProductsByCategory(category.slug);
       <span class="page-num">3</span>
       <span class="page-arrow" aria-label="اگلا صفحہ">&gt;</span>
     </nav>
-  </main>
+  </div>
 
   <!-- Bottom Detailed Information -->
   <section class="category-seo-section">

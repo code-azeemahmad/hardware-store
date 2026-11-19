@@ -21,8 +21,8 @@ const currentPath = Astro.url.pathname;
       <MobileNavDrawer client:load lang={lang} currentPath={currentPath} />
 
       <!-- Brand Logo / Emblem -->
-      <a href={basePath || '/'} class="brand-link" aria-label="Naseer Plywood & Hardware">
-        <div class="brand-logo-emblem">
+      <a href={basePath || '/'} class="brand-link">
+        <div class="brand-logo-emblem" aria-hidden="true">
           <span class="emblem-initials">NP</span>
         </div>
         <div class="brand-text">

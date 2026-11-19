@@ -60,6 +60,30 @@ const products = await getProductsBySubcategory(category.slug, subcategory.slug)
 
 const canonicalPath = `/ur/${category.slug}/${canonicalSubSlug}/`;
 const redirectUrl = isAlias ? canonicalPath : undefined;
+
+const breadcrumbs = [
+  { name: 'ہوم', url: '/ur/' },
+  { name: category.nameUr, url: `/ur/${category.slug}/` },
+  { name: subcategory.nameUr, url: canonicalPath },
+];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `${subcategory.nameUr} | ${category.nameUr} | نصیر پلائی ووڈ اینڈ ہارڈویئر`,
+  "description": subcategory.descriptionUr,
+  "url": canonicalPath,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((p, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "url": `/ur/products/${p.slug}/`,
+      "name": p.titleUr,
+    })),
+  },
+};
 ---
 
 <BaseLayout
@@ -68,6 +92,8 @@ const redirectUrl = isAlias ? canonicalPath : undefined;
   lang={lang}
   canonicalPath={canonicalPath}
   redirectUrl={redirectUrl}
+  breadcrumbs={breadcrumbs}
+  collectionSchema={collectionSchema}
 >
   <!-- Subcategory Header & Breadcrumbs -->
   <section class="subcategory-header">
@@ -108,7 +134,8 @@ const redirectUrl = isAlias ? canonicalPath : undefined;
   </section>
 
   <!-- Product Grid -->
-  <main class="container catalogue-grid-wrap">
+  <div class="container catalogue-grid-wrap">
+    <h2 class="sr-only">{subcategory.nameUr} میں دستیاب پراڈکٹس</h2>
     {products.length > 0 ? (
       <div class="product-cards-grid">
         {products.map((p) => (
@@ -135,7 +162,7 @@ const redirectUrl = isAlias ? canonicalPath : undefined;
     <nav class="pagination-bar" aria-label="Pagination">
       <span class="page-num active">1</span>
     </nav>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>
