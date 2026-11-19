@@ -1,0 +1,127 @@
+# ==============================================================================
+# Naseer Plywood & Hardware — Production Docker Compose Configuration
+# 3-Tier Production Architecture: Isolated PostgreSQL, Internal FastAPI, Public Nginx (SSL)
+# ==============================================================================
+
+services:
+  # ----------------------------------------------------------------------------
+  # 1. Database Service: PostgreSQL 17 (Private & Isolated)
+  # ----------------------------------------------------------------------------
+  hardware-postgres:
+    container_name: hardware-postgres
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hardware_db}
+      POSTGRES_USER: ${POSTGRES_USER:-hardware_prod_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Database password required}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hardware-network
+    # Security Rule: Do NOT expose 5432 to public host
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hardware_prod_user} -d ${POSTGRES_DB:-hardware_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+
+  # ----------------------------------------------------------------------------
+  # 2. Application Service: FastAPI Backend (Internal)
+  # ----------------------------------------------------------------------------
+  hardware-backend:
+    container_name: hardware-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      APP_ENV: production
+      DEBUG: "False"
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://naseerhardware.pk,https://www.naseerhardware.pk}
+      MEDIA_STORAGE_PATH: /data/media
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://naseerhardware.pk}
+      PUBLIC_API_URL: ${PUBLIC_API_URL:-https://naseerhardware.pk/api/v1}
+      FRONTEND_DIR: /frontend
+    volumes:
+      - ./backend:/app:ro
+      - ./frontend:/frontend
+      - media_data:/data/media
+    networks:
+      - hardware-network
+    expose:
+      - "8000"
+    depends_on:
+      hardware-postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/v1/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+
+  # ----------------------------------------------------------------------------
+  # 3. Public Web Service: Nginx Reverse Proxy & Static Asset Server
+  # ----------------------------------------------------------------------------
+  hardware-frontend:
+    container_name: hardware-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./frontend/deploy:/usr/share/nginx/html:ro
+      - ./frontend/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
+      - media_data:/data/media:ro
+      - certbot_certs:/etc/letsencrypt:ro
+      - certbot_webroot:/var/www/certbot:ro
+    networks:
+      - hardware-network
+    depends_on:
+      hardware-backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -k http://localhost/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 1024M
+
+volumes:
+  postgres_data:
+    name: hardware_postgres_data
+  media_data:
+    name: hardware_media_data
+  certbot_certs:
+    name: hardware_certbot_certs
+  certbot_webroot:
+    name: hardware_certbot_webroot
+
+networks:
+  hardware-network:
+    name: hardware_internal_network
+    driver: bridge

@@ -40,8 +40,12 @@ deploy/
 .env
 .env.local
 .env.*.local
+.env.production
 *.pem
 *.key
+
+# Backups
+backups/
 
 # Persistent media & uploads (local)
 media/
