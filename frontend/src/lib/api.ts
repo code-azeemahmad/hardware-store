@@ -142,7 +142,7 @@ export async function fetchPublishedCategories(): Promise<Category[]> {
         heroImage:
           cat.image_url ||
           FALLBACK_CATEGORIES.find((c) => c.slug === cat.slug)?.heroImage ||
-          '/images/shelf.svg',
+          '/images/shelf.jpg',
         subcategories: cat.children
           .filter((sub) => sub.is_published)
           .sort((a, b) => a.sort_order - b.sort_order)
@@ -317,7 +317,7 @@ function mapApiDetailToProduct(detail: ApiProductDetail): Product {
       ? detail.images
           .sort((a, b) => a.sort_order - b.sort_order)
           .map((img) => img.image_url)
-      : fallback?.gallery || [detail.primary_image_url || '/images/shelf.svg'];
+      : fallback?.gallery || [detail.primary_image_url || '/images/shelf.jpg'];
 
   const originAttr = detail.attribute_values?.find((a) => a.attribute_slug === 'origin');
 
@@ -335,7 +335,7 @@ function mapApiDetailToProduct(detail: ApiProductDetail): Product {
     priceType: detail.price_on_request || !detail.price ? 'onRequest' : 'fixed',
     price: detail.price ? parseFloat(detail.price) : null,
     currency: 'PKR',
-    imageUrl: detail.primary_image_url || gallery[0] || '/images/shelf.svg',
+    imageUrl: detail.primary_image_url || gallery[0] || '/images/shelf.jpg',
     gallery,
     descriptionEn:
       detail.description_en ||

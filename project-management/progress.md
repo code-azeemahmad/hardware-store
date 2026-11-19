@@ -11,6 +11,8 @@ Last updated: 2026-11-18
 
 ## Completed
 
+- [x] **P7-04:** Retained original height, spacing, and dimensions of the Plywood Showcase Banner (`PlywoodPromoBanner.astro`), preserving full desktop/mobile paddings (`clamp(2rem, 4vw, 3.5rem)`), multi-badge grid layout, and full-bleed image container (`min-height: 320px`).
+- [x] **P7-03:** Integrated genuine `.jpg` showroom photographs from `shop_photos/` (`gate.jpg` showroom storefront, `wood.jpg` plywood warehouse stacks, `crafts.jpg` architectural hardware display, and `shelf.jpg` kitchen/sanitary display). Replaced SVG vectors with real photographs across HeroSlider, About Us gallery, Plywood Promo Banner, Showroom Location card, and Contact pages in English and Urdu.
 - [x] **P7-02:** Integrated WhatsApp Brand Color `#25D366` across all UI buttons, cards, hover transitions, and icons. Corrected WhatsApp international link format to `https://wa.me/923177030847` (no leading zero, no spaces, no plus, URL-encoded messages). Updated store contact telephone numbers across all English and Urdu components to: Naseer Ahmad Bhatti (`03045030046`) and Sameer Ahmad Bhatti (`03177030847`).
 - [x] Initial project scope and high-level stack documented.
 - [x] Product catalogue and enquiry-led business model recorded.

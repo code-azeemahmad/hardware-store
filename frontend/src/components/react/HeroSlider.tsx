@@ -21,7 +21,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ lang }) => {
   const slides: Slide[] = [
     {
       id: 1,
-      image: '/images/gate.svg',
+      image: '/images/gate.jpg',
       badge: isUrdu ? 'سرگودھا کا سب سے بڑا شوروم' : 'Main Showroom — Sargodha',
       title: isUrdu ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware',
       subtitle: isUrdu
@@ -31,7 +31,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ lang }) => {
     },
     {
       id: 2,
-      image: '/images/wood.svg',
+      image: '/images/wood.jpg',
       badge: isUrdu ? 'ڈائریکٹ امپورٹ و ڈسٹری بیوشن' : 'Direct Wholesale & Distribution',
       title: isUrdu ? 'واٹر پروف میرین اور کمرشل پلائی ووڈ' : 'Commercial & Waterproof Marine Plywood',
       subtitle: isUrdu
@@ -41,7 +41,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ lang }) => {
     },
     {
       id: 3,
-      image: '/images/crafts.svg',
+      image: '/images/crafts.jpg',
       badge: isUrdu ? 'پریمیم ڈور فٹنگز' : 'Architectural Door Fittings',
       title: isUrdu ? 'اسمارٹ ڈیجیٹل لاکس اور مین ڈور ہینڈلز' : 'Smart Digital Door Locks & Handles',
       subtitle: isUrdu
@@ -51,7 +51,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ lang }) => {
     },
     {
       id: 4,
-      image: '/images/shelf.svg',
+      image: '/images/shelf.jpg',
       badge: isUrdu ? 'ایج بینڈنگ و دراز فٹنگز' : 'Precision Cabinet Accessories',
       title: isUrdu ? 'پی وی سی ایج بینڈنگ اور ہائیڈرولک چینلز' : 'PVC Edge Banding Tapes & Hydraulic Channels',
       subtitle: isUrdu

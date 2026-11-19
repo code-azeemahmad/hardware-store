@@ -20,6 +20,16 @@ const isUrdu = lang === 'ur';
     <div class="showroom-layout">
       <!-- Location Details Card -->
       <div class="location-card">
+        <div class="location-img-wrap">
+          <img
+            src="/images/gate.jpg"
+            alt={isUrdu ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر شوروم، سرگودھا' : 'Naseer Plywood & Hardware Showroom, Canal Road Sargodha'}
+            class="location-thumb-img"
+            loading="lazy"
+            width="500"
+            height="260"
+          />
+        </div>
         <div class="card-badge">{isUrdu ? 'مرکزی شوروم' : 'Main Showroom'}</div>
         <h3 class="location-name">{isUrdu ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}</h3>
 
@@ -141,6 +151,25 @@ const isUrdu = lang === 'ur';
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .location-img-wrap {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .location-thumb-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-fast);
+  }
+
+  .location-thumb-img:hover {
+    transform: scale(1.03);
   }
 
   .card-badge {
