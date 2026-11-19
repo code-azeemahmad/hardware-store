@@ -25,8 +25,28 @@ interface MegaMenuCategory {
 export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentPath }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const basePath = lang === 'ur' ? '/ur' : '';
   const isUrdu = lang === 'ur';
+
+  const cancelClose = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const openMenu = (id: string) => {
+    cancelClose();
+    setActiveMenu(id);
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimerRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 250);
+  };
 
   const menuData: MegaMenuCategory[] = [
     {
@@ -163,11 +183,13 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        cancelClose();
         setActiveMenu(null);
       }
     };
     const handleClickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        cancelClose();
         setActiveMenu(null);
       }
     };
@@ -175,6 +197,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
+      cancelClose();
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -202,15 +225,19 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
             <li
               key={category.id}
               className="mega-menu-parent"
-              onMouseEnter={() => setActiveMenu(category.id)}
-              onMouseLeave={() => setActiveMenu(null)}
+              onMouseEnter={() => openMenu(category.id)}
+              onMouseLeave={scheduleClose}
             >
               <button
                 type="button"
                 className={`mega-nav-link mega-trigger ${isActive ? 'active' : ''} ${isOpen ? 'open' : ''}`}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
-                onClick={() => setActiveMenu(isOpen ? null : category.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  cancelClose();
+                  setActiveMenu(isOpen ? null : category.id);
+                }}
               >
                 <span>{ui[lang][category.nameKey]}</span>
                 <svg
@@ -233,6 +260,8 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
                 <div
                   className="mega-dropdown-panel"
                   aria-label={ui[lang][category.nameKey]}
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={scheduleClose}
                 >
                   <div className="mega-dropdown-container">
                     <div className="mega-columns-grid">
@@ -245,7 +274,10 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
                                 <a
                                   href={item.href}
                                   className="mega-sub-link"
-                                  onClick={() => setActiveMenu(null)}
+                                  onClick={() => {
+                                    cancelClose();
+                                    setActiveMenu(null);
+                                  }}
                                 >
                                   {item.title}
                                 </a>
@@ -301,29 +333,41 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
       <style>{`
         .mega-nav-wrapper {
           display: flex;
-          align-items: center;
+          align-items: stretch;
+          height: 100%;
         }
 
         .mega-nav-list {
           display: flex;
           list-style: none;
-          align-items: center;
-          gap: 1.5rem;
+          align-items: stretch;
+          height: 100%;
+          gap: 1.25rem;
           margin: 0;
           padding: 0;
         }
 
+        .mega-nav-list > li {
+          display: flex;
+          align-items: stretch;
+          height: 100%;
+        }
+
         .mega-menu-parent {
           position: static;
+          display: flex;
+          align-items: stretch;
+          height: 100%;
         }
 
         .mega-nav-link {
           font-size: 0.9375rem;
           font-weight: 600;
           color: var(--color-text-dark);
-          padding: 1.5rem 0.25rem;
+          padding: 0 0.5rem;
           display: inline-flex;
           align-items: center;
+          height: 100%;
           gap: 0.35rem;
           cursor: pointer;
           background: none;
@@ -338,7 +382,8 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           color: var(--color-primary-red);
         }
 
-        .mega-nav-link.active::after {
+        .mega-nav-link.active::after,
+        .mega-nav-link.open::after {
           content: '';
           position: absolute;
           bottom: 0;
@@ -364,15 +409,28 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           background-color: var(--color-surface-white);
           border-top: 1px solid var(--color-border);
           border-bottom: 3px solid var(--color-primary-red);
-          box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.12);
-          z-index: 999;
-          animation: megaFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.15);
+          z-index: 1001;
+          pointer-events: auto;
+          animation: megaFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Invisible hover bridge connecting navbar trigger buttons to dropdown panel */
+        .mega-dropdown-panel::before {
+          content: '';
+          position: absolute;
+          top: -24px;
+          inset-inline: 0;
+          height: 24px;
+          background: transparent;
+          pointer-events: auto;
+          z-index: 10;
         }
 
         @keyframes megaFadeIn {
           from {
             opacity: 0;
-            transform: translateY(-6px);
+            transform: translateY(-4px);
           }
           to {
             opacity: 1;
@@ -409,20 +467,23 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 0.65rem;
+          gap: 0.35rem;
         }
 
         .mega-sub-link {
           font-size: 0.875rem;
-          color: #555555;
+          color: #444444;
           text-decoration: none;
-          transition: color var(--transition-fast), padding-inline-start var(--transition-fast);
-          display: inline-block;
+          display: block;
+          padding: 0.35rem 0.5rem;
+          border-radius: 4px;
+          transition: all var(--transition-fast);
         }
 
         .mega-sub-link:hover {
           color: var(--color-primary-red);
-          padding-inline-start: 4px;
+          background-color: var(--color-surface-muted);
+          padding-inline-start: 0.75rem;
         }
 
         .mega-promo-box {
