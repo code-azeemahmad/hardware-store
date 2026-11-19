@@ -1,16 +1,19 @@
 # Project Status
 
 **Current Date:** 2026-11-18  
-**Current Phase:** Phase 4 — Admin Dashboard, Authentication, and Content Management (COMPLETED, REVIEWED & HARDENED)  
-**Overall Status:** Full Admin Dashboard React SPA deployed at `/admin/` in Astro SSG; Argon2id + JWT access/refresh token cycle active with server-side rotation, reuse detection, and revocation in `admin_refresh_tokens` table; single-use 72-hour invitation-based onboarding (zero public registration); full Product/Category/Brand CRUD with dynamic specifications JSONB, gallery image management, and variants; strict magic byte media upload inspection (SVG rejected for XSS protection) storing assets in persistent `/data/media` volume served via Nginx `/media/`; Enquiry inbox management with lifecycle tracking; localized translation health tracking (`translation_status: COMPLETE | MISSING_UR | INCOMPLETE`); site rebuild trigger restricted to super_admin; and 90/90 backend tests passing (100%). Ready for Phase 5 (Publishing Integration).
+**Current Phase:** Phase 5 — Publishing Integration (COMPLETED; Ready for Phase 6)  
+**Overall Status:** Dynamic database-backed static site generation fully operational. Astro SSG builds directly query PostgreSQL via FastAPI (`frontend/src/lib/api.ts`), compiling 95 static HTML pages in English (`/`) and Urdu RTL (`/ur/`) with canonical URLs, reciprocal hreflang annotations, and dynamic `sitemap.xml`. Production rebuild pipeline integrated into FastAPI (`POST /api/v1/admin/build/trigger`) with super_admin RBAC check, concurrent build mutex (409 Conflict), isolated staging compilation (`dist_staging`), output integrity validation, and atomic deployment to Nginx web root volume; failed builds preserve the live site untouched with zero downtime. Automated backend test suite has 92/92 tests passing (100%); 0 TypeScript errors in `npm run check`. Ready for Phase 6 (Quality, Accessibility, and SEO).
 
 ---
 
 ## 1. Executive Summary
 
-Phase 2 has implemented the complete bilingual Design System and all public page templates based on the mandatory visual reference captures (`reference/homepage.pdf`, `reference/item.pdf`, `reference/bestsellingitemsgrid.pdf`, `reference/moreitemsgrid.pdf`, `reference/contact.pdf`) and physical showroom photographs (`shop_photos/`). 
-
-The Astro SSG build generates **106 static pages** in both English (`/`) and Urdu RTL (`/ur/`) in 1.37 seconds. All three Docker Compose containers (`hardware-frontend`, `hardware-backend`, `hardware-postgres`) are running healthy. Nginx reverse proxies traffic seamlessly on port `8080`. Security requirements (admin bootstrap credentials rotated, JWT secrets from env, public admin registration disabled) have been strictly observed.
+Phase 5 has successfully connected the Astro SSG frontend build pipeline directly to the live PostgreSQL database via FastAPI endpoints. The public website now dynamically compiles from database records rather than static mock files:
+1. **Build-Time API Integration:** `frontend/src/lib/api.ts` connects Astro to FastAPI at `http://hardware-backend:8000/api/v1` or `http://localhost:8080/api/v1` with candidate auto-discovery, parallel product detail fetching, specifications adaptation, and offline fallback.
+2. **Database-Backed Dynamic Pages:** Category hubs, subcategories, product detail pages, brand directory, and sitemap are generated dynamically for both English and Urdu RTL locales from PostgreSQL data.
+3. **Production Rebuild Pipeline:** Super administrators can trigger static regeneration via `POST /api/v1/admin/build/trigger`. The build worker executes Astro SSG into `dist_staging`, validates file integrity (`index.html`, `/ur/index.html`, `sitemap.xml`), and atomically synchronizes output to the Nginx volume in ~2.8 seconds.
+4. **Publish/Unpublish Security:** Unpublished items (`is_published: false`) return HTTP 404 in the public API, are automatically excluded from static compilation, and return custom 404 pages via Nginx `try_files`.
+5. **Rollback Guard:** If compilation fails, the staging directory is discarded and the live production website remains 100% untouched.
 
 ---
 
@@ -18,8 +21,8 @@ The Astro SSG build generates **106 static pages** in both English (`/`) and Urd
 
 | Service | Container Name | Image / Tech | Status | Ports / Exposure | Health Check Command |
 |---|---|---|---|---|---|
-| **Frontend** | `hardware-frontend` | Nginx Alpine + Astro SSG (106 pages) | **Up (healthy)** | `0.0.0.0:8080->80/tcp` | `curl -f http://localhost/` |
-| **Backend** | `hardware-backend` | FastAPI (Python 3.12-slim) | **Up (healthy)** | `8000/tcp` (Internal) | `curl -f http://localhost:8000/api/v1/health` |
+| **Frontend** | `hardware-frontend` | Nginx Alpine + Astro SSG (95 live pages) | **Up (healthy)** | `0.0.0.0:8080->80/tcp` | `curl -f http://localhost/` |
+| **Backend** | `hardware-backend` | FastAPI + Python 3.12 + Node.js 20 | **Up (healthy)** | `8000/tcp` (Internal) | `curl -f http://localhost:8000/api/v1/health` |
 | **Database** | `hardware-postgres` | PostgreSQL 17 Alpine | **Up (healthy)** | `5432/tcp` (Internal) | `pg_isready -U hardware_user -d hardware_db` |
 
 ---

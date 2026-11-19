@@ -177,50 +177,10 @@ def list_products(
     )
 
 
-@router.get("/{slug}", response_model=ProductDetail)
-def get_product(slug: str, db: Session = Depends(get_db)):
-    """Retrieve complete product details with specifications, gallery images, variants, and related products."""
-    product = (
-        db.query(Product)
-        .options(
-            joinedload(Product.brand),
-            selectinload(Product.categories),
-            selectinload(Product.images),
-            selectinload(Product.variants),
-            selectinload(Product.attribute_values).joinedload(ProductAttributeValue.attribute),
-        )
-        .filter(Product.slug == slug, Product.is_published.is_(True))
-        .first()
-    )
-    if not product:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Product '{slug}' not found",
-        )
-
-    # Fetch up to 4 related products from any shared category
-    related_items: list[ProductListItem] = []
-    if product.categories:
-        cat_ids = [c.id for c in product.categories]
-        related_products = (
-            db.query(Product)
-            .options(
-                joinedload(Product.brand),
-                selectinload(Product.categories),
-                selectinload(Product.images),
-            )
-            .filter(
-                Product.is_published.is_(True),
-                Product.id != product.id,
-                Product.categories.any(Category.id.in_(cat_ids)),
-            )
-            .order_by(Product.created_at.desc())
-            .limit(4)
-            .all()
-        )
-        related_items = [_to_list_item(p) for p in related_products]
-
-    # Map attribute values
+def _to_product_detail(
+    product: Product, related_items: Optional[List[ProductListItem]] = None
+) -> ProductDetail:
+    """Helper to convert Product model to complete ProductDetail schema."""
     attr_values_read = [
         ProductAttributeValueRead(
             id=av.id,
@@ -267,5 +227,70 @@ def get_product(slug: str, db: Session = Depends(get_db)):
         images=[ProductImageRead.model_validate(img) for img in product.images],
         attribute_values=attr_values_read,
         variants=[ProductVariantRead.model_validate(v) for v in product.variants if v.is_published],
-        related_products=related_items,
+        related_products=related_items or [],
     )
+
+
+@router.get("/build-export", response_model=List[ProductDetail])
+def export_products_for_build(db: Session = Depends(get_db)):
+    """Export all published products with complete details in a single query for SSG static build."""
+    products = (
+        db.query(Product)
+        .options(
+            joinedload(Product.brand),
+            selectinload(Product.categories),
+            selectinload(Product.images),
+            selectinload(Product.variants),
+            selectinload(Product.attribute_values).joinedload(ProductAttributeValue.attribute),
+        )
+        .filter(Product.is_published.is_(True))
+        .order_by(Product.created_at.desc())
+        .all()
+    )
+    return [_to_product_detail(p) for p in products]
+
+
+@router.get("/{slug}", response_model=ProductDetail)
+def get_product(slug: str, db: Session = Depends(get_db)):
+    """Retrieve complete product details with specifications, gallery images, variants, and related products."""
+    product = (
+        db.query(Product)
+        .options(
+            joinedload(Product.brand),
+            selectinload(Product.categories),
+            selectinload(Product.images),
+            selectinload(Product.variants),
+            selectinload(Product.attribute_values).joinedload(ProductAttributeValue.attribute),
+        )
+        .filter(Product.slug == slug, Product.is_published.is_(True))
+        .first()
+    )
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Product '{slug}' not found",
+        )
+
+    # Fetch up to 4 related products from any shared category
+    related_items: list[ProductListItem] = []
+    if product.categories:
+        cat_ids = [c.id for c in product.categories]
+        related_products = (
+            db.query(Product)
+            .options(
+                joinedload(Product.brand),
+                selectinload(Product.categories),
+                selectinload(Product.images),
+            )
+            .filter(
+                Product.is_published.is_(True),
+                Product.id != product.id,
+                Product.categories.any(Category.id.in_(cat_ids)),
+            )
+            .order_by(Product.created_at.desc())
+            .limit(4)
+            .all()
+        )
+        related_items = [_to_list_item(p) for p in related_products]
+
+    return _to_product_detail(product, related_items=related_items)

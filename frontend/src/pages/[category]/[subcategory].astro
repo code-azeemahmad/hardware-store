@@ -2,24 +2,45 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/astro/ProductCard.astro';
 import {
-  CATEGORIES,
+  fetchPublishedCategories,
   getProductsBySubcategory,
   type Category,
   type Subcategory,
-} from '../../data/catalogue';
+} from '../../lib/api';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const categories = await fetchPublishedCategories();
   const paths: {
     params: { category: string; subcategory: string };
-    props: { category: Category; subcategory: Subcategory };
+    props: {
+      category: Category;
+      subcategory: Subcategory;
+      isAlias?: boolean;
+      canonicalSubSlug?: string;
+    };
   }[] = [];
 
-  CATEGORIES.forEach((cat) => {
+  categories.forEach((cat) => {
     cat.subcategories.forEach((sub) => {
+      // Primary canonical route
       paths.push({
         params: { category: cat.slug, subcategory: sub.slug },
-        props: { category: cat, subcategory: sub },
+        props: { category: cat, subcategory: sub, isAlias: false, canonicalSubSlug: sub.slug },
       });
+      if (sub.slug.startsWith(`${cat.slug}-`)) {
+        const shortSlug = sub.slug.replace(`${cat.slug}-`, '');
+        paths.push({
+          params: { category: cat.slug, subcategory: shortSlug },
+          props: { category: cat, subcategory: sub, isAlias: true, canonicalSubSlug: sub.slug },
+        });
+      }
+      if (sub.slug.startsWith('door-')) {
+        const shortSlug = sub.slug.replace('door-', '');
+        paths.push({
+          params: { category: cat.slug, subcategory: shortSlug },
+          props: { category: cat, subcategory: sub, isAlias: true, canonicalSubSlug: sub.slug },
+        });
+      }
     });
   });
 
@@ -29,17 +50,24 @@ export function getStaticPaths() {
 interface Props {
   category: Category;
   subcategory: Subcategory;
+  isAlias?: boolean;
+  canonicalSubSlug?: string;
 }
 
-const { category, subcategory } = Astro.props;
+const { category, subcategory, isAlias = false, canonicalSubSlug = subcategory.slug } = Astro.props;
 const lang = 'en';
-const products = getProductsBySubcategory(category.slug, subcategory.slug);
+const products = await getProductsBySubcategory(category.slug, subcategory.slug);
+
+const canonicalPath = `/${category.slug}/${canonicalSubSlug}/`;
+const redirectUrl = isAlias ? canonicalPath : undefined;
 ---
 
 <BaseLayout
   title={`${subcategory.nameEn} | ${category.nameEn} | Naseer Plywood & Hardware`}
   description={subcategory.descriptionEn}
   lang={lang}
+  canonicalPath={canonicalPath}
+  redirectUrl={redirectUrl}
 >
   <!-- Subcategory Header & Breadcrumbs -->
   <section class="subcategory-header">

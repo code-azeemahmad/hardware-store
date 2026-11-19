@@ -7,9 +7,10 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Install curl for docker healthcheck
+# Install curl for docker healthcheck and nodejs for Astro SSG publishing builds
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
+    nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Create persistent media directory

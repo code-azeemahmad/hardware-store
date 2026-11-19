@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { BRANDS } from '../../../data/catalogue';
+import { fetchPublishedBrands } from '../../../lib/api';
 
 const lang = 'ur';
+const BRANDS = await fetchPublishedBrands();
 ---
 
 <BaseLayout

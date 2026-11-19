@@ -54,10 +54,19 @@ Do not mark a task Done without evidence and verification.
 - [x] P4-REV Phase 4 Review Items Addressed (Server-side refresh token rotation & revocation in `admin_refresh_tokens` table, replay attack detection with total session invalidation, logout revocation, magic byte content inspection for JPEG/PNG/WebP, complete SVG rejection for XSS prevention, comprehensive RBAC matrix audit with 4-role verification tests, rebuild trigger restricted to super_admin, build pipeline staging & atomic deployment architecture documented, 4 root categories [Kitchen, Hardware, Bathroom, Plywood] & 19 total categories verified, unpublished 404 security verified, media persistence verified across container restart, 90/90 backend tests passing). Holding at Phase 4 Completion Gate awaiting approval for Phase 5.
 
 ## Phase 5 — Publishing integration
-- [ ] P5-01 Astro build-time API integration.
-- [ ] P5-02 Generate product/category pages for both locales.
-- [ ] P5-03 Secure rebuild trigger.
-- [ ] P5-04 Publish/unpublish and failed-build behavior.
+- [x] P5-01 Astro build-time API integration (Implemented `frontend/src/lib/api.ts` connecting Astro SSG to FastAPI backend at `http://hardware-backend:8000/api/v1` or `http://localhost:8080/api/v1` with candidate auto-discovery, parallel entity fetching, specifications adaptation, and offline fallback).
+- [x] P5-02 Generate product/category pages for both locales (Refactored `[category]/index.astro`, `[category]/[subcategory].astro`, `products/[slug].astro`, `brands/index.astro`, `search.astro`, and all Urdu `/ur/` counterparts to query PostgreSQL via `api.ts`; dynamically generates English and Urdu static HTML pages with reciprocal hreflang annotations).
+- [x] P5-03 Secure rebuild trigger (Restricted `POST /api/v1/admin/build/trigger` to `super_admin` role with RBAC enforcement; implemented thread mutex locking returning 409 Conflict for concurrent requests; non-parameterized background Astro SSG compilation; 6/6 build tests passing in pytest).
+- [x] P5-04 Publish/unpublish and failed-build behavior (Unpublished products return 404 and are excluded from static generation; build pipeline compiles to `dist_staging`, performs integrity validation on `index.html`, `/ur/index.html`, and `sitemap.xml`, and atomically synchronizes output to production root; rollback guard preserves live site on error with zero downtime).
+- [x] P5-REV Phase 5 Implementation & Reliability Review Addressed:
+  1. Genuinely atomic release deployment via versioned directories (`deploy/releases/release_TIMESTAMP`) and POSIX symlink atomic pointer swap (`current -> releases/release_TIMESTAMP`) using `os.replace()`; zero visitor downtime or half-rendered pages.
+  2. Production fixture fallback strictly disabled when `STRICT_API=true` or `APP_ENV=production`; compiler fails immediately and retains working live site if API/DB is offline.
+  3. Complete database pagination retrieving all published items across all pages; dedicated `/api/v1/products/build-export` endpoint retrieving full catalog in single query; tested with >100 products.
+  4. PostgreSQL distributed advisory locking (`BUILD_ADVISORY_LOCK_ID = 9876543210123`) preventing concurrent builds across backend worker processes; persistent `site_build_state` table; automatic startup recovery of stale locks; sanitized build error logs.
+  5. Instant rollback endpoint `POST /api/v1/admin/build/rollback` (super_admin only) atomically reverting `current` to previous release.
+  6. Subcategory alias canonicals and redirection: aliases (`/kitchen/sinks/`) contain `<link rel="canonical">` pointing to primary URL (`/kitchen/kitchen-sinks/`) and `<meta http-equiv="refresh">` redirect; aliases strictly excluded from `sitemap.xml`.
+  7. Bilingual SEO verification: verified reciprocal hreflang annotations (`en`, `ur`, `x-default`), self-referencing canonical URLs, and exclusion of unpublished products (HTTP 404).
+  8. Automated test suite expanded to 100/100 passing tests (including new `test_publishing_pipeline.py`); frontend `npm run check` passes with 0 errors across 84 files. Holding at Phase 5 Completion Gate.
 
 ## Phase 6 — Quality and SEO
 - [ ] P6-01 Metadata, canonical, hreflang, sitemap, robots.

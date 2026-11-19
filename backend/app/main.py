@@ -1,4 +1,6 @@
+import logging
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -6,11 +8,33 @@ from fastapi.responses import JSONResponse
 from app.api.v1.router import api_v1_router
 from app.core.config import settings
 from app.core.exceptions import AppException
+from app.db.session import SessionLocal
+from app.models.build import BuildStatus, SiteBuildState
+
+logger = logging.getLogger(__name__)
+
+
+def _recover_stale_build_state(custom_db=None):
+    """Recovers any stale build state left in 'building' if server restarted abruptly."""
+    try:
+        db = custom_db if custom_db is not None else SessionLocal()
+        state = db.query(SiteBuildState).filter(SiteBuildState.id == 1).first()
+        if state and state.status == BuildStatus.BUILDING.value:
+            state.status = BuildStatus.FAILED.value
+            state.completed_at = datetime.now(timezone.utc)
+            state.message = "Previous build was interrupted by server restart. System recovered to idle state."
+            db.commit()
+            logger.warning("Recovered stale build state from abrupt server restart.")
+        if custom_db is None:
+            db.close()
+    except Exception as exc:
+        logger.error(f"Error during startup build state recovery: {exc}")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup actions
+    # Startup actions: clean stale build state if any
+    _recover_stale_build_state()
     yield
     # Shutdown actions
 

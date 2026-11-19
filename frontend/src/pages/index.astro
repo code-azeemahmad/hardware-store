@@ -8,8 +8,20 @@ import { ReviewCarousel } from '../components/react/ReviewCarousel';
 import ShowroomLocation from '../components/astro/ShowroomLocation.astro';
 import SocialBar from '../components/astro/SocialBar.astro';
 import { ui } from '../i18n/ui';
+import {
+  fetchPublishedProducts,
+  getProductsByCategory,
+} from '../lib/api';
 
 const lang = 'en';
+const allProducts = await fetchPublishedProducts();
+const bestSellers = allProducts.filter((p) => p.isBestSeller).length > 0
+  ? allProducts.filter((p) => p.isBestSeller).slice(0, 4)
+  : allProducts.slice(0, 4);
+
+const bathroomProducts = (await getProductsByCategory('bathroom')).slice(0, 4);
+const kitchenProducts = (await getProductsByCategory('kitchen')).slice(0, 4);
+const hardwareProducts = (await getProductsByCategory('hardware')).slice(0, 4);
 ---
 
 <BaseLayout
@@ -27,213 +39,84 @@ const lang = 'en';
     viewAllHref="/hardware/"
     lang={lang}
   >
-    <ProductCard
-      title='T1221 Built-in Electric Oven'
-      category='Kitchen Appliances'
-      brand='Forza'
-      slug='t1221-builtin-oven'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='DS-681 Smart Digital Door Lock'
-      category='Home Hardware'
-      brand='DORMA'
-      slug='ds-681-smart-door-lock'
-      imageUrl='/images/crafts.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='ZY004 Matte Gold Cabinet Handle'
-      category='Hardware Fittings'
-      brand='Naseer Signature'
-      slug='zy004-cabinet-handle'
-      imageUrl='/images/crafts.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='19905 Kitchen Sink Mixer'
-      category='Kitchen Faucets'
-      brand='Forza'
-      slug='19905-sink-mixer'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
+    {bestSellers.map((prod) => (
+      <ProductCard
+        title={prod.titleEn}
+        category={prod.subcategoryNameEn || prod.categoryNameEn}
+        brand={prod.brand}
+        slug={prod.slug}
+        imageUrl={prod.imageUrl}
+        lang={lang}
+      />
+    ))}
   </ProductGrid>
 
-  <!-- Section 2: Feature Products -->
+  <!-- Section 2: Bathroom Collection -->
   <ProductGrid
     title={ui[lang]['section.featured']}
     subtitle={ui[lang]['section.featuredSub']}
     viewAllHref="/bathroom/"
     lang={lang}
   >
-    <ProductCard
-      title='1129 32" Floating Bathroom Vanity'
-      category='Bathroom Vanities'
-      brand='Sanita'
-      slug='1129-32-floating-vanity'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='9322-1 Designer Ceramic Basin'
-      category='Wash Basins'
-      brand='Sanita'
-      slug='9322-1-designer-basin'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='1836 LED Smart Touch Mirror'
-      category='Vanity Mirrors'
-      brand='Lumina'
-      slug='1836-led-smart-mirror'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='Solid Surface Custom Vanity Set'
-      category='Bathroom Vanities'
-      brand='Naseer Signature'
-      slug='custom-vanity-set'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
+    {bathroomProducts.map((prod) => (
+      <ProductCard
+        title={prod.titleEn}
+        category={prod.subcategoryNameEn || prod.categoryNameEn}
+        brand={prod.brand}
+        slug={prod.slug}
+        imageUrl={prod.imageUrl}
+        lang={lang}
+      />
+    ))}
   </ProductGrid>
 
-  <!-- Section 3: Wall Hang Commode -->
-  <ProductGrid
-    title={ui[lang]['section.wallHang']}
-    subtitle={ui[lang]['section.wallHangSub']}
-    viewAllHref="/bathroom/"
-    lang={lang}
-  >
-    <ProductCard
-      title='A-WHC-014 Rimless Wall-Hang Commode (Matte Grey)'
-      category='Sanitary Ware'
-      brand='Sanita'
-      slug='a-whc-014-rimless-commode'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='B-WHC-1 Ceramic Commode (White & Gold Rim)'
-      category='Sanitary Ware'
-      brand='Sanita'
-      slug='b-whc-1-white-gold-commode'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='2303-014 Luxury Black & Gold Wall-Hang Commode'
-      category='Sanitary Ware'
-      brand='Sanita'
-      slug='2303-014-black-gold-commode'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='B-WHC-002-2 Pure White Rimless Commode'
-      category='Sanitary Ware'
-      brand='Sanita'
-      slug='b-whc-002-2-pure-white-commode'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-  </ProductGrid>
-
-  <!-- Section 4: Kitchen Accessories -->
+  <!-- Section 3: Kitchen Accessories & Sinks -->
   <ProductGrid
     title={ui[lang]['section.kitchenAccessories']}
     subtitle={ui[lang]['section.kitchenAccessoriesSub']}
     viewAllHref="/kitchen/"
     lang={lang}
   >
-    <ProductCard
-      title='S910-201 Stainless Steel Dish Rack'
-      category='Kitchen Accessories'
-      brand='Forza'
-      slug='s910-201-dish-rack'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='K004 Adjustable Cutlery Tray Organizer'
-      category='Kitchen Storage'
-      brand='Forza'
-      slug='k004-cutlery-tray'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='PT2022 Heavy Duty Tall Pantry Unit'
-      category='Kitchen Storage'
-      brand='Forza'
-      slug='pt2022-tall-pantry-unit'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='Angular Revolving Corner Magic Basket'
-      category='Kitchen Storage'
-      brand='Forza'
-      slug='angular-revolving-corner-basket'
-      imageUrl='/images/shelf.jpg'
-      lang={lang}
-    />
+    {kitchenProducts.map((prod) => (
+      <ProductCard
+        title={prod.titleEn}
+        category={prod.subcategoryNameEn || prod.categoryNameEn}
+        brand={prod.brand}
+        slug={prod.slug}
+        imageUrl={prod.imageUrl}
+        lang={lang}
+      />
+    ))}
   </ProductGrid>
 
-  <!-- Section 5: Kitchen Handles -->
+  <!-- Section 4: Architectural Door Hardware -->
   <ProductGrid
     title={ui[lang]['section.kitchenHandles']}
     subtitle={ui[lang]['section.kitchenHandlesSub']}
     viewAllHref="/hardware/"
     lang={lang}
   >
-    <ProductCard
-      title='ZY001 Solid Brass Knurled Cabinet Handle'
-      category='Cabinet Hardware'
-      brand='Naseer Signature'
-      slug='zy001-brass-cabinet-handle'
-      imageUrl='/images/crafts.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='B050 Matte Black Sleek Drawer Handle'
-      category='Cabinet Hardware'
-      brand='Naseer Signature'
-      slug='b050-matte-black-handle'
-      imageUrl='/images/crafts.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='ZY004 Champagne Gold Profile Handle'
-      category='Cabinet Hardware'
-      brand='Naseer Signature'
-      slug='zy004-champagne-gold-handle'
-      imageUrl='/images/crafts.jpg'
-      lang={lang}
-    />
-    <ProductCard
-      title='ZY005 Extended Tall Wardrobe Pull Handle'
-      category='Wardrobe Hardware'
-      brand='Naseer Signature'
-      slug='zy005-extended-wardrobe-handle'
-      imageUrl='/images/crafts.jpg'
-      lang={lang}
-    />
+    {hardwareProducts.map((prod) => (
+      <ProductCard
+        title={prod.titleEn}
+        category={prod.subcategoryNameEn || prod.categoryNameEn}
+        brand={prod.brand}
+        slug={prod.slug}
+        imageUrl={prod.imageUrl}
+        lang={lang}
+      />
+    ))}
   </ProductGrid>
 
-  <!-- Section 6: Dedicated Plywood Promotion Highlight Banner -->
+  <!-- Section 5: Dedicated Plywood Promotion Highlight Banner -->
   <PlywoodPromoBanner lang={lang} />
 
-  <!-- Section 7: Google Customer Reviews Carousel Island -->
+  <!-- Section 6: Google Customer Reviews Carousel Island -->
   <ReviewCarousel client:load lang={lang} />
 
-  <!-- Section 8: Showroom Location & Map -->
+  <!-- Section 7: Showroom Location & Map -->
   <ShowroomLocation lang={lang} />
 
-  <!-- Section 9: Social Connect Bar -->
+  <!-- Section 8: Social Connect Bar -->
   <SocialBar lang={lang} />
 </BaseLayout>

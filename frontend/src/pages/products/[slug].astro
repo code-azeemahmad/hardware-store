@@ -3,13 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/astro/ProductCard.astro';
 import { EnquiryForm } from '../../components/react/EnquiryForm';
 import {
-  PRODUCTS,
+  fetchPublishedProducts,
   getRelatedProducts,
   type Product,
-} from '../../data/catalogue';
+} from '../../lib/api';
 
-export function getStaticPaths() {
-  return PRODUCTS.map((product) => ({
+export async function getStaticPaths() {
+  const products = await fetchPublishedProducts();
+  return products.map((product) => ({
     params: { slug: product.slug },
     props: { product },
   }));
@@ -21,7 +22,7 @@ interface Props {
 
 const { product } = Astro.props;
 const lang = 'en';
-const relatedProducts = getRelatedProducts(product.slug, product.categorySlug, 4);
+const relatedProducts = await getRelatedProducts(product.slug, product.categorySlug, 4);
 
 const whatsappHref = `https://wa.me/923045030046?text=${encodeURIComponent(
   `Hello Naseer Plywood & Hardware! I am interested in inquiring about the price and stock of: "${product.titleEn}" (SKU: ${product.sku}).`
@@ -29,8 +30,8 @@ const whatsappHref = `https://wa.me/923045030046?text=${encodeURIComponent(
 ---
 
 <BaseLayout
-  title={`${product.titleEn} | Naseer Plywood & Hardware`}
-  description={product.descriptionEn.slice(0, 160)}
+  title={product.metaTitleEn || `${product.titleEn} | Naseer Plywood & Hardware`}
+  description={product.metaDescriptionEn || product.descriptionEn.slice(0, 160)}
   lang={lang}
 >
   <div class="product-page">

@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SearchCatalogue } from '../../components/react/SearchCatalogue';
-import { PRODUCTS } from '../../data/catalogue';
+import { fetchPublishedProducts } from '../../lib/api';
 
 const lang = 'ur';
+const PRODUCTS = await fetchPublishedProducts();
 ---
 
 <BaseLayout

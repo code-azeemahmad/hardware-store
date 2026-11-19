@@ -4,10 +4,10 @@ Last updated: 2026-11-18
 
 ## Current status
 
-- Overall phase: Phase 4 — Admin Dashboard, Authentication, and Content Management (COMPLETED; Awaiting user sign-off for Phase 5)
-- Overall status: Full Admin SPA implemented at `/admin/` in Astro SSG; Argon2id + JWT access/refresh cycle active; single-use 72-hour staff invitation onboarding; Product, Category, and Brand CRUD active; Persistent media uploads at `/api/v1/admin/media/upload`; Enquiry management inbox; Bilingual translation health tracking; Site rebuild trigger; 78/78 tests passing (100%).
-- Current task: Phase 4 Completion Gate & Implementation Report
-- Blockers: None. Ready for Phase 5 (Publishing Integration).
+- Overall phase: Phase 5 — Publishing Integration (COMPLETED; Awaiting user sign-off for Phase 6)
+- Overall status: Astro SSG build pipeline connected directly to live FastAPI PostgreSQL database via `frontend/src/lib/api.ts`; dynamic generation of all bilingual pages (`/` English and `/ur/` Urdu RTL) with reciprocal hreflang annotations; dynamic sitemap generation; secure `super_admin` production rebuild trigger in FastAPI with concurrency mutex (409 Conflict), isolated staging compilation (`dist_staging`), integrity validation, atomic output deployment to Nginx web root volume, and failed-build rollback guard; 92/92 automated backend tests passing (100%); 0 TypeScript errors in `npm run check`.
+- Current task: Phase 5 Completion Gate & Implementation Report
+- Blockers: None. Ready for Phase 6 (Quality, Accessibility, and SEO).
 
 ## Completed
 
@@ -58,18 +58,29 @@ Last updated: 2026-11-18
   6. *Integration Testing & Persistence:* Verified media persistence in `/data/media` volume across Docker container restarts (`HTTP 200 OK` after `docker compose restart`); tested expired, revoked, and inactive tokens; verified clean secret hygiene.
   7. *Phase 5 Implementation Plan:* Documented comprehensive architecture for Astro dynamic SSG database queries, bilingual page generation, reciprocal hreflang annotations, sitemap generation, and atomic deployment.
 - [x] Automated checks: Frontend Astro check passed (0 errors, 0 warnings); Frontend build generated 107 static pages (including `/admin/index.html`); Backend automated test suite has 90/90 tests passing (100%).
+- [x] **P5-01:** Implemented `frontend/src/lib/api.ts` connecting Astro SSG to FastAPI backend at `http://hardware-backend:8000/api/v1` or `http://localhost:8080/api/v1` with candidate auto-discovery, parallel entity fetching, specifications adaptation, and offline fallback.
+- [x] **P5-02:** Refactored `[category]/index.astro`, `[category]/[subcategory].astro`, `products/[slug].astro`, `brands/index.astro`, `search.astro`, and all Urdu `/ur/` counterparts to query PostgreSQL via `api.ts`; dynamically generates English and Urdu static HTML pages with reciprocal hreflang annotations.
+- [x] **P5-03:** Restricted `POST /api/v1/admin/build/trigger` to `super_admin` role with RBAC enforcement; implemented thread mutex locking returning 409 Conflict for concurrent requests; non-parameterized background Astro SSG compilation; 6/6 build tests passing in pytest.
+- [x] **P5-04:** Unpublished products return 404 and are excluded from static generation; build pipeline compiles to `dist_staging`, performs integrity validation on `index.html`, `/ur/index.html`, and `sitemap.xml`, and atomically synchronizes output to production root; rollback guard preserves live site on error with zero downtime.
+- [x] **P5-REV:** Completed all 8 Phase 5 Publishing Reliability and SEO Review Items:
+  1. *Genuinely Atomic Deployment:* Built release-based versioned directories (`frontend/deploy/releases/release_TIMESTAMP/`) and atomic pointer swap (`deploy/current` -> `releases/release_TIMESTAMP`) via POSIX `os.replace()`; updated Nginx root to `/usr/share/nginx/html/current; disable_symlinks off;`; preserved last 5 releases for instant rollback.
+  2. *Production Fixture Fallback Policy:* Disabled silent mock fallback when `STRICT_API=true` or `APP_ENV=production`; if backend or database is unreachable, build throws an explicit error and aborts, preserving the active release without visitor disruption.
+  3. *Complete Database Pagination & Fast Export:* Added `GET /api/v1/products/build-export` returning all published products with pre-joined categories, images, attributes, and specifications in a single query; implemented full pagination loop `while (page <= total_pages)` across all product pages; tested with 105 published items.
+  4. *Distributed Build Locking & Recovery:* Created `site_build_state` table via Alembic migration `004_build_state_schema.py`; implemented PostgreSQL advisory locking (`BUILD_ADVISORY_LOCK_ID = 9876543210123`) preventing concurrent builds across multiple worker processes; added startup recovery in FastAPI lifespan resetting interrupted builds from abrupt restarts; sanitized build error logs to redact credentials and tokens.
+  5. *Instant Rollback Endpoint:* Implemented `POST /api/v1/admin/build/rollback` (super_admin only) atomically reverting `current` pointer to previous release directory in single syscall.
+  6. *Subcategory Alias Canonical & Redirect:* Configured primary canonical URLs for all subcategories (e.g. `https://naseerhardware.pk/kitchen/kitchen-sinks/`); subcategory alias routes (`/kitchen/sinks/`) now emit canonical tags pointing directly to primary canonical URLs and include `<meta http-equiv="refresh" content="0; url=/kitchen/kitchen-sinks/">` redirects; aliases strictly excluded from `sitemap.xml`.
+  7. *Bilingual SEO & Unpublished Security:* Verified reciprocal hreflang annotations (`en`, `ur`, `x-default`) on all English and Urdu routes; verified self-referencing canonical URLs; verified unpublished products return HTTP 404 and are excluded from build-export and sitemap.
+  8. *End-to-End Test Suite:* Added `tests/test_publishing_pipeline.py`; 100/100 backend tests passing in pytest; 0 errors across 84 files in `npm run check`.
+- [x] Automated checks: Frontend Astro check passed (0 errors, 0 warnings); Backend automated test suite has 100/100 tests passing (100%).
 
 ## In progress
 
-- Phase 4 Completion Gate: Awaiting user review and explicit approval to proceed to Phase 5 (Publishing Integration).
+- Phase 5 Completion Gate: Awaiting user review and explicit approval to proceed to Phase 6 (Quality, Accessibility, and SEO).
 
 ## Next actions
 
-1. Receive user review and approval for Phase 4.
-2. Begin Phase 5 — Publishing Integration (Astro build-time API integration, generate product/category pages from live database, secure rebuild trigger, and fallback on failed builds).
-
-1. Receive explicit user approval at Phase 3 Completion Gate.
-2. Proceed to Phase 4: Admin Dashboard, Authentication, and Content Management (Admin login, JWT token management, invitation workflow, CRUD for products/categories/brands/images/variants, localized SEO fields, and enquiry management).
+1. Receive user review and approval for Phase 5.
+2. Begin Phase 6 — Quality and SEO (Metadata, canonical, hreflang, sitemap, robots, breadcrumbs and JSON-LD structured data, image optimization, accessibility, keyboard review, and RTL audit).
 
 ## Update rules
 

@@ -12,6 +12,7 @@ from app.models.product import (
     product_categories,
 )
 from app.models.enquiry import Enquiry, EnquiryType, EnquiryStatus, EnquiryChannel
+from app.models.build import SiteBuildState, BuildStatus
 
 __all__ = [
     "Base",
@@ -32,4 +33,6 @@ __all__ = [
     "EnquiryType",
     "EnquiryStatus",
     "EnquiryChannel",
+    "SiteBuildState",
+    "BuildStatus",
 ]

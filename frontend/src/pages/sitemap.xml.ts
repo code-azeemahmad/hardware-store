@@ -1,7 +1,11 @@
 import type { APIRoute } from 'astro';
-import { CATEGORIES, PRODUCTS, BLOG_POSTS } from '../data/catalogue';
+import {
+  fetchPublishedCategories,
+  fetchPublishedProducts,
+} from '../lib/api';
+import { BLOG_POSTS } from '../data/catalogue';
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
   const siteUrl = 'https://naseerhardware.pk';
 
   interface RouteItem {
@@ -20,8 +24,11 @@ export const GET: APIRoute = () => {
     { pathEn: '/search/', pathUr: '/ur/search/', priority: '0.7', changefreq: 'weekly' },
   ];
 
-  // Add categories
-  CATEGORIES.forEach((cat) => {
+  const categories = await fetchPublishedCategories();
+  const products = await fetchPublishedProducts();
+
+  // Add categories and subcategories
+  categories.forEach((cat) => {
     routes.push({
       pathEn: `/${cat.slug}/`,
       pathUr: `/ur/${cat.slug}/`,
@@ -30,6 +37,7 @@ export const GET: APIRoute = () => {
     });
 
     cat.subcategories.forEach((sub) => {
+      // Primary Canonical Subcategory URL only (aliases are excluded from sitemap)
       routes.push({
         pathEn: `/${cat.slug}/${sub.slug}/`,
         pathUr: `/ur/${cat.slug}/${sub.slug}/`,
@@ -40,7 +48,7 @@ export const GET: APIRoute = () => {
   });
 
   // Add products
-  PRODUCTS.forEach((prod) => {
+  products.forEach((prod) => {
     routes.push({
       pathEn: `/products/${prod.slug}/`,
       pathUr: `/ur/products/${prod.slug}/`,

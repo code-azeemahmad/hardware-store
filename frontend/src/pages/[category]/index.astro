@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/astro/ProductCard.astro';
-import { CATEGORIES, getProductsByCategory, type Category } from '../../data/catalogue';
+import { fetchPublishedCategories, getProductsByCategory, type Category } from '../../lib/api';
 
-export function getStaticPaths() {
-  return CATEGORIES.map((category) => ({
+export async function getStaticPaths() {
+  const categories = await fetchPublishedCategories();
+  return categories.map((category) => ({
     params: { category: category.slug },
     props: { category },
   }));
@@ -16,7 +17,7 @@ interface Props {
 
 const { category } = Astro.props;
 const lang = 'en';
-const products = getProductsByCategory(category.slug);
+const products = await getProductsByCategory(category.slug);
 ---
 
 <BaseLayout
