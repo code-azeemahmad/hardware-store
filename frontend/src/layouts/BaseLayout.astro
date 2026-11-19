@@ -37,7 +37,7 @@ const {
   productSchema,
   collectionSchema,
   noindex = false,
-  ogImage = '/images/shelf.jpg',
+  ogImage = '/images/shelf.svg',
   preloadHeroImage,
 } = Astro.props;
 
@@ -83,10 +83,10 @@ const storeSchema = {
   "name": lang === 'ur' ? "نصیر پلائی ووڈ اینڈ ہارڈویئر" : "Naseer Plywood & Hardware",
   "alternateName": lang === 'ur' ? "Naseer Plywood & Hardware Sargodha" : "نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا",
   "description": description,
-  "telephone": "+923045030046",
+  "telephone": ["+923045030046", "+923177030847"],
   "url": siteBase,
   "logo": `${siteBase}/favicon.svg`,
-  "image": `${siteBase}/images/shelf.jpg`,
+  "image": `${siteBase}/images/shelf.svg`,
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Canal Road, Near New Cantt Hospital / General Bus Stand Road",
@@ -126,7 +126,7 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
 
     <!-- LCP Hero Image Preload Optimization -->
     {preloadHeroImage && (
-      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" type="image/jpeg" />
+      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" type={preloadHeroImage.endsWith('.svg') ? 'image/svg+xml' : 'image/jpeg'} />
     )}
 
     <!-- Search Engine Indexing Control -->

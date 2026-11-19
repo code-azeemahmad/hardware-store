@@ -14,7 +14,7 @@ const breadcrumbs = [
 
 <BaseLayout
   title="ہم سے رابطہ کریں | نصیر پلائی ووڈ اینڈ ہارڈویئر سرگودھا"
-  description="نصیر پلائی ووڈ اینڈ ہارڈویئر، کینال روڈ سرگودھا۔ فون 0304-5030046 یا واٹس ایپ پر فوری رابطہ کریں برائے ہول سیل اور ریٹیل قیمت۔"
+  description="نصیر پلائی ووڈ اینڈ ہارڈویئر، کینال روڈ سرگودھا۔ فون 0304-5030046 / 0317-7030847 یا واٹس ایپ پر فوری رابطہ کریں برائے ہول سیل اور ریٹیل قیمت۔"
   lang={lang}
   breadcrumbs={breadcrumbs}
 >
@@ -44,8 +44,8 @@ const breadcrumbs = [
           </div>
           <h2 class="method-title">فون پر فوری رابطہ</h2>
           <p class="method-text">اسٹاک اور آرڈرز کے لیے کال کریں</p>
-          <a href="tel:03045030046" class="method-action" data-analytics-event="call_click" data-phone="03045030046">5030046-0304</a>
-          <a href="tel:03177030847" class="method-subaction" data-analytics-event="call_click" data-phone="03177030847">7030847-0317</a>
+          <a href="tel:03045030046" class="method-action" data-analytics-event="call_click" data-phone="03045030046" dir="ltr">0304-5030046 (نصیر احمد)</a>
+          <a href="tel:03177030847" class="method-subaction" data-analytics-event="call_click" data-phone="03177030847" dir="ltr">0317-7030847 (سمیر احمد)</a>
         </div>
 
         <div class="method-card">
@@ -55,14 +55,26 @@ const breadcrumbs = [
           <h2 class="method-title">واٹس ایپ آرڈرز</h2>
           <p class="method-text">تصاویر اور تفصیلات بھیجیں</p>
           <a
-            href="https://wa.me/923045030046"
+            href="https://wa.me/923177030847"
             target="_blank"
             rel="noopener noreferrer"
             class="method-action whatsapp-link"
             data-analytics-event="whatsapp_click"
             data-source="contact_page_card"
+            dir="ltr"
           >
-            +92 304 5030046
+            0317-7030847 (سمیر احمد)
+          </a>
+          <a
+            href="https://wa.me/923045030046"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="method-subaction"
+            data-analytics-event="whatsapp_click"
+            data-source="contact_page_card"
+            dir="ltr"
+          >
+            0304-5030046 (نصیر احمد)
           </a>
         </div>
 
@@ -222,7 +234,7 @@ const breadcrumbs = [
   }
   .icon-circle.whatsapp-color {
     background-color: #dcfce7;
-    color: #16a34a;
+    color: var(--color-whatsapp);
   }
   .method-title {
     font-size: 1.25rem;
@@ -242,7 +254,7 @@ const breadcrumbs = [
     text-decoration: none;
   }
   .method-action.whatsapp-link {
-    color: #16a34a;
+    color: var(--color-whatsapp);
   }
   .method-action.static-text {
     color: var(--color-surface-black);

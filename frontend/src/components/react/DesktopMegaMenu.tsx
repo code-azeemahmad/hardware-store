@@ -261,7 +261,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
                         <h5>{isUrdu ? 'حسب ضرورت آرڈرز' : 'Custom Project Sizing?'}</h5>
                         <p>{isUrdu ? 'تمام سائز اور موٹائی کے لیے ہمارے ماہرین سے واٹس ایپ پر رابطہ کریں۔' : 'Connect with our hardware & plywood specialists for bulk contractor pricing.'}</p>
                         <a
-                          href="https://wa.me/923045030046"
+                          href="https://wa.me/923177030847"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="mega-whatsapp-pill"

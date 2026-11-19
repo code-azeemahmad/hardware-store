@@ -297,7 +297,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           {/* Quick Contact CTAs in Drawer */}
           <div className="drawer-footer-actions">
             <a
-              href="https://wa.me/923045030046"
+              href="https://wa.me/923177030847"
               target="_blank"
               rel="noopener noreferrer"
               className="drawer-whatsapp-btn"
@@ -308,14 +308,14 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
               <span>{ui[lang]['action.whatsapp']}</span>
             </a>
             <a
-              href="tel:+923045030046"
+              href="tel:03045030046"
               className="drawer-call-btn"
               dir="ltr"
               data-analytics-event="call_click"
               data-phone="03045030046"
             >
               <FaPhoneAlt size={16} />
-              <span>+92-304-5030046</span>
+              <span>0304-5030046 / 0317-7030847</span>
             </a>
           </div>
         </div>

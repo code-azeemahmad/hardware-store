@@ -11,6 +11,7 @@ Last updated: 2026-11-18
 
 ## Completed
 
+- [x] **P7-02:** Integrated WhatsApp Brand Color `#25D366` across all UI buttons, cards, hover transitions, and icons. Corrected WhatsApp international link format to `https://wa.me/923177030847` (no leading zero, no spaces, no plus, URL-encoded messages). Updated store contact telephone numbers across all English and Urdu components to: Naseer Ahmad Bhatti (`03045030046`) and Sameer Ahmad Bhatti (`03177030847`).
 - [x] Initial project scope and high-level stack documented.
 - [x] Product catalogue and enquiry-led business model recorded.
 - [x] English/Urdu requirement recorded.
@@ -130,7 +131,19 @@ Last updated: 2026-11-18
   - Replaced temporary logo and favicon with custom Nasir Plywood & Hardware brand SVG logo (`shop_photos/logo.svg` -> `frontend/public/images/logo.svg`, `frontend/public/favicon.svg`), generating multi-resolution PNGs (`favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`, `favicon.ico`).
   - Switched frontend host port binding from `8080:80` to `80:80` (`http://localhost/`), updated CORS `ALLOWED_ORIGINS`, `PUBLIC_SITE_URL`, `PUBLIC_API_URL`, build pipeline environment defaults, and documentation (`README.md`, `.env.example`).
   - Rebuilt static release `release_20261119_124635` via atomic build pipeline to bake `http://localhost` into canonical tags and JSON-LD schemas.
-  - Verified 100/100 pytest backend tests pass and all 5 Puppeteer E2E smoke test journeys pass against `http://localhost`.
+  - Converted the 4 showroom photographs to scalable SVG vector assets (`crafts.svg`, `gate.svg`, `shelf.svg`, `wood.svg`) using `vtracer` with user-specified spline/color parameters, deployed them to `frontend/public/images/`, and updated all frontend references.
+  - Inspected, analyzed, deduplicated, and systematically renamed all 73 unique photos in `shop_photos/`:
+    - Removed 23 low-resolution thumbnail duplicates (`* (1).jpeg`) and 1 duplicate copy (`6_fafddf4d... copy.jpeg`).
+    - Visually inspected each image and renamed them into clear, descriptive kebab-case names matching their hardware/sanitary contents across Smart Locks (5), Cabinet & Furniture Handles (4), Door Stoppers & Stops (25), Kitchen Organizers & Faucets (5), Wardrobe Fittings (2), Bathroom Sanitaryware (8), and Bathroom Accessory Sets (15).
+    - Preserved original showroom filenames (`crafts.jpg`, `gate.jpg`, `shelf.jpg`, `wood.jpg`) alongside descriptive copies.
+  - Verified 100/100 pytest backend tests pass and 0 errors in `npm run check` across 60 files.
+  - Added 69 verified photo-based products directly to PostgreSQL database via `backend/app/db/import_photo_products.py`:
+    - Deployed high-resolution product photographs to `frontend/public/images/products/` with 30-day cache control.
+    - Added comprehensive localized metadata (English and Urdu RTL), accurate physical specifications (JSONB), unique SKUs (`NP-SL-*`, `NP-CH-*`, `NP-DS-*`, `NP-KT-*`, `NP-WR-*`, `NP-BT-*`, `NP-BA-*`), and strict Price on Request enforcement.
+    - Expanded total catalog to **81 published products** across Kitchen, Hardware, and Bathroom departments.
+    - Recompiled Astro SSG generating **235 static bilingual pages** in 2.36s and deployed via atomic release pointer swap (`release_20261119_185700`).
+    - Expanded sitemap to **216 canonical URLs**.
+    - Verified all 81 product pages, image URLs, and category listing pages return `HTTP 200 OK`.
 
 ## In progress
 

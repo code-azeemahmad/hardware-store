@@ -20,8 +20,8 @@ const lang = 'en';
       <div class="links-suggestions">
         <a href="/" class="btn-primary">Return to Homepage</a>
         <a href="/search/" class="btn-secondary">Search Catalogue</a>
-        <a href="https://wa.me/923045030046" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
-          Ask on WhatsApp (+92 304 5030046)
+        <a href="https://wa.me/923177030847" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          Ask on WhatsApp (0317-7030847)
         </a>
       </div>
 
@@ -96,12 +96,16 @@ const lang = 'en';
     text-decoration: none;
   }
   .btn-whatsapp {
-    background-color: #25d366;
+    background-color: var(--color-whatsapp);
     color: #ffffff;
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
     font-weight: 700;
     text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .btn-whatsapp:hover {
+    background-color: var(--color-whatsapp-hover);
   }
   .quick-category-links {
     border-top: 1px solid var(--color-border);

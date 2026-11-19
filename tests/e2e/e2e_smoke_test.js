@@ -95,7 +95,7 @@ async function runE2ESmokeTests() {
 
     // Verify WhatsApp CTA link structure
     const waHref = await page.$eval('a.whatsapp-primary-btn', el => el.getAttribute('href'));
-    if (!waHref.includes('wa.me/923045030046') || !waHref.includes('DS-681')) {
+    if (!waHref.includes('wa.me/923177030847') || !waHref.includes('DS-681')) {
       throw new Error(`Malformed WhatsApp link: ${waHref}`);
     }
     console.log('  -> WhatsApp CTA link verified.');

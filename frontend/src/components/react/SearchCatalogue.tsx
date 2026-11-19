@@ -134,7 +134,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
             const productTitle = isUrdu ? p.titleUr : p.titleEn;
             const categoryName = isUrdu ? p.subcategoryNameUr : p.subcategoryNameEn;
             const productHref = `${basePath}/products/${p.slug}/`;
-            const waHref = `https://wa.me/923045030046?text=${encodeURIComponent(
+            const waHref = `https://wa.me/923177030847?text=${encodeURIComponent(
               isUrdu
                 ? `السلام علیکم! مجھے اس پراڈکٹ کی قیمت جاننی ہے: ${p.titleUr}`
                 : `Hello! I would like to inquire about: ${p.titleEn}`
@@ -186,12 +186,12 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
               : 'Try checking your spelling, using broader keywords, or message our showroom team on WhatsApp directly.'}
           </p>
           <a
-            href="https://wa.me/923045030046"
+            href="https://wa.me/923177030847"
             target="_blank"
             rel="noopener noreferrer"
             className="no-results-wa-btn"
           >
-            {isUrdu ? 'واٹس ایپ پر پوچھیں (+92 304 5030046)' : 'Ask on WhatsApp (+92 304 5030046)'}
+            {isUrdu ? 'واٹس ایپ پر پوچھیں (0317-7030847)' : 'Ask on WhatsApp (0317-7030847)'}
           </a>
         </div>
       )}
@@ -383,7 +383,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           display: block;
           text-align: center;
           padding: 0.55rem;
-          background-color: #25d366;
+          background-color: var(--color-whatsapp);
           color: #ffffff;
           font-size: 0.825rem;
           font-weight: 700;
@@ -392,7 +392,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           transition: background-color var(--transition-fast);
         }
         .card-wa-btn:hover {
-          background-color: #1eb956;
+          background-color: var(--color-whatsapp-hover);
         }
         .no-results-box {
           text-align: center;
@@ -419,12 +419,16 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
         }
         .no-results-wa-btn {
           display: inline-flex;
-          background-color: #25d366;
+          background-color: var(--color-whatsapp);
           color: #ffffff;
           font-weight: 700;
           padding: 0.75rem 1.75rem;
           border-radius: var(--radius-full);
           text-decoration: none;
+          transition: background-color var(--transition-fast);
+        }
+        .no-results-wa-btn:hover {
+          background-color: var(--color-whatsapp-hover);
         }
       `}</style>
     </div>

@@ -62,7 +62,7 @@ const breadcrumbs = [
               </span>
 
               <a
-                href={`https://wa.me/923045030046?text=${encodeURIComponent(`Hello! Please share current catalog and wholesale price list for brand: ${brand.name}`)}`}
+                href={`https://wa.me/923177030847?text=${encodeURIComponent(`Hello! Please share current catalog and wholesale price list for brand: ${brand.name}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="brand-wa-link"
@@ -81,14 +81,14 @@ const breadcrumbs = [
         <h2>Looking for a Specific Brand or Specification?</h2>
         <p>If you have an architect's specification sheet or builder bill of quantities (BOQ), our sourcing desk can supply the exact brand match.</p>
         <a
-          href="https://wa.me/923045030046"
+          href="https://wa.me/923177030847"
           class="btn-wa"
           target="_blank"
           rel="noopener noreferrer"
           data-analytics-event="whatsapp_click"
           data-source="brands_boq_banner"
         >
-          Send Your Material BOQ (+92 304 5030046)
+          Send Your Material BOQ (0317-7030847)
         </a>
       </section>
     </div>
@@ -235,7 +235,7 @@ const breadcrumbs = [
     color: var(--color-text-muted);
   }
   .brand-wa-link {
-    color: #16a34a;
+    color: var(--color-whatsapp);
     font-weight: 700;
     text-decoration: none;
   }
@@ -264,11 +264,15 @@ const breadcrumbs = [
   }
   .btn-wa {
     display: inline-flex;
-    background-color: #25d366;
+    background-color: var(--color-whatsapp);
     color: #ffffff;
     font-weight: 700;
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
     text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .btn-wa:hover {
+    background-color: var(--color-whatsapp-hover);
   }
 </style>

@@ -107,7 +107,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
     }
   };
 
-  const whatsappHref = `https://wa.me/923045030046?text=${encodeURIComponent(
+  const whatsappHref = `https://wa.me/923177030847?text=${encodeURIComponent(
     isUrdu
       ? `السلام علیکم نصیر ہارڈویئر! ${prefilledProduct ? `میں اس پراڈکٹ کے بارے میں معلومات لینا چاہتا ہوں: ${prefilledProduct}` : 'مجھے انکوائری کرنی ہے۔'}`
       : `Hello Naseer Hardware! ${prefilledProduct ? `I want to inquire about: ${prefilledProduct}` : 'I have a question about your products.'}`
@@ -387,7 +387,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           align-items: center;
           gap: 0.5rem;
           padding: 0.85rem 1.25rem;
-          background-color: var(--color-whatsapp, #0d6e38);
+          background-color: var(--color-whatsapp);
           color: #ffffff;
           font-size: 0.9rem;
           font-weight: 600;
@@ -396,7 +396,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           transition: background-color var(--transition-fast);
         }
         .whatsapp-direct-btn:hover {
-          background-color: var(--color-whatsapp-hover, #0b5c2e);
+          background-color: var(--color-whatsapp-hover);
         }
         .enquiry-alert {
           padding: 0.75rem 1rem;
@@ -439,12 +439,17 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           justify-content: center;
           gap: 0.5rem;
           padding: 0.75rem 1.5rem;
-          background-color: #0d6e38;
+          background-color: var(--color-whatsapp);
           color: #ffffff;
           font-weight: 700;
           font-size: 0.95rem;
           border-radius: var(--radius-full);
           text-decoration: none;
+          transition: background-color var(--transition-fast), transform var(--transition-fast);
+        }
+        .whatsapp-followup-btn:hover {
+          background-color: var(--color-whatsapp-hover);
+          transform: translateY(-1px);
         }
       `}</style>
     </div>

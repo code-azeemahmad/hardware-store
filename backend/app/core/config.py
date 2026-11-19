@@ -52,8 +52,8 @@ class Settings(BaseSettings):
     # Store Defaults
     STORE_NAME_EN: str = "Naseer Plywood & Hardware"
     STORE_NAME_UR: str = "نصیر پلائی ووڈ اینڈ ہارڈویئر"
-    STORE_PHONE: str = "+92-304-5030046"
-    STORE_WHATSAPP: str = "+923045030046"
+    STORE_PHONE: str = "0304-5030046 / 0317-7030847"
+    STORE_WHATSAPP: str = "923177030847"
     STORE_ADDRESS_EN: str = "Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Pakistan"
     STORE_ADDRESS_UR: str = "نزد نیو کینٹ ہسپتال کینال روڈ / جنرل بس اسٹینڈ روڈ، سرگودھا، پاکستان"
 

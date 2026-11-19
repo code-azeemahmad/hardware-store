@@ -38,9 +38,10 @@ const isUrdu = lang === 'ur';
         <div class="location-detail-item">
           <span class="detail-icon" aria-hidden="true"><FaPhoneAlt /></span>
           <div>
-            <strong>{isUrdu ? 'فون اور واٹس ایپ:' : 'Phone & WhatsApp:'}</strong>
+            <strong>{isUrdu ? 'رابطہ نمبرز:' : 'Contact Numbers:'}</strong>
             <p dir="ltr">
-              <a href="tel:+923045030046">+92-304-5030046</a> / <a href="tel:+923177030847">+92-317-7030847</a>
+              <a href="tel:03045030046">0304-5030046 ({isUrdu ? 'نصیر احمد بھٹی' : 'Naseer Ahmad Bhatti'})</a><br />
+              <a href="tel:03177030847">0317-7030847 ({isUrdu ? 'سمیر احمد بھٹی' : 'Sameer Ahmad Bhatti'})</a>
             </p>
           </div>
         </div>
@@ -64,7 +65,7 @@ const isUrdu = lang === 'ur';
             <span>{ui[lang]['action.openMaps']}</span>
           </a>
           <a
-            href="https://wa.me/923045030046"
+            href="https://wa.me/923177030847"
             target="_blank"
             rel="noopener noreferrer"
             class="map-btn map-btn-whatsapp"

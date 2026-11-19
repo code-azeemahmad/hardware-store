@@ -152,7 +152,7 @@ const collectionSchema = {
     ) : (
       <div class="empty-state">
         <p>Currently updating display samples for this category. Inquire on WhatsApp for immediate availability.</p>
-        <a href="https://wa.me/923045030046" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+        <a href="https://wa.me/923177030847" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
           Ask via WhatsApp
         </a>
       </div>
@@ -273,11 +273,15 @@ const collectionSchema = {
   .whatsapp-btn {
     display: inline-flex;
     padding: 0.65rem 1.5rem;
-    background-color: #25d366;
+    background-color: var(--color-whatsapp);
     color: #ffffff;
     font-weight: 700;
     border-radius: var(--radius-full);
     text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  .whatsapp-btn:hover {
+    background-color: var(--color-whatsapp-hover);
   }
   .pagination-bar {
     display: flex;

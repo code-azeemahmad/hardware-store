@@ -14,7 +14,7 @@ const breadcrumbs = [
 
 <BaseLayout
   title="Contact Us | Naseer Plywood & Hardware Showroom Sargodha"
-  description="Contact Naseer Plywood & Hardware on Canal Road Sargodha. Call 0304-5030046 or send an instant WhatsApp inquiry for pricing, stock, and orders."
+  description="Contact Naseer Plywood & Hardware on Canal Road Sargodha. Call 0304-5030046 / 0317-7030847 or send an instant WhatsApp inquiry (0317-7030847) for pricing, stock, and orders."
   lang={lang}
   breadcrumbs={breadcrumbs}
 >
@@ -44,8 +44,8 @@ const breadcrumbs = [
           </div>
           <h2 class="method-title">Direct Telephone</h2>
           <p class="method-text">Call for immediate stock checks</p>
-          <a href="tel:03045030046" class="method-action" data-analytics-event="call_click" data-phone="03045030046">0304-5030046</a>
-          <a href="tel:03177030847" class="method-subaction" data-analytics-event="call_click" data-phone="03177030847">0317-7030847</a>
+          <a href="tel:03045030046" class="method-action" data-analytics-event="call_click" data-phone="03045030046">0304-5030046 (Naseer Ahmad)</a>
+          <a href="tel:03177030847" class="method-subaction" data-analytics-event="call_click" data-phone="03177030847">0317-7030847 (Sameer Ahmad)</a>
         </div>
 
         <div class="method-card">
@@ -55,14 +55,24 @@ const breadcrumbs = [
           <h2 class="method-title">WhatsApp Orders</h2>
           <p class="method-text">Send photos & specifications</p>
           <a
-            href="https://wa.me/923045030046"
+            href="https://wa.me/923177030847"
             target="_blank"
             rel="noopener noreferrer"
             class="method-action whatsapp-link"
             data-analytics-event="whatsapp_click"
             data-source="contact_page_card"
           >
-            +92 304 5030046
+            0317-7030847 (Sameer Ahmad)
+          </a>
+          <a
+            href="https://wa.me/923045030046"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="method-subaction"
+            data-analytics-event="whatsapp_click"
+            data-source="contact_page_card"
+          >
+            0304-5030046 (Naseer Ahmad)
           </a>
         </div>
 
@@ -222,7 +232,7 @@ const breadcrumbs = [
   }
   .icon-circle.whatsapp-color {
     background-color: #dcfce7;
-    color: #16a34a;
+    color: var(--color-whatsapp);
   }
   .method-title {
     font-size: 1.15rem;
@@ -242,7 +252,7 @@ const breadcrumbs = [
     text-decoration: none;
   }
   .method-action.whatsapp-link {
-    color: #16a34a;
+    color: var(--color-whatsapp);
   }
   .method-action.static-text {
     color: var(--color-surface-black);
