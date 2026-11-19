@@ -12,7 +12,7 @@ const CHROME_PATH = process.env.CHROME_PATH || path.join(
   '.cache/puppeteer/chrome/linux-158.0.8127.36/chrome-linux64/chrome-wrapper.sh'
 );
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:8080';
+const BASE_URL = process.env.BASE_URL || 'http://localhost';
 
 async function runE2ESmokeTests() {
   console.log('======================================================================');

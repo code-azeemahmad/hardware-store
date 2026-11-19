@@ -3,6 +3,7 @@ import { DesktopMegaMenu } from '../react/DesktopMegaMenu';
 import { MobileNavDrawer } from '../react/MobileNavDrawer';
 import { SearchModal } from '../react/SearchModal';
 import { LanguageSwitcher } from '../react/LanguageSwitcher';
+import { FaWhatsapp } from 'react-icons/fa';
 
 interface Props {
   lang: 'en' | 'ur';
@@ -21,9 +22,37 @@ const currentPath = Astro.url.pathname;
       <MobileNavDrawer client:load lang={lang} currentPath={currentPath} />
 
       <!-- Brand Logo / Emblem -->
-      <a href={basePath || '/'} class="brand-link">
+      <a href={basePath || '/'} class="brand-link" aria-label={lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر ہوم' : 'Naseer Plywood & Hardware Home'}>
         <div class="brand-logo-emblem" aria-hidden="true">
-          <span class="emblem-initials">NP</span>
+          <svg viewBox="0 0 400 400" width="44" height="44" class="header-logo-svg">
+            <defs>
+              <linearGradient id="headerWood" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#A96A33"/>
+                <stop offset="1" stop-color="#6B3E1F"/>
+              </linearGradient>
+              <linearGradient id="headerGold" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FFD36A"/>
+                <stop offset="1" stop-color="#D4972B"/>
+              </linearGradient>
+            </defs>
+            <g transform="translate(200,200)">
+              <path d="M0,-190 L165,-95 L165,95 L0,190 L-165,95 L-165,-95 Z"
+                    fill="url(#headerWood)" stroke="#1F120A" stroke-width="16" stroke-linejoin="round"/>
+              <path d="M0,-135 L118,-67 L118,67 L0,135 L-118,67 L-118,-67 Z"
+                    fill="#F7E6C8" stroke="#1F120A" stroke-width="7" stroke-linejoin="round"/>
+              <g transform="translate(0,-12)">
+                <rect x="-78" y="-92" width="46" height="184" rx="9"
+                      fill="url(#headerWood)" stroke="#1F120A" stroke-width="5"/>
+                <rect x="-23" y="-92" width="46" height="184" rx="9"
+                      fill="url(#headerWood)" stroke="#1F120A" stroke-width="5"/>
+                <rect x="32" y="-92" width="46" height="184" rx="9"
+                      fill="url(#headerWood)" stroke="#1F120A" stroke-width="5"/>
+              </g>
+              <text x="0" y="108" text-anchor="middle"
+                    font-family="Arial, Helvetica, sans-serif"
+                    font-size="34" font-weight="800" fill="#1F120A">NPH</text>
+            </g>
+          </svg>
         </div>
         <div class="brand-text">
           <span class="brand-title">{lang === 'ur' ? 'نصیر پلائی ووڈ' : 'NASEER PLYWOOD'}</span>
@@ -54,9 +83,7 @@ const currentPath = Astro.url.pathname;
         title="Chat on WhatsApp"
         aria-label="WhatsApp Contact"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.514 0-10 4.486-10 10 0 1.945.565 3.755 1.537 5.289l-1.637 5.979 6.136-1.61c1.476.883 3.204 1.342 4.964 1.342 5.514 0 10-4.486 10-10s-4.486-10-10-10z"/>
-        </svg>
+        <FaWhatsapp size={20} />
       </a>
     </div>
   </div>
@@ -94,17 +121,17 @@ const currentPath = Astro.url.pathname;
   .brand-logo-emblem {
     width: 44px;
     height: 44px;
-    border-radius: 50%;
-    background-color: var(--color-secondary-black);
-    border: 2px solid var(--color-primary-red);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-surface-white);
-    font-weight: 800;
-    font-size: 1rem;
-    letter-spacing: -0.5px;
     flex-shrink: 0;
+  }
+
+  .header-logo-svg {
+    width: 44px;
+    height: 44px;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   }
 
   .brand-text {

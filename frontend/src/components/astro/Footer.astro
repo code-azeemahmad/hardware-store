@@ -1,5 +1,6 @@
 ---
 import { useTranslations } from '../../i18n/utils';
+import { FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp, FaClock, FaDirections } from 'react-icons/fa';
 
 interface Props {
   lang: 'en' | 'ur';
@@ -16,14 +17,50 @@ const basePath = lang === 'ur' ? '/ur' : '';
     <div class="footer-col">
       <h3 class="col-title">{t('footer.showroomAddress')}</h3>
       <p class="store-name">{lang === 'ur' ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}</p>
-      <p class="store-address">
-        {lang === 'ur' 
-          ? 'نزد نیو کینٹ ہسپتال، کینال روڈ / جنرل بس اسٹینڈ روڈ، سرگودھا، پنجاب، پاکستان' 
-          : 'Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Punjab, Pakistan'}
-      </p>
-      <p class="store-phone">
-        <a href="tel:+923045030046" dir="ltr">+92-304-5030046</a> / <a href="tel:+923177030847" dir="ltr">+92-317-7030847</a>
-      </p>
+      
+      <div class="footer-info-row">
+        <FaMapMarkerAlt className="footer-icon location-icon" />
+        <p class="store-address">
+          {lang === 'ur' 
+            ? 'نزد نیو کینٹ ہسپتال، کینال روڈ / جنرل بس اسٹینڈ روڈ، سرگودھا، پنجاب، پاکستان' 
+            : 'Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Punjab, Pakistan'}
+        </p>
+      </div>
+
+      <div class="footer-info-row">
+        <FaPhoneAlt className="footer-icon phone-icon" />
+        <p class="store-phone">
+          <a href="tel:+923045030046" dir="ltr">+92-304-5030046</a> / <a href="tel:+923177030847" dir="ltr">+92-317-7030847</a>
+        </p>
+      </div>
+
+      <div class="footer-info-row">
+        <FaWhatsapp className="footer-icon whatsapp-icon" />
+        <p class="store-whatsapp">
+          <a href="https://wa.me/923045030046" target="_blank" rel="noopener noreferrer" dir="ltr">
+            +92-304-5030046 ({lang === 'ur' ? 'واٹس ایپ برائے آرڈرز' : 'WhatsApp Orders'})
+          </a>
+        </p>
+      </div>
+
+      <div class="footer-info-row">
+        <FaClock className="footer-icon clock-icon" />
+        <p class="store-hours">
+          {lang === 'ur' ? 'پیر تا ہفتہ: 9:00 صبح تا 8:30 شام' : 'Mon - Sat: 9:00 AM – 8:30 PM'}
+        </p>
+      </div>
+
+      <div class="footer-actions">
+        <a 
+          href="https://maps.google.com/?q=Canal+Road+Sargodha+Pakistan" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="footer-map-link"
+        >
+          <FaDirections className="footer-btn-icon" />
+          <span>{lang === 'ur' ? 'گوگل میپس پر راستہ دیکھیں' : 'Directions on Google Maps'}</span>
+        </a>
+      </div>
     </div>
 
     <!-- Contact Info / Links Column -->
@@ -95,21 +132,73 @@ const basePath = lang === 'ur' ? '/ur' : '';
     color: var(--color-surface-white);
   }
 
-  .store-address {
-    font-size: 0.875rem;
-    color: #a0a0a0;
-    margin-bottom: 0.75rem;
-    line-height: 1.6;
+  .footer-info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-bottom: 0.625rem;
   }
 
-  .store-phone {
-    font-size: 0.9375rem;
-    color: var(--color-surface-white);
-    font-weight: 600;
-  }
-
-  .store-phone a:hover {
+  .footer-icon {
+    font-size: 1rem;
     color: var(--color-primary-red);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .footer-icon.whatsapp-icon {
+    color: #25D366;
+  }
+
+  .store-address,
+  .store-phone,
+  .store-whatsapp,
+  .store-hours {
+    font-size: 0.875rem;
+    color: #c0c0c0;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .store-phone a,
+  .store-whatsapp a {
+    color: var(--color-surface-white);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .store-phone a:hover,
+  .store-whatsapp a:hover {
+    color: var(--color-primary-red);
+  }
+
+  .footer-actions {
+    margin-top: 1rem;
+  }
+
+  .footer-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--color-surface-white);
+    padding: 0.4rem 0.85rem;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .footer-map-link:hover {
+    background-color: var(--color-primary-red);
+    border-color: var(--color-primary-red);
+    color: #fff;
+  }
+
+  .footer-btn-icon {
+    font-size: 0.875rem;
   }
 
   .footer-links {

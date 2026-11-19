@@ -176,15 +176,15 @@ hardware-store/
 5. **Step 5: Docker Compose Orchestration (`docker-compose.yml`)**
    - Service `hardware-postgres`: PostgreSQL 17 with healthcheck (`pg_isready`), private internal network, persistent data volume.
    - Service `hardware-backend`: Depends on postgres health, runs migrations, serves Uvicorn.
-   - Service `hardware-frontend`: Nginx + Astro output, depends on backend, maps host port `${FRONTEND_PORT:-8080}:80`.
+   - Service `hardware-frontend`: Nginx + Astro output, depends on backend, maps host port `${FRONTEND_PORT:-80}:80`.
    - Named volumes: `postgres_data`, `media_data`.
 
 6. **Step 6: Phase 1 Verification**
    - Run unit test `pytest backend/tests/test_health.py`.
    - Run frontend type check `npm run check`.
    - Verify `docker compose up --build` launches cleanly and all health checks turn healthy.
-   - Verify curl `http://localhost:8080/api/v1/health` returns `{"status":"ok","database":"connected"}`.
-   - Verify curl `http://localhost:8080/` returns valid HTML with announcement bars and header.
+   - Verify curl `http://localhost/api/v1/health` returns `{"status":"ok","database":"connected"}`.
+   - Verify curl `http://localhost/` returns valid HTML with announcement bars and header.
 
 ---
 

@@ -2,7 +2,7 @@
 set -e
 
 OUT_DIR="/work/docs/03-design/screenshots"
-BASE_URL="http://127.0.0.1:8080"
+BASE_URL="${BASE_URL:-http://127.0.0.1}"
 
 echo "Capturing implemented screenshots..."
 

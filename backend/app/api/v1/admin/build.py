@@ -154,7 +154,7 @@ def _run_build_process(
         env["INTERNAL_API_URL"] = os.environ.get(
             "INTERNAL_API_URL", "http://localhost:8000/api/v1"
         )
-        env["PUBLIC_SITE_URL"] = os.environ.get("PUBLIC_SITE_URL", "http://localhost:8080")
+        env["PUBLIC_SITE_URL"] = os.environ.get("PUBLIC_SITE_URL", "http://localhost")
 
         # Compile Astro SSG
         cmd = ["node", astro_cli, "build", "--outDir", rel_out_dir]

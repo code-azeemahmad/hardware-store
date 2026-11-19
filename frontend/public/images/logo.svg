@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A96A33"/>
+      <stop offset="1" stop-color="#6B3E1F"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD36A"/>
+      <stop offset="1" stop-color="#D4972B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Emblem -->
+  <g transform="translate(220,350)">
+    <path d="M0,-190 L165,-95 L165,95 L0,190 L-165,95 L-165,-95 Z"
+          fill="url(#wood)" stroke="#1F120A" stroke-width="16" stroke-linejoin="round"/>
+
+    <path d="M0,-135 L118,-67 L118,67 L0,135 L-118,67 L-118,-67 Z"
+          fill="#F7E6C8" stroke="#1F120A" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- Plywood planks -->
+    <g transform="translate(0,-12)">
+      <rect x="-78" y="-92" width="46" height="184" rx="9"
+            fill="url(#wood)" stroke="#1F120A" stroke-width="5"/>
+      <rect x="-23" y="-92" width="46" height="184" rx="9"
+            fill="url(#wood)" stroke="#1F120A" stroke-width="5"/>
+      <rect x="32" y="-92" width="46" height="184" rx="9"
+            fill="url(#wood)" stroke="#1F120A" stroke-width="5"/>
+    </g>
+
+    <text x="0" y="108" text-anchor="middle"
+          font-family="Arial, Helvetica, sans-serif"
+          font-size="34" font-weight="800" fill="#1F120A">NPH</text>
+  </g>
+</svg>

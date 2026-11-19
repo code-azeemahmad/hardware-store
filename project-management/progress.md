@@ -58,7 +58,7 @@ Last updated: 2026-11-18
   6. *Integration Testing & Persistence:* Verified media persistence in `/data/media` volume across Docker container restarts (`HTTP 200 OK` after `docker compose restart`); tested expired, revoked, and inactive tokens; verified clean secret hygiene.
   7. *Phase 5 Implementation Plan:* Documented comprehensive architecture for Astro dynamic SSG database queries, bilingual page generation, reciprocal hreflang annotations, sitemap generation, and atomic deployment.
 - [x] Automated checks: Frontend Astro check passed (0 errors, 0 warnings); Frontend build generated 107 static pages (including `/admin/index.html`); Backend automated test suite has 90/90 tests passing (100%).
-- [x] **P5-01:** Implemented `frontend/src/lib/api.ts` connecting Astro SSG to FastAPI backend at `http://hardware-backend:8000/api/v1` or `http://localhost:8080/api/v1` with candidate auto-discovery, parallel entity fetching, specifications adaptation, and offline fallback.
+- [x] **P5-01:** Implemented `frontend/src/lib/api.ts` connecting Astro SSG to FastAPI backend at `http://hardware-backend:8000/api/v1` or `http://localhost/api/v1` with candidate auto-discovery, parallel entity fetching, specifications adaptation, and offline fallback.
 - [x] **P5-02:** Refactored `[category]/index.astro`, `[category]/[subcategory].astro`, `products/[slug].astro`, `brands/index.astro`, `search.astro`, and all Urdu `/ur/` counterparts to query PostgreSQL via `api.ts`; dynamically generates English and Urdu static HTML pages with reciprocal hreflang annotations.
 - [x] **P5-03:** Restricted `POST /api/v1/admin/build/trigger` to `super_admin` role with RBAC enforcement; implemented thread mutex locking returning 409 Conflict for concurrent requests; non-parameterized background Astro SSG compilation; 6/6 build tests passing in pytest.
 - [x] **P5-04:** Unpublished products return 404 and are excluded from static generation; build pipeline compiles to `dist_staging`, performs integrity validation on `index.html`, `/ur/index.html`, and `sitemap.xml`, and atomically synchronizes output to production root; rollback guard preserves live site on error with zero downtime.
@@ -124,6 +124,13 @@ Last updated: 2026-11-18
   - *P7-04: End-to-End Smoke Tests:* Automated Headless Chrome test suite (`tests/e2e/e2e_smoke_test.js`) executed and passed across all 5 journeys (English public browsing, enquiry submission, bilingual Urdu RTL flow, real-time search, admin authentication & build trigger).
   - *P7-05: Owner Content & Sign-off:* Verified Canal Road Sargodha showroom details, phone numbers, and Price on Request policy; compiled comprehensive `docs/01-product/owner-handoff-guide.md`.
   - *P7-06: Production Deployment & Monitoring:* Compiled `docs/10-operations/production-launch-runbook.md` with complete pre-flight checklist, SSL provisioning, deployment commands, health checks, cron backups, and zero-downtime rollback procedures.
+
+- [x] **Post-Launch Frontend Tweaks & Port 80 Migration:**
+  - Installed `react-icons` and integrated modern SVG icons (`FaWhatsapp`, `FaMapMarkerAlt`, `FaPhoneAlt`, `FaClock`, etc.) across all components, header, footer, product cards, contact pages, and showroom locations in English and Urdu.
+  - Replaced temporary logo and favicon with custom Nasir Plywood & Hardware brand SVG logo (`shop_photos/logo.svg` -> `frontend/public/images/logo.svg`, `frontend/public/favicon.svg`), generating multi-resolution PNGs (`favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`, `favicon.ico`).
+  - Switched frontend host port binding from `8080:80` to `80:80` (`http://localhost/`), updated CORS `ALLOWED_ORIGINS`, `PUBLIC_SITE_URL`, `PUBLIC_API_URL`, build pipeline environment defaults, and documentation (`README.md`, `.env.example`).
+  - Rebuilt static release `release_20261119_124635` via atomic build pipeline to bake `http://localhost` into canonical tags and JSON-LD schemas.
+  - Verified 100/100 pytest backend tests pass and all 5 Puppeteer E2E smoke test journeys pass against `http://localhost`.
 
 ## In progress
 

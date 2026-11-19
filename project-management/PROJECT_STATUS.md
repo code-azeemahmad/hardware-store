@@ -9,7 +9,7 @@
 ## 1. Executive Summary
 
 Phase 5 has successfully connected the Astro SSG frontend build pipeline directly to the live PostgreSQL database via FastAPI endpoints. The public website now dynamically compiles from database records rather than static mock files:
-1. **Build-Time API Integration:** `frontend/src/lib/api.ts` connects Astro to FastAPI at `http://hardware-backend:8000/api/v1` or `http://localhost:8080/api/v1` with candidate auto-discovery, parallel product detail fetching, specifications adaptation, and offline fallback.
+1. **Build-Time API Integration:** `frontend/src/lib/api.ts` connects Astro to FastAPI at `http://hardware-backend:8000/api/v1` or `http://localhost/api/v1` with candidate auto-discovery, parallel product detail fetching, specifications adaptation, and offline fallback.
 2. **Database-Backed Dynamic Pages:** Category hubs, subcategories, product detail pages, brand directory, and sitemap are generated dynamically for both English and Urdu RTL locales from PostgreSQL data.
 3. **Production Rebuild Pipeline:** Super administrators can trigger static regeneration via `POST /api/v1/admin/build/trigger`. The build worker executes Astro SSG into `dist_staging`, validates file integrity (`index.html`, `/ur/index.html`, `sitemap.xml`), and atomically synchronizes output to the Nginx volume in ~2.8 seconds.
 4. **Publish/Unpublish Security:** Unpublished items (`is_published: false`) return HTTP 404 in the public API, are automatically excluded from static compilation, and return custom 404 pages via Nginx `try_files`.
@@ -21,7 +21,7 @@ Phase 5 has successfully connected the Astro SSG frontend build pipeline directl
 
 | Service | Container Name | Image / Tech | Status | Ports / Exposure | Health Check Command |
 |---|---|---|---|---|---|
-| **Frontend** | `hardware-frontend` | Nginx Alpine + Astro SSG (95 live pages) | **Up (healthy)** | `0.0.0.0:8080->80/tcp` | `curl -f http://localhost/` |
+| **Frontend** | `hardware-frontend` | Nginx Alpine + Astro SSG (95 live pages) | **Up (healthy)** | `0.0.0.0:80->80/tcp` | `curl -f http://localhost/` |
 | **Backend** | `hardware-backend` | FastAPI + Python 3.12 + Node.js 20 | **Up (healthy)** | `8000/tcp` (Internal) | `curl -f http://localhost:8000/api/v1/health` |
 | **Database** | `hardware-postgres` | PostgreSQL 17 Alpine | **Up (healthy)** | `5432/tcp` (Internal) | `pg_isready -U hardware_user -d hardware_db` |
 

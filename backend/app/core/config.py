@@ -26,7 +26,12 @@ class Settings(BaseSettings):
     INVITATION_TOKEN_EXPIRE_HOURS: int = 72
 
     # CORS
-    ALLOWED_ORIGINS: Union[List[str], str] = ["http://localhost:8080", "http://127.0.0.1:8080"]
+    ALLOWED_ORIGINS: Union[List[str], str] = [
+        "http://localhost",
+        "http://127.0.0.1",
+        "https://naseerhardware.pk",
+        "https://www.naseerhardware.pk",
+    ]
 
     @field_validator("ALLOWED_ORIGINS", mode="before")
     @classmethod
@@ -41,8 +46,8 @@ class Settings(BaseSettings):
     MEDIA_STORAGE_PATH: str = "/data/media"
 
     # Public URLs
-    PUBLIC_SITE_URL: str = "http://localhost:8080"
-    PUBLIC_API_URL: str = "http://localhost:8080/api/v1"
+    PUBLIC_SITE_URL: str = "http://localhost"
+    PUBLIC_API_URL: str = "http://localhost/api/v1"
 
     # Store Defaults
     STORE_NAME_EN: str = "Naseer Plywood & Hardware"

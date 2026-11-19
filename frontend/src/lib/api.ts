@@ -26,9 +26,10 @@ const CANDIDATE_URLS = [
   process.env.INTERNAL_API_URL,
   process.env.PUBLIC_API_URL,
   'http://hardware-backend:8000/api/v1',
-  'http://localhost:8080/api/v1',
+  'http://localhost/api/v1',
   'http://localhost:8000/api/v1',
-  'http://127.0.0.1:8080/api/v1',
+  'http://127.0.0.1/api/v1',
+  'http://127.0.0.1:8000/api/v1',
 ].filter(Boolean) as string[];
 
 const STRICT_API = process.env.STRICT_API === 'true' || process.env.APP_ENV === 'production';

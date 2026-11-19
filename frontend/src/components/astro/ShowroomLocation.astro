@@ -1,5 +1,6 @@
 ---
 import { ui } from '../../i18n/ui';
+import { FaMapMarkerAlt, FaPhoneAlt, FaClock, FaDirections, FaWhatsapp } from 'react-icons/fa';
 
 interface Props {
   lang?: 'en' | 'ur';
@@ -23,7 +24,7 @@ const isUrdu = lang === 'ur';
         <h3 class="location-name">{isUrdu ? 'نصیر پلائی ووڈ اینڈ ہارڈویئر' : 'Naseer Plywood & Hardware'}</h3>
 
         <div class="location-detail-item">
-          <span class="detail-icon">📍</span>
+          <span class="detail-icon" aria-hidden="true"><FaMapMarkerAlt /></span>
           <div>
             <strong>{isUrdu ? 'پتہ:' : 'Address:'}</strong>
             <p>
@@ -35,7 +36,7 @@ const isUrdu = lang === 'ur';
         </div>
 
         <div class="location-detail-item">
-          <span class="detail-icon">📞</span>
+          <span class="detail-icon" aria-hidden="true"><FaPhoneAlt /></span>
           <div>
             <strong>{isUrdu ? 'فون اور واٹس ایپ:' : 'Phone & WhatsApp:'}</strong>
             <p dir="ltr">
@@ -45,7 +46,7 @@ const isUrdu = lang === 'ur';
         </div>
 
         <div class="location-detail-item">
-          <span class="detail-icon">🕒</span>
+          <span class="detail-icon" aria-hidden="true"><FaClock /></span>
           <div>
             <strong>{ui[lang]['footer.openingHours']}:</strong>
             <p>{ui[lang]['footer.openingHoursText']}</p>
@@ -59,7 +60,8 @@ const isUrdu = lang === 'ur';
             rel="noopener noreferrer"
             class="map-btn map-btn-primary"
           >
-            {ui[lang]['action.openMaps']}
+            <FaDirections className="btn-icon" />
+            <span>{ui[lang]['action.openMaps']}</span>
           </a>
           <a
             href="https://wa.me/923045030046"
@@ -67,7 +69,8 @@ const isUrdu = lang === 'ur';
             rel="noopener noreferrer"
             class="map-btn map-btn-whatsapp"
           >
-            {ui[lang]['action.whatsapp']}
+            <FaWhatsapp className="btn-icon" />
+            <span>{ui[lang]['action.whatsapp']}</span>
           </a>
         </div>
       </div>
@@ -169,7 +172,17 @@ const isUrdu = lang === 'ur';
   }
 
   .detail-icon {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+    color: var(--color-primary-red);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-icon {
+    font-size: 1rem;
     flex-shrink: 0;
   }
 
@@ -201,6 +214,10 @@ const isUrdu = lang === 'ur';
   }
 
   .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
     padding: 0.75rem 1.5rem;
     border-radius: 6px;
     font-size: 0.875rem;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ui } from '../../i18n/ui';
+import { FaWhatsapp, FaPhoneAlt } from 'react-icons/fa';
 
 interface MobileNavDrawerProps {
   lang: 'en' | 'ur';
@@ -165,7 +166,31 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
         {/* Drawer Header */}
         <div className="drawer-header">
           <div className="drawer-brand">
-            <span className="drawer-emblem">NP</span>
+            <svg viewBox="0 0 400 400" width="40" height="40" className="drawer-logo-svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="drawerWood" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="#A96A33" />
+                  <stop offset="1" stopColor="#6B3E1F" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(200,200)">
+                <path d="M0,-190 L165,-95 L165,95 L0,190 L-165,95 L-165,-95 Z"
+                      fill="url(#drawerWood)" stroke="#1F120A" strokeWidth="16" strokeLinejoin="round" />
+                <path d="M0,-135 L118,-67 L118,67 L0,135 L-118,67 L-118,-67 Z"
+                      fill="#F7E6C8" stroke="#1F120A" strokeWidth="7" strokeLinejoin="round" />
+                <g transform="translate(0,-12)">
+                  <rect x="-78" y="-92" width="46" height="184" rx="9"
+                        fill="url(#drawerWood)" stroke="#1F120A" strokeWidth="5" />
+                  <rect x="-23" y="-92" width="46" height="184" rx="9"
+                        fill="url(#drawerWood)" stroke="#1F120A" strokeWidth="5" />
+                  <rect x="32" y="-92" width="46" height="184" rx="9"
+                        fill="url(#drawerWood)" stroke="#1F120A" strokeWidth="5" />
+                </g>
+                <text x="0" y="108" textAnchor="middle"
+                      fontFamily="Arial, Helvetica, sans-serif"
+                      fontSize="34" fontWeight="800" fill="#1F120A">NPH</text>
+              </g>
+            </svg>
             <div className="drawer-brand-text">
               <strong>{isUrdu ? 'نصیر پلائی ووڈ' : 'NASEER PLYWOOD'}</strong>
               <small>{isUrdu ? 'اینڈ ہارڈویئر' : '& HARDWARE'}</small>
@@ -279,9 +304,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
               data-analytics-event="whatsapp_click"
               data-source="mobile_drawer"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.514 0-10 4.486-10 10 0 1.945.565 3.755 1.537 5.289l-1.637 5.979 6.136-1.61c1.476.883 3.204 1.342 4.964 1.342 5.514 0 10-4.486 10-10s-4.486-10-10-10z"/>
-              </svg>
+              <FaWhatsapp size={20} />
               <span>{ui[lang]['action.whatsapp']}</span>
             </a>
             <a
@@ -291,7 +314,8 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
               data-analytics-event="call_click"
               data-phone="03045030046"
             >
-              📞 +92-304-5030046
+              <FaPhoneAlt size={16} />
+              <span>+92-304-5030046</span>
             </a>
           </div>
         </div>
@@ -488,7 +512,10 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
         }
 
         .drawer-call-btn {
-          display: block;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
           text-align: center;
           padding: 0.75rem;
           border: 1px solid var(--color-border);

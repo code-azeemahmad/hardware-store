@@ -51,10 +51,10 @@ The intended application structure is documented in `docs/02-architecture/reposi
    docker compose ps
    ```
 4. Access the services:
-   - **Frontend (English):** [http://localhost:8080/](http://localhost:8080/)
-   - **Frontend (Urdu RTL):** [http://localhost:8080/ur/](http://localhost:8080/ur/)
-   - **Backend Health Check:** [http://localhost:8080/api/v1/health](http://localhost:8080/api/v1/health)
-   - **Interactive API Docs:** [http://localhost:8080/api/docs](http://localhost:8080/api/docs)
+   - **Frontend (English):** [http://localhost/](http://localhost/)
+   - **Frontend (Urdu RTL):** [http://localhost/ur/](http://localhost/ur/)
+   - **Backend Health Check:** [http://localhost/api/v1/health](http://localhost/api/v1/health)
+   - **Interactive API Docs:** [http://localhost/api/docs](http://localhost/api/docs)
 
 5. Run database migrations:
    ```bash

@@ -24,11 +24,10 @@ This document records decisions requiring user confirmation or architectural app
 
 ---
 
-## 3. Host Port Mapping (Port 80 Collision)
+## 3. Host Port Mapping (Port 80 Configuration)
 
-- **Context:** An existing Docker container (`saas-nginx`) on the host is currently binding host port `0.0.0.0:80`.
-- **Question:** How should `docker-compose.yml` map the public HTTP port for `hardware-frontend` in local development?
-- **Recommendation:** Map host port `8080` (or `8000`/`3000`) to container port `80` (e.g. `8080:80`) in `docker-compose.yml` via a configurable variable `${FRONTEND_PORT:-8080}`. This avoids crashing when starting alongside existing local services. In production, this can be set to `80:80`.
+- **Context:** Host port 80 is dedicated to `hardware-frontend` (Nginx).
+- **Decision:** Map host port `80` to container port `80` (`80:80`) in `docker-compose.yml` via configurable variable `${FRONTEND_PORT:-80}`. Accessible directly at `http://localhost/`.
 
 ---
 
