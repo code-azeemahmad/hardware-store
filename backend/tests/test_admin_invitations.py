@@ -131,3 +131,17 @@ def test_revoke_invitation(super_admin_client: TestClient, client: TestClient):
     )
     assert accept_res.status_code == 400
     assert "revoked" in accept_res.json()["detail"].lower()
+
+
+def test_list_team_members(super_admin_client: TestClient, editor_client: TestClient):
+    # Super admin can list team members
+    res = super_admin_client.get("/api/v1/admin/invitations/team")
+    assert res.status_code == 200
+    team = res.json()
+    assert isinstance(team, list)
+    assert len(team) >= 1
+    assert any(m["role"] == "super_admin" for m in team)
+
+    # Editor cannot list team members (Super Admin only)
+    res_editor = editor_client.get("/api/v1/admin/invitations/team")
+    assert res_editor.status_code == 403

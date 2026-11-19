@@ -1,5 +1,30 @@
 import React, { useEffect, useState } from "react";
 import {
+  FiSearch,
+  FiPlus,
+  FiImage,
+  FiCheck,
+  FiAlertCircle,
+  FiXCircle,
+  FiEye,
+  FiEyeOff,
+  FiEdit2,
+  FiEdit3,
+  FiTrash2,
+  FiChevronLeft,
+  FiChevronRight,
+  FiX,
+  FiSliders,
+  FiFileText,
+  FiList,
+  FiLayers,
+  FiGlobe,
+  FiSave,
+  FiUploadCloud,
+  FiStar,
+  FiPlusCircle,
+} from "react-icons/fi";
+import {
   apiListProducts,
   apiGetProduct,
   apiCreateProduct,
@@ -329,16 +354,20 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
       {/* Action Bar & Filters */}
       <div className="admin-action-bar">
         <div className="admin-filters">
-          <input
-            type="text"
-            className="admin-search-input"
-            placeholder="Search by name, SKU, or slug..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
+          <div style={{ position: "relative", minWidth: "260px" }}>
+            <FiSearch style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", color: "#9CA3AF" }} />
+            <input
+              type="text"
+              className="admin-search-input"
+              style={{ paddingLeft: "36px", width: "100%" }}
+              placeholder="Search by name, SKU, or slug..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
 
           <select
             className="admin-select"
@@ -401,8 +430,13 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
           </select>
         </div>
 
-        <button onClick={handleOpenCreate} className="btn-admin btn-admin-primary">
-          + Add New Product
+        <button
+          onClick={handleOpenCreate}
+          className="btn-admin btn-admin-primary"
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+        >
+          <FiPlus />
+          <span>Add New Product</span>
         </button>
       </div>
 
@@ -460,11 +494,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          fontSize: "10px",
                           color: "#9CA3AF",
                         }}
                       >
-                        No Img
+                        <FiImage style={{ fontSize: "1.25rem" }} />
                       </div>
                     )}
                   </td>
@@ -494,31 +527,44 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                   </td>
                   <td>
                     {p.translation_status === "complete" ? (
-                      <span className="status-pill complete">🟢 Complete</span>
+                      <span className="status-pill complete" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                        <FiCheck />
+                        <span>Complete</span>
+                      </span>
                     ) : p.translation_status === "missing_ur" ? (
-                      <span className="status-pill missing-ur">🟡 Missing UR</span>
+                      <span className="status-pill missing-ur" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                        <FiAlertCircle />
+                        <span>Missing UR</span>
+                      </span>
                     ) : (
-                      <span className="status-pill incomplete">🔴 Incomplete</span>
+                      <span className="status-pill incomplete" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                        <FiXCircle />
+                        <span>Incomplete</span>
+                      </span>
                     )}
                   </td>
                   <td>
-                    <span className={`status-pill ${p.is_published ? "published" : "draft"}`}>
-                      {p.is_published ? "Published" : "Draft"}
+                    <span className={`status-pill ${p.is_published ? "published" : "draft"}`} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                      {p.is_published ? <FiEye /> : <FiEyeOff />}
+                      <span>{p.is_published ? "Published" : "Draft"}</span>
                     </span>
                   </td>
                   <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
                     <button
                       onClick={() => handleOpenEdit(p)}
                       className="btn-admin btn-admin-secondary btn-admin-sm"
-                      style={{ marginRight: "6px" }}
+                      style={{ marginRight: "6px", display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      Edit
+                      <FiEdit2 />
+                      <span>Edit</span>
                     </button>
                     <button
                       onClick={() => handleDelete(p.id, p.name_en)}
                       className="btn-admin btn-admin-danger btn-admin-sm"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      Delete
+                      <FiTrash2 />
+                      <span>Delete</span>
                     </button>
                   </td>
                 </tr>
@@ -547,8 +593,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
             className="btn-admin btn-admin-secondary btn-admin-sm"
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
           >
-            ← Previous
+            <FiChevronLeft />
+            <span>Previous</span>
           </button>
           <span style={{ padding: "4px 8px", fontWeight: 600 }}>
             Page {page} of {totalPages}
@@ -557,8 +605,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
             className="btn-admin btn-admin-secondary btn-admin-sm"
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
           >
-            Next →
+            <span>Next</span>
+            <FiChevronRight />
           </button>
         </div>
       </div>
@@ -568,14 +618,24 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
         <div className="admin-modal-overlay">
           <div className="admin-modal">
             <div className="admin-modal-header">
-              <h3 className="admin-modal-title">
-                {editingProduct ? `Edit Product: ${editingProduct.name_en}` : "Create New Product"}
+              <h3 className="admin-modal-title" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                {editingProduct ? (
+                  <>
+                    <FiEdit3 style={{ color: "#E21B23" }} />
+                    <span>Edit Product: {editingProduct.name_en}</span>
+                  </>
+                ) : (
+                  <>
+                    <FiPlusCircle style={{ color: "#E21B23" }} />
+                    <span>Create New Product</span>
+                  </>
+                )}
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer" }}
+                style={{ background: "none", border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", color: "#6B7280" }}
               >
-                ✕
+                <FiX style={{ fontSize: "1.25rem" }} />
               </button>
             </div>
 
@@ -591,24 +651,29 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
               }}
             >
               {[
-                { id: "general", label: "General & Identity" },
-                { id: "descriptions", label: "Bilingual Descriptions" },
-                { id: "specs", label: "Specifications" },
-                { id: "images", label: `Images (${formData.images.length})` },
-                { id: "variants", label: `Variants (${formData.variants.length})` },
-                { id: "seo", label: "SEO Meta Tags" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`btn-admin btn-admin-sm ${
-                    activeTab === tab.id ? "btn-admin-primary" : "btn-admin-secondary"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+                { id: "general", label: "General & Identity", icon: FiSliders },
+                { id: "descriptions", label: "Bilingual Descriptions", icon: FiFileText },
+                { id: "specs", label: "Specifications", icon: FiList },
+                { id: "images", label: `Images (${formData.images.length})`, icon: FiImage },
+                { id: "variants", label: `Variants (${formData.variants.length})`, icon: FiLayers },
+                { id: "seo", label: "SEO Meta Tags", icon: FiGlobe },
+              ].map((tab) => {
+                const TabIcon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveTab(tab.id as any)}
+                    className={`btn-admin btn-admin-sm ${
+                      activeTab === tab.id ? "btn-admin-primary" : "btn-admin-secondary"
+                    }`}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap" }}
+                  >
+                    <TabIcon />
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
             </div>
 
             <form onSubmit={handleSave} style={{ display: "flex", flexDirection: "column", flexGrow: 1, minHeight: 0 }}>
@@ -837,8 +902,14 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                         value={specVal}
                         onChange={(e) => setSpecVal(e.target.value)}
                       />
-                      <button type="button" onClick={handleAddSpec} className="btn-admin btn-admin-secondary">
-                        + Add Spec
+                      <button
+                        type="button"
+                        onClick={handleAddSpec}
+                        className="btn-admin btn-admin-secondary"
+                        style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                      >
+                        <FiPlus />
+                        <span>Add Spec</span>
                       </button>
                     </div>
 
@@ -868,8 +939,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                                     type="button"
                                     onClick={() => handleRemoveSpec(k)}
                                     className="btn-admin btn-admin-danger btn-admin-sm"
+                                    style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                                   >
-                                    Remove
+                                    <FiTrash2 />
+                                    <span>Remove</span>
                                   </button>
                                 </td>
                               </tr>
@@ -889,8 +962,9 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                         Upload product photographs stored in persistent storage (/data/media).
                       </p>
 
-                      <label className="btn-admin btn-admin-primary" style={{ cursor: "pointer" }}>
-                        {uploadingImage ? "Uploading..." : "+ Upload Image Asset"}
+                      <label className="btn-admin btn-admin-primary" style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                        <FiUploadCloud />
+                        <span>{uploadingImage ? "Uploading..." : "Upload Image Asset"}</span>
                         <input
                           type="file"
                           accept="image/png,image/jpeg,image/webp,image/svg+xml"
@@ -921,16 +995,19 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
 
                           <div style={{ marginTop: "8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             {img.is_primary ? (
-                              <span className="status-pill complete" style={{ fontSize: "0.7rem" }}>
-                                ★ Primary Image
+                              <span className="status-pill complete" style={{ fontSize: "0.7rem", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                                <FiStar />
+                                <span>Primary Image</span>
                               </span>
                             ) : (
                               <button
                                 type="button"
                                 onClick={() => handleSetPrimaryImage(idx)}
                                 className="btn-admin btn-admin-secondary btn-admin-sm"
+                                style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                               >
-                                Set Primary
+                                <FiStar />
+                                <span>Set Primary</span>
                               </button>
                             )}
 
@@ -938,8 +1015,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                               type="button"
                               onClick={() => handleRemoveImage(idx)}
                               className="btn-admin btn-admin-danger btn-admin-sm"
+                              style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                             >
-                              Remove
+                              <FiTrash2 />
+                              <span>Remove</span>
                             </button>
                           </div>
                         </div>
@@ -972,8 +1051,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                           }));
                         }}
                         className="btn-admin btn-admin-secondary"
+                        style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
                       >
-                        + Add Variant Option
+                        <FiPlus />
+                        <span>Add Variant Option</span>
                       </button>
                     </div>
 
@@ -1076,8 +1157,10 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                                       }));
                                     }}
                                     className="btn-admin btn-admin-danger btn-admin-sm"
+                                    style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                                   >
-                                    Remove
+                                    <FiTrash2 />
+                                    <span>Remove</span>
                                   </button>
                                 </td>
                               </tr>
@@ -1151,11 +1234,30 @@ export const ProductsView: React.FC<Props> = ({ initialFilter }) => {
                   onClick={() => setIsModalOpen(false)}
                   className="btn-admin btn-admin-secondary"
                   disabled={isSaving}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
                 >
-                  Cancel
+                  <FiX />
+                  <span>Cancel</span>
                 </button>
-                <button type="submit" className="btn-admin btn-admin-primary" disabled={isSaving}>
-                  {isSaving ? "Saving..." : editingProduct ? "Save Changes" : "Create Product"}
+                <button
+                  type="submit"
+                  className="btn-admin btn-admin-primary"
+                  disabled={isSaving}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                  {isSaving ? (
+                    "Saving..."
+                  ) : editingProduct ? (
+                    <>
+                      <FiSave />
+                      <span>Save Changes</span>
+                    </>
+                  ) : (
+                    <>
+                      <FiPlus />
+                      <span>Create Product</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>

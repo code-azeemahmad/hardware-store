@@ -6,7 +6,8 @@ export interface AdminUser {
   full_name: string;
   role: "super_admin" | "admin" | "catalogue_editor" | "enquiry_handler";
   is_active: boolean;
-  created_at: string;
+  last_login_at?: string | null;
+  created_at?: string;
 }
 
 export interface AuthTokens {

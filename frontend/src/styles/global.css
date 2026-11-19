@@ -55,6 +55,18 @@ main {
   padding-inline: 1.5rem;
 }
 
+@media (max-width: 576px) {
+  .container {
+    padding-inline: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding-inline: 0.625rem;
+  }
+}
+
 /* Links & Buttons */
 a {
   color: inherit;

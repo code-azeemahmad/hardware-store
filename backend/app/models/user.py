@@ -30,6 +30,9 @@ class AdminUser(Base, TimestampMixin):
     sent_invitations: Mapped[list["AdminInvitation"]] = relationship(
         "AdminInvitation", back_populates="invited_by", foreign_keys="AdminInvitation.invited_by_id"
     )
+    refresh_tokens: Mapped[list["AdminRefreshToken"]] = relationship(
+        "AdminRefreshToken", back_populates="user", cascade="all, delete-orphan", passive_deletes=True
+    )
 
 
 class AdminInvitation(Base, TimestampMixin):
@@ -61,4 +64,4 @@ class AdminRefreshToken(Base, TimestampMixin):
     is_revoked: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     replaced_by_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
-    user: Mapped[AdminUser] = relationship("AdminUser", backref="refresh_tokens")
+    user: Mapped[AdminUser] = relationship("AdminUser", back_populates="refresh_tokens")

@@ -49,3 +49,45 @@ def test_product_schema_hybrid_pricing():
     )
     assert prod.price is None
     assert prod.price_on_request is True
+
+
+def test_production_config_rejects_dev_secret():
+    from app.core.config import Settings
+    with pytest.raises(ValidationError, match="Insecure SECRET_KEY"):
+        Settings(
+            APP_ENV="production",
+            DEBUG=False,
+            SECRET_KEY="dev_secret_hardware_store_key_change_in_production_min32chars!",
+        )
+
+
+def test_production_config_rejects_short_secret():
+    from app.core.config import Settings
+    with pytest.raises(ValidationError, match="at least 32 characters"):
+        Settings(
+            APP_ENV="production",
+            DEBUG=False,
+            SECRET_KEY="short-secret-key",
+        )
+
+
+def test_production_config_rejects_debug_true():
+    from app.core.config import Settings
+    with pytest.raises(ValidationError, match="DEBUG must be set to False"):
+        Settings(
+            APP_ENV="production",
+            DEBUG=True,
+            SECRET_KEY="a" * 48,
+        )
+
+
+def test_production_config_valid():
+    from app.core.config import Settings
+    cfg = Settings(
+        APP_ENV="production",
+        DEBUG=False,
+        SECRET_KEY="a" * 48,
+    )
+    assert cfg.APP_ENV == "production"
+    assert cfg.DEBUG is False
+

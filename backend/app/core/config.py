@@ -1,5 +1,5 @@
 from typing import List, Union
-from pydantic import AnyHttpUrl, field_validator
+from pydantic import AnyHttpUrl, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -41,6 +41,18 @@ class Settings(BaseSettings):
         elif isinstance(v, list):
             return v
         return []
+
+    @model_validator(mode="after")
+    def validate_security_settings(self) -> "Settings":
+        if self.APP_ENV.lower() == "production":
+            dev_secret = "dev_secret_hardware_store_key_change_in_production_min32chars!"
+            if self.SECRET_KEY == dev_secret:
+                raise ValueError("Insecure SECRET_KEY: The development secret key cannot be used in production.")
+            if len(self.SECRET_KEY) < 32:
+                raise ValueError("Insecure SECRET_KEY: Production secret key must be at least 32 characters long.")
+            if self.DEBUG:
+                raise ValueError("Insecure configuration: DEBUG must be set to False in production.")
+        return self
 
     # Media Storage
     MEDIA_STORAGE_PATH: str = "/data/media"

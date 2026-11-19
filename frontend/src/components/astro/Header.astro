@@ -190,4 +190,65 @@ const currentPath = Astro.url.pathname;
     background-color: var(--color-whatsapp-hover);
     transform: scale(1.05);
   }
+
+  @media (max-width: 480px) {
+    .header-container {
+      padding-inline: 0.75rem;
+    }
+    .header-left {
+      gap: 0.4rem;
+    }
+    .brand-link {
+      gap: 0.4rem;
+    }
+    .header-right {
+      gap: 0.35rem;
+    }
+    .brand-title {
+      font-size: 0.9rem;
+    }
+    .brand-subtitle {
+      font-size: 0.65rem;
+    }
+    .brand-logo-emblem,
+    .header-logo-svg {
+      width: 36px;
+      height: 36px;
+    }
+    .whatsapp-quick-btn {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .header-container {
+      padding-inline: 0.35rem;
+    }
+    .header-left {
+      gap: 0.25rem;
+    }
+    .brand-link {
+      gap: 0.25rem;
+    }
+    .header-right {
+      gap: 0.25rem;
+    }
+    .brand-logo-emblem,
+    .header-logo-svg {
+      width: 30px;
+      height: 30px;
+    }
+    .brand-title {
+      font-size: 0.75rem;
+      letter-spacing: 0;
+    }
+    .brand-subtitle {
+      display: none;
+    }
+    .whatsapp-quick-btn {
+      width: 30px;
+      height: 30px;
+    }
+  }
 </style>

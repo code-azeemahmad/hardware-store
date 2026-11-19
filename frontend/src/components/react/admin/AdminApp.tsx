@@ -1,4 +1,14 @@
 import React, { useEffect, useState } from "react";
+import {
+  FiBarChart2,
+  FiPackage,
+  FiFolder,
+  FiTag,
+  FiInbox,
+  FiUsers,
+  FiExternalLink,
+  FiLogOut,
+} from "react-icons/fi";
 import { AdminLogin } from "./AdminLogin";
 import { AdminAcceptInvite } from "./AdminAcceptInvite";
 import { DashboardView } from "./DashboardView";
@@ -21,7 +31,7 @@ export const AdminApp: React.FC = () => {
     // Check URL parameters for invitation token or tabs
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("invite");
+      const token = urlParams.get("invite") || urlParams.get("token");
       if (token) {
         setInviteToken(token);
         setLoading(false);
@@ -53,6 +63,36 @@ export const AdminApp: React.FC = () => {
         setLoading(false);
       });
   }, []);
+
+  // Sync back/forward browser navigation
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get("tab") || "dashboard";
+      setCurrentTab(tab);
+      const filter = params.get("filter") || undefined;
+      setInitialProductFilter(filter);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  // Update document title dynamically
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const tabTitles: Record<string, string> = {
+        dashboard: "Dashboard Overview",
+        products: "Products Catalogue",
+        categories: "Categories Hierarchy",
+        brands: "Brands & Manufacturers",
+        enquiries: "Customer Leads & Inquiries",
+        invitations: "Team & Invitations",
+      };
+      const title = tabTitles[currentTab] || "Admin Console";
+      document.title = `Naseer Hardware – ${title}`;
+    }
+  }, [currentTab]);
 
   const handleLogout = () => {
     clearTokens();
@@ -126,7 +166,7 @@ export const AdminApp: React.FC = () => {
             onClick={() => handleNavigate("dashboard")}
             className={`admin-nav-item ${currentTab === "dashboard" ? "active" : ""}`}
           >
-            <span>📊</span>
+            <FiBarChart2 style={{ fontSize: "1.15rem", flexShrink: 0 }} />
             <span>Dashboard Overview</span>
           </button>
 
@@ -134,7 +174,7 @@ export const AdminApp: React.FC = () => {
             onClick={() => handleNavigate("products")}
             className={`admin-nav-item ${currentTab === "products" ? "active" : ""}`}
           >
-            <span>📦</span>
+            <FiPackage style={{ fontSize: "1.15rem", flexShrink: 0 }} />
             <span>Products Catalogue</span>
           </button>
 
@@ -142,7 +182,7 @@ export const AdminApp: React.FC = () => {
             onClick={() => handleNavigate("categories")}
             className={`admin-nav-item ${currentTab === "categories" ? "active" : ""}`}
           >
-            <span>🗂️</span>
+            <FiFolder style={{ fontSize: "1.15rem", flexShrink: 0 }} />
             <span>Categories</span>
           </button>
 
@@ -150,7 +190,7 @@ export const AdminApp: React.FC = () => {
             onClick={() => handleNavigate("brands")}
             className={`admin-nav-item ${currentTab === "brands" ? "active" : ""}`}
           >
-            <span>🏷️</span>
+            <FiTag style={{ fontSize: "1.15rem", flexShrink: 0 }} />
             <span>Brands</span>
           </button>
 
@@ -159,7 +199,7 @@ export const AdminApp: React.FC = () => {
               onClick={() => handleNavigate("enquiries")}
               className={`admin-nav-item ${currentTab === "enquiries" ? "active" : ""}`}
             >
-              <span>📥</span>
+              <FiInbox style={{ fontSize: "1.15rem", flexShrink: 0 }} />
               <span>Enquiries Inbox</span>
             </button>
           )}
@@ -169,7 +209,7 @@ export const AdminApp: React.FC = () => {
               onClick={() => handleNavigate("invitations")}
               className={`admin-nav-item ${currentTab === "invitations" ? "active" : ""}`}
             >
-              <span>👥</span>
+              <FiUsers style={{ fontSize: "1.15rem", flexShrink: 0 }} />
               <span>Team & Invitations</span>
             </button>
           )}
@@ -185,9 +225,10 @@ export const AdminApp: React.FC = () => {
           <button
             onClick={handleLogout}
             className="btn-admin btn-admin-secondary btn-admin-sm"
-            style={{ width: "100%", marginTop: "12px", background: "#1F2937", color: "#D1D5DB", borderColor: "#374151" }}
+            style={{ width: "100%", marginTop: "12px", background: "#1F2937", color: "#D1D5DB", borderColor: "#374151", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
           >
-            Sign Out
+            <FiLogOut />
+            <span>Sign Out</span>
           </button>
         </div>
       </aside>
@@ -211,8 +252,10 @@ export const AdminApp: React.FC = () => {
               target="_blank"
               rel="noreferrer"
               className="btn-admin btn-admin-secondary btn-admin-sm"
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
             >
-              🌐 View Public Website ↗
+              <FiExternalLink />
+              <span>View Public Website</span>
             </a>
           </div>
         </header>

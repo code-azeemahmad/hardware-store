@@ -372,6 +372,12 @@ export async function apiListInvitations(): Promise<AdminInvitation[]> {
   return res.json();
 }
 
+export async function apiListTeamMembers(): Promise<AdminUser[]> {
+  const res = await fetchWithAuth("/api/v1/admin/invitations/team");
+  if (!res.ok) throw new Error("Failed to fetch team members");
+  return res.json();
+}
+
 export async function apiCreateInvitation(email: string, role: string): Promise<{ invitation: AdminInvitation; invitation_token: string; invite_url: string }> {
   const res = await fetchWithAuth("/api/v1/admin/invitations", {
     method: "POST",

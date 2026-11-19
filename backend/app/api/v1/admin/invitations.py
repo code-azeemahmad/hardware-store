@@ -79,7 +79,17 @@ def list_invitations(
     return db.query(AdminInvitation).order_by(AdminInvitation.created_at.desc()).all()
 
 
+@router.get("/team", response_model=list[UserRead])
+def list_team_members(
+    db: Session = Depends(get_db),
+    current_user: AdminUser = Depends(require_roles([AdminRole.SUPER_ADMIN])),
+):
+    """List all registered administrative staff members (Super Admin only)."""
+    return db.query(AdminUser).order_by(AdminUser.created_at.asc()).all()
+
+
 @router.delete("/{invitation_id}", status_code=status.HTTP_200_OK)
+@router.post("/{invitation_id}/revoke", status_code=status.HTTP_200_OK)
 def revoke_invitation(
     invitation_id: uuid.UUID,
     db: Session = Depends(get_db),

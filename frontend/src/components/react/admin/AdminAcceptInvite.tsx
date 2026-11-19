@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FiUserCheck, FiCheckCircle, FiAlertTriangle } from "react-icons/fi";
 import { apiAcceptInvite } from "./api";
 
 interface Props {
@@ -51,15 +52,25 @@ export const AdminAcceptInvite: React.FC<Props> = ({ token, onSuccess }) => {
     <div className="admin-auth-container">
       <div className="admin-auth-card">
         <div className="admin-auth-header">
-          <div style={{ fontSize: "2rem" }}>✉️</div>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
+            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(226, 27, 35, 0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <FiUserCheck style={{ fontSize: "1.75rem", color: "#E21B23" }} />
+            </div>
+          </div>
           <h1 className="admin-auth-title">Welcome to the Team</h1>
           <p className="admin-auth-subtitle">Activate Your Naseer Hardware Admin Account</p>
         </div>
 
-        {error && <div className="admin-alert admin-alert-error">{error}</div>}
+        {error && (
+          <div className="admin-alert admin-alert-error" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <FiAlertTriangle />
+            <span>{error}</span>
+          </div>
+        )}
         {success && (
-          <div className="admin-alert admin-alert-success">
-            Account activated successfully! Redirecting to login...
+          <div className="admin-alert admin-alert-success" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <FiCheckCircle />
+            <span>Account activated successfully! Redirecting to login...</span>
           </div>
         )}
 

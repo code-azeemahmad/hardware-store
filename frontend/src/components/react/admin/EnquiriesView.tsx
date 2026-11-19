@@ -1,4 +1,17 @@
 import React, { useEffect, useState } from "react";
+import {
+  FiSearch,
+  FiPhone,
+  FiFileText,
+  FiEye,
+  FiChevronLeft,
+  FiChevronRight,
+  FiTrash2,
+  FiX,
+  FiInbox,
+  FiPhoneCall,
+} from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { apiListEnquiries, apiUpdateEnquiryStatus, apiDeleteEnquiry } from "./api";
 import type { AdminEnquiry } from "./types";
 
@@ -65,16 +78,20 @@ export const EnquiriesView: React.FC = () => {
     <div>
       <div className="admin-action-bar">
         <div className="admin-filters">
-          <input
-            type="text"
-            className="admin-search-input"
-            placeholder="Search by customer name, phone, message..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
+          <div style={{ position: "relative", minWidth: "260px" }}>
+            <FiSearch style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", color: "#9CA3AF" }} />
+            <input
+              type="text"
+              className="admin-search-input"
+              style={{ paddingLeft: "36px", width: "100%" }}
+              placeholder="Search by customer name, phone, message..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
 
           <select
             className="admin-select"
@@ -144,14 +161,30 @@ export const EnquiriesView: React.FC = () => {
                   <td>
                     <a
                       href={`tel:${e.phone}`}
-                      style={{ color: "#E21B23", textDecoration: "none", fontWeight: 600 }}
+                      style={{ color: "#E21B23", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      {e.phone}
+                      <FiPhone />
+                      <span>{e.phone}</span>
                     </a>
                   </td>
                   <td>
-                    <span className="status-pill published">
-                      {e.channel === "whatsapp" ? "💬 WhatsApp" : e.channel === "call" ? "📞 Call" : "📝 Form"}
+                    <span className="status-pill published" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                      {e.channel === "whatsapp" ? (
+                        <>
+                          <FaWhatsapp style={{ color: "#25D366" }} />
+                          <span>WhatsApp</span>
+                        </>
+                      ) : e.channel === "call" ? (
+                        <>
+                          <FiPhone style={{ color: "#3B82F6" }} />
+                          <span>Call</span>
+                        </>
+                      ) : (
+                        <>
+                          <FiFileText style={{ color: "#6B7280" }} />
+                          <span>Form</span>
+                        </>
+                      )}
                     </span>
                   </td>
                   <td>{e.product_name_en || <span style={{ color: "#9CA3AF" }}>General Enquiry</span>}</td>
@@ -187,8 +220,10 @@ export const EnquiriesView: React.FC = () => {
                     <button
                       onClick={() => setSelectedEnquiry(e)}
                       className="btn-admin btn-admin-secondary btn-admin-sm"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      Details
+                      <FiEye />
+                      <span>Details</span>
                     </button>
                   </td>
                 </tr>
@@ -217,8 +252,10 @@ export const EnquiriesView: React.FC = () => {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
             className="btn-admin btn-admin-secondary btn-admin-sm"
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
           >
-            ← Previous
+            <FiChevronLeft />
+            <span>Previous</span>
           </button>
           <span style={{ padding: "4px 8px", fontWeight: 600 }}>
             Page {page} of {totalPages}
@@ -227,8 +264,10 @@ export const EnquiriesView: React.FC = () => {
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
             className="btn-admin btn-admin-secondary btn-admin-sm"
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
           >
-            Next →
+            <span>Next</span>
+            <FiChevronRight />
           </button>
         </div>
       </div>
@@ -238,12 +277,16 @@ export const EnquiriesView: React.FC = () => {
         <div className="admin-modal-overlay">
           <div className="admin-modal" style={{ maxWidth: "560px" }}>
             <div className="admin-modal-header">
-              <h3 className="admin-modal-title">Customer Inquiry Details</h3>
+              <h3 className="admin-modal-title" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                <FiInbox style={{ color: "#E21B23" }} />
+                <span>Customer Inquiry Details</span>
+              </h3>
               <button
                 onClick={() => setSelectedEnquiry(null)}
-                style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer" }}
+                style={{ background: "none", border: "none", fontSize: "1.25rem", cursor: "pointer", display: "inline-flex", alignItems: "center" }}
+                title="Close modal"
               >
-                ✕
+                <FiX />
               </button>
             </div>
 
@@ -255,12 +298,23 @@ export const EnquiriesView: React.FC = () => {
                 </div>
                 <div>
                   <div className="form-label">Phone Number</div>
-                  <div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                     <a
                       href={`tel:${selectedEnquiry.phone}`}
-                      style={{ color: "#E21B23", fontWeight: 700, fontSize: "1rem", textDecoration: "none" }}
+                      style={{ color: "#E21B23", fontWeight: 700, fontSize: "1rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "6px" }}
                     >
-                      {selectedEnquiry.phone}
+                      <FiPhoneCall />
+                      <span>{selectedEnquiry.phone}</span>
+                    </a>
+                    <a
+                      href={`https://wa.me/92${selectedEnquiry.phone.replace(/\D/g, '').replace(/^0/, '')}?text=${encodeURIComponent('Hi, regarding your enquiry on Naseer Hardware...')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-admin btn-admin-secondary btn-admin-sm"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#25D366", borderColor: "#25D366", marginTop: "4px", width: "fit-content" }}
+                    >
+                      <FaWhatsapp style={{ color: "#25D366" }} />
+                      <span>WhatsApp Customer</span>
                     </a>
                   </div>
                 </div>
@@ -334,16 +388,19 @@ export const EnquiriesView: React.FC = () => {
                 type="button"
                 onClick={() => handleDelete(selectedEnquiry.id)}
                 className="btn-admin btn-admin-danger"
-                style={{ marginRight: "auto" }}
+                style={{ marginRight: "auto", display: "inline-flex", alignItems: "center", gap: "6px" }}
               >
-                Delete Record
+                <FiTrash2 />
+                <span>Delete Record</span>
               </button>
               <button
                 type="button"
                 onClick={() => setSelectedEnquiry(null)}
                 className="btn-admin btn-admin-secondary"
+                style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
               >
-                Close
+                <FiX />
+                <span>Close</span>
               </button>
             </div>
           </div>

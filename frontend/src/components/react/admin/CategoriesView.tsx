@@ -1,5 +1,19 @@
 import React, { useEffect, useState } from "react";
 import {
+  FiPlus,
+  FiEdit2,
+  FiEdit3,
+  FiTrash2,
+  FiCheck,
+  FiAlertCircle,
+  FiEye,
+  FiEyeOff,
+  FiX,
+  FiSave,
+  FiPlusCircle,
+  FiFolder,
+} from "react-icons/fi";
+import {
   apiListCategories,
   apiCreateCategory,
   apiUpdateCategory,
@@ -147,8 +161,13 @@ export const CategoriesView: React.FC = () => {
           </select>
         </div>
 
-        <button onClick={handleOpenCreate} className="btn-admin btn-admin-primary">
-          + Add Category
+        <button
+          onClick={handleOpenCreate}
+          className="btn-admin btn-admin-primary"
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+        >
+          <FiPlus />
+          <span>Add Category</span>
         </button>
       </div>
 
@@ -182,7 +201,10 @@ export const CategoriesView: React.FC = () => {
               categories.map((c) => (
                 <tr key={c.id}>
                   <td>
-                    <div style={{ fontWeight: 600, color: "#111111" }}>{c.name_en}</div>
+                    <div style={{ fontWeight: 600, color: "#111111", display: "flex", alignItems: "center", gap: "6px" }}>
+                      <FiFolder style={{ color: "#E21B23" }} />
+                      <span>{c.name_en}</span>
+                    </div>
                     <div
                       dir="rtl"
                       style={{
@@ -201,9 +223,15 @@ export const CategoriesView: React.FC = () => {
                   </td>
                   <td>
                     {c.translation_status === "complete" ? (
-                      <span className="status-pill complete">🟢 Complete</span>
+                      <span className="status-pill complete" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                        <FiCheck />
+                        <span>Complete</span>
+                      </span>
                     ) : (
-                      <span className="status-pill missing-ur">🟡 Missing UR</span>
+                      <span className="status-pill missing-ur" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                        <FiAlertCircle />
+                        <span>Missing UR</span>
+                      </span>
                     )}
                   </td>
                   <td>
@@ -211,24 +239,28 @@ export const CategoriesView: React.FC = () => {
                       type="button"
                       onClick={() => handleTogglePublish(c)}
                       className={`status-pill ${c.is_published ? "complete" : "draft"}`}
-                      style={{ cursor: "pointer", border: "none" }}
+                      style={{ cursor: "pointer", border: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      {c.is_published ? "✓ Live" : "Hidden"}
+                      {c.is_published ? <FiEye /> : <FiEyeOff />}
+                      <span>{c.is_published ? "Live" : "Hidden"}</span>
                     </button>
                   </td>
                   <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
                     <button
                       onClick={() => handleOpenEdit(c)}
                       className="btn-admin btn-admin-secondary btn-admin-sm"
-                      style={{ marginRight: "6px" }}
+                      style={{ marginRight: "6px", display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      Edit
+                      <FiEdit2 />
+                      <span>Edit</span>
                     </button>
                     <button
                       onClick={() => handleDelete(c)}
                       className="btn-admin btn-admin-danger btn-admin-sm"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      Delete
+                      <FiTrash2 />
+                      <span>Delete</span>
                     </button>
                   </td>
                 </tr>
@@ -243,14 +275,24 @@ export const CategoriesView: React.FC = () => {
         <div className="admin-modal-overlay">
           <div className="admin-modal" style={{ maxWidth: "600px" }}>
             <div className="admin-modal-header">
-              <h3 className="admin-modal-title">
-                {editingCategory ? `Edit Category: ${editingCategory.name_en}` : "Create Category"}
+              <h3 className="admin-modal-title" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                {editingCategory ? (
+                  <>
+                    <FiEdit3 style={{ color: "#E21B23" }} />
+                    <span>Edit Category: {editingCategory.name_en}</span>
+                  </>
+                ) : (
+                  <>
+                    <FiPlusCircle style={{ color: "#E21B23" }} />
+                    <span>Create Category</span>
+                  </>
+                )}
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer" }}
+                style={{ background: "none", border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", color: "#6B7280" }}
               >
-                ✕
+                <FiX style={{ fontSize: "1.25rem" }} />
               </button>
             </div>
 
@@ -363,11 +405,30 @@ export const CategoriesView: React.FC = () => {
                   onClick={() => setIsModalOpen(false)}
                   className="btn-admin btn-admin-secondary"
                   disabled={isSaving}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
                 >
-                  Cancel
+                  <FiX />
+                  <span>Cancel</span>
                 </button>
-                <button type="submit" className="btn-admin btn-admin-primary" disabled={isSaving}>
-                  {isSaving ? "Saving..." : editingCategory ? "Save Changes" : "Create Category"}
+                <button
+                  type="submit"
+                  className="btn-admin btn-admin-primary"
+                  disabled={isSaving}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                  {isSaving ? (
+                    "Saving..."
+                  ) : editingCategory ? (
+                    <>
+                      <FiSave />
+                      <span>Save Changes</span>
+                    </>
+                  ) : (
+                    <>
+                      <FiPlus />
+                      <span>Create Category</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
