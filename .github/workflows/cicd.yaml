@@ -60,13 +60,19 @@ jobs:
     name: Build & Publish Images to GHCR
     needs: test-and-verify
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Log in to GitHub Container Registry (GHCR)
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push Immutable Container Images
         run: |
@@ -89,6 +95,9 @@ jobs:
     name: Deploy to EC2 via AWS SSM
     needs: build-and-publish
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Configure AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@e3ddf4a3c9e70bc52b4fa0e45cb0dc2c8c4b574e
