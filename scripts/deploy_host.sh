@@ -85,7 +85,11 @@ fi
 echo "[2/7] Creating pre-deployment database and media snapshot..."
 mkdir -p "${DEPLOY_DIR}/backups"
 PRE_DEPLOY_BACKUP="${DEPLOY_DIR}/backups/pre-deploy-${DEPLOY_SHA}"
-bash "${DEPLOY_DIR}/scripts/backup.sh" "${PRE_DEPLOY_BACKUP}"
+if docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" ps --services --filter "status=running" | grep -q "^hardware-postgres$"; then
+    bash "${DEPLOY_DIR}/scripts/backup.sh" "${PRE_DEPLOY_BACKUP}"
+else
+    echo "Notice: hardware-postgres is not running. Skipping pre-deployment backup."
+fi
 
 # 5. Pull Immutable Images from GHCR
 echo "[3/7] Pulling immutable container images from GHCR for tag ${DEPLOY_SHA}..."
@@ -93,21 +97,40 @@ if [ "${PULL_IMAGES:-true}" = "true" ]; then
     docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" pull hardware-backend hardware-frontend || echo "Warning: Pull skipped or using local images."
 fi
 
-# 6. Apply Database Migrations (Run inside temporary container)
-echo "[4/7] Applying Alembic database migrations..."
-if ! docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" run --rm --no-deps hardware-backend alembic upgrade head; then
+# Ensure PostgreSQL is running and healthy before running migrations
+echo "[4/7] Ensuring PostgreSQL is running and healthy..."
+docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" up -d hardware-postgres
+
+until [ "$(docker inspect -f '{{.State.Health.Status}}' hardware-postgres 2>/dev/null)" = "healthy" ]; do
+    echo "Waiting for hardware-postgres to become healthy..."
+    sleep 2
+done
+
+# Initialize frontend deploy directory if missing
+if [ ! -e "${DEPLOY_DIR}/frontend/deploy/current" ]; then
+    echo "Initializing frontend/deploy release directory from container..."
+    mkdir -p "${DEPLOY_DIR}/frontend/deploy/releases/release_init"
+    docker run --rm -v "${DEPLOY_DIR}/frontend/deploy/releases/release_init:/target" \
+        "ghcr.io/${GHCR_OWNER}/hardware-frontend:${DEPLOY_SHA}" cp -a /usr/share/nginx/html/. /target/ || true
+    cd "${DEPLOY_DIR}/frontend/deploy" && ln -sfn releases/release_init current
+    cd "${DEPLOY_DIR}"
+fi
+
+# 6. Apply Database Migrations
+echo "[5/7] Applying Alembic database migrations..."
+if ! docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" run --rm hardware-backend alembic upgrade head; then
     echo "CRITICAL: Database migration failed! Aborting container rollout."
     echo "Database has not been rolled back automatically to prevent data loss. Triage required."
     exit 1
 fi
 
 # 7. Update Running Application Containers (Tracking Actual Downtime)
-echo "[5/7] Recreating application containers..."
+echo "[6/7] Recreating application containers..."
 RECREATE_START=$(date +%s)
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" up -d --remove-orphans
 
 # 8. Run Deep Health Checks
-echo "[6/7] Verifying container health..."
+echo "[7/7] Verifying container health..."
 sleep 8
 
 HEALTH_OK=true
@@ -122,8 +145,8 @@ else
         HEALTH_OK=false
     fi
 
-    # Check frontend public reverse proxy ingress
-    if ! curl -sf -k http://localhost/ > /dev/null; then
+    # Check frontend public reverse proxy ingress (accepts 200 or 301/302 HTTPS redirect)
+    if ! curl -sf -o /dev/null -w "%{http_code}" http://localhost/ | grep -qE "^(200|301|302)$"; then
         echo "Frontend public HTTP health check FAILED."
         HEALTH_OK=false
     fi
