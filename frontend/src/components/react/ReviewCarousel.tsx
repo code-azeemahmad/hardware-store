@@ -144,7 +144,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
         {/* CTA Button matching reference */}
         <div className="reviews-footer">
           <a
-            href="https://maps.app.goo.gl/xmLZoo4WbL5xnffy8"
+            href="https://maps.app.goo.gl/ebSodsY4LkVm8H9d9"
             target="_blank"
             rel="noopener noreferrer"
             className="google-reviews-btn"

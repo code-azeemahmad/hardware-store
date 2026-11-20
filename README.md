@@ -148,7 +148,7 @@ The application reads configuration from `.env` in development and from environm
 | `STORE_WHATSAPP` | Optional | Store WhatsApp contact number without spaces or plus. | `923177030847` |
 | `STORE_ADDRESS_EN` | Optional | Showroom physical location in English. | `Near New Cantt Hospital, Canal Road, Sargodha, Pakistan` |
 | `STORE_ADDRESS_UR` | Optional | Showroom physical location in Urdu. | `نزد نیو کینٹ ہسپتال کینال روڈ سرگودھا` |
-| `STORE_MAPS_URL` | Optional | Google Maps place profile URL. | `https://maps.app.goo.gl/xmLZoo4WbL5xnffy8` |
+| `STORE_MAPS_URL` | Optional | Google Maps place profile URL. | `https://maps.app.goo.gl/ebSodsY4LkVm8H9d9` |
 
 ### Running in development
 
@@ -358,7 +358,7 @@ This project does not currently contain a `LICENSE` file. All rights are reserve
 
 - **Business Name:** Naseer Plywood & Hardware
 - **Physical Address:** Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Pakistan
-- **Google Maps Location:** [https://maps.app.goo.gl/xmLZoo4WbL5xnffy8](https://maps.app.goo.gl/xmLZoo4WbL5xnffy8)
+- **Google Maps Location:** [https://maps.app.goo.gl/ebSodsY4LkVm8H9d9](https://maps.app.goo.gl/ebSodsY4LkVm8H9d9)
 - **Direct Showroom Telephone:** 0304-5030046 / 0317-7030847
 - **WhatsApp Enquiries:** +92 317 7030847
 <!-- TODO: confirm live production domain -->

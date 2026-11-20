@@ -67,7 +67,7 @@ class Settings(BaseSettings):
     STORE_WHATSAPP: str = "923177030847"
     STORE_ADDRESS_EN: str = "Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Pakistan"
     STORE_ADDRESS_UR: str = "نزد نیو کینٹ ہسپتال کینال روڈ / جنرل بس اسٹینڈ روڈ، سرگودھا، پاکستان"
-    STORE_MAPS_URL: str = "https://maps.app.goo.gl/xmLZoo4WbL5xnffy8"
+    STORE_MAPS_URL: str = "https://maps.app.goo.gl/ebSodsY4LkVm8H9d9"
 
 
 settings = Settings()
