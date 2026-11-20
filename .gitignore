@@ -47,10 +47,11 @@ deploy/
 # Backups
 backups/
 
-# Persistent media & uploads (local)
-media/
-data/
-uploads/
+# Persistent media & uploads (local repository root only)
+/media/
+/data/
+/uploads/
+!frontend/src/data/
 
 # IDE / OS
 .DS_Store
