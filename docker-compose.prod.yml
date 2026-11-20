@@ -39,6 +39,7 @@ services:
   # ----------------------------------------------------------------------------
   hardware-backend:
     container_name: hardware-backend
+    image: ${ECR_REGISTRY:-hardware-store}/hardware-backend:${IMAGE_TAG:-latest}
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -81,6 +82,7 @@ services:
   # ----------------------------------------------------------------------------
   hardware-frontend:
     container_name: hardware-frontend
+    image: ${ECR_REGISTRY:-hardware-store}/hardware-frontend:${IMAGE_TAG:-latest}
     build:
       context: ./frontend
       dockerfile: Dockerfile

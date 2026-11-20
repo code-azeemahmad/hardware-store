@@ -31,6 +31,7 @@ from app.schemas.product import (
     ProductVariantRead,
     VariantInput,
 )
+from app.api.v1.admin.media import cleanup_unreferenced_media_file
 
 router = APIRouter(prefix="/products", tags=["admin-products"])
 
@@ -314,8 +315,13 @@ def delete_product(
     if not product:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
 
+    image_urls = [img.image_url for img in product.images]
     db.delete(product)
     db.commit()
+
+    for url in image_urls:
+        cleanup_unreferenced_media_file(url, db)
+
     return {"message": "Product deleted successfully"}
 
 
@@ -393,8 +399,11 @@ def remove_product_image(
     if not img:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Image not found")
 
+    target_url = img.image_url
     db.delete(img)
     db.commit()
+
+    cleanup_unreferenced_media_file(target_url, db)
     return {"message": "Image removed successfully"}
 
 
