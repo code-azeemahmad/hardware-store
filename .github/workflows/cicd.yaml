@@ -117,7 +117,7 @@ jobs:
             --instance-ids "${TARGET_INSTANCE}" \
             --document-name "AWS-RunShellScript" \
             --comment "Deploy commit ${{ github.sha }} via GHCR" \
-            --parameters "commands=[\"sudo -u ubuntu /opt/hardware-store/scripts/deploy_host.sh ${{ github.sha }}\"]" \
+            --parameters "commands=[\"sudo -H -u ubuntu /opt/hardware-store/scripts/deploy_host.sh ${{ github.sha }}\"]" \
             --region "${TARGET_REGION}" \
             --output text \
             --query "Command.CommandId")
