@@ -24,11 +24,11 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ currentLang,
         style={{
           padding: '0.25rem 0.6rem',
           borderRadius: '4px',
-          border: '1px solid var(--color-border)',
+          border: '1px solid var(--border)',
           fontWeight: 600,
-          color: 'var(--color-text-dark)',
+          color: 'var(--text)',
           textDecoration: 'none',
-          backgroundColor: 'var(--color-surface-muted)',
+          backgroundColor: 'var(--bg-alt)',
         }}
         title={currentLang === 'en' ? 'اردو میں دیکھیں' : 'Switch to English'}
       >

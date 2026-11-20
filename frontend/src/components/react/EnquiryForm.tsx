@@ -286,26 +286,26 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
 
       <style>{`
         .enquiry-card {
-          background-color: var(--color-surface-white);
-          border: 1px solid var(--color-border);
+          background-color: var(--surface);
+          border: 1px solid var(--border);
           border-radius: var(--radius-lg);
           padding: 2rem;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+          box-shadow: var(--shadow-sm);
         }
         .enquiry-header {
           margin-bottom: 1.5rem;
-          border-bottom: 1px solid var(--color-border);
+          border-bottom: 1px solid var(--border);
           padding-bottom: 1rem;
         }
         .enquiry-title {
           font-size: 1.35rem;
           font-weight: 700;
-          color: var(--color-surface-black);
+          color: var(--text);
           margin-bottom: 0.35rem;
         }
         .enquiry-subtitle {
           font-size: 0.9rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           line-height: 1.4;
         }
         .enquiry-form {
@@ -331,27 +331,27 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
         .form-label {
           font-size: 0.85rem;
           font-weight: 600;
-          color: var(--color-surface-black);
+          color: var(--text);
         }
         .form-input, .form-textarea {
           width: 100%;
           padding: 0.75rem 0.9rem;
           font-size: 0.925rem;
           font-family: inherit;
-          color: var(--color-surface-black);
-          background-color: var(--color-surface-light);
-          border: 1px solid var(--color-border);
+          color: var(--text);
+          background-color: var(--bg-alt);
+          border: 1px solid var(--border);
           border-radius: var(--radius-md);
           outline: none;
           transition: border-color var(--transition-fast), background-color var(--transition-fast);
         }
         .form-input:focus, .form-textarea:focus {
-          border-color: var(--color-primary-red);
-          background-color: var(--color-surface-white);
+          border-color: var(--red-text);
+          background-color: var(--surface);
         }
         .readonly-input {
-          background-color: #f1f5f9;
-          color: #475569;
+          background-color: var(--bg-alt);
+          color: var(--text-muted);
           font-weight: 600;
         }
         .form-actions {
@@ -364,8 +364,8 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
         .submit-btn {
           flex: 1;
           min-width: 180px;
-          background-color: var(--color-primary-red);
-          color: #ffffff;
+          background-color: var(--red);
+          color: var(--on-red);
           padding: 0.85rem 1.5rem;
           font-size: 0.95rem;
           font-weight: 700;
@@ -375,7 +375,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           transition: background-color var(--transition-fast), transform var(--transition-fast);
         }
         .submit-btn:hover:not(:disabled) {
-          background-color: #c7161d;
+          background-color: var(--color-primary-red-hover);
           transform: translateY(-1px);
         }
         .submit-btn:disabled {
@@ -387,7 +387,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           align-items: center;
           gap: 0.5rem;
           padding: 0.85rem 1.25rem;
-          background-color: var(--color-whatsapp);
+          background-color: var(--green-whatsapp);
           color: #ffffff;
           font-size: 0.9rem;
           font-weight: 600;
@@ -404,9 +404,9 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           font-size: 0.875rem;
         }
         .enquiry-alert.error {
-          background-color: #fee2e2;
-          color: #b91c1c;
-          border: 1px solid #f87171;
+          background-color: rgba(239, 68, 68, 0.15);
+          color: #f87171;
+          border: 1px solid rgba(248, 113, 113, 0.3);
         }
         .enquiry-success {
           text-align: center;
@@ -418,19 +418,19 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           justify-content: center;
           width: 64px;
           height: 64px;
-          background-color: #dcfce7;
+          background-color: rgba(34, 197, 94, 0.15);
           border-radius: 50%;
           margin-bottom: 1rem;
         }
         .success-heading {
           font-size: 1.25rem;
           font-weight: 700;
-          color: #15803d;
+          color: #22c55e;
           margin-bottom: 0.5rem;
         }
         .success-text {
           font-size: 0.95rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           margin-bottom: 1.5rem;
         }
         .whatsapp-followup-btn {
@@ -439,7 +439,7 @@ export const EnquiryForm: React.FC<EnquiryFormProps> = ({
           justify-content: center;
           gap: 0.5rem;
           padding: 0.75rem 1.5rem;
-          background-color: var(--color-whatsapp);
+          background-color: var(--green-whatsapp);
           color: #ffffff;
           font-weight: 700;
           font-size: 0.95rem;

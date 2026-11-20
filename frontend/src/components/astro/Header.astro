@@ -3,6 +3,7 @@ import { DesktopMegaMenu } from '../react/DesktopMegaMenu';
 import { MobileNavDrawer } from '../react/MobileNavDrawer';
 import { SearchModal } from '../react/SearchModal';
 import { LanguageSwitcher } from '../react/LanguageSwitcher';
+import { ThemeToggle } from '../react/ThemeToggle';
 import { FaWhatsapp } from 'react-icons/fa';
 
 interface Props {
@@ -66,13 +67,16 @@ const currentPath = Astro.url.pathname;
       <DesktopMegaMenu client:load lang={lang} currentPath={currentPath} />
     </div>
 
-    <!-- Right: Header Actions (Search, Language Switcher, WhatsApp) -->
+    <!-- Right: Header Actions (Search, Language Switcher, Theme Toggle, WhatsApp) -->
     <div class="header-right">
       <!-- Search Modal Island -->
       <SearchModal client:load lang={lang} />
 
       <!-- Language Switcher Island -->
       <LanguageSwitcher client:load currentLang={lang} currentPath={currentPath} />
+
+      <!-- Theme Toggle Island -->
+      <ThemeToggle client:load lang={lang} />
 
       <!-- Direct WhatsApp Action Button -->
       <a
@@ -94,8 +98,8 @@ const currentPath = Astro.url.pathname;
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: var(--color-surface-white);
-    border-bottom: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
   }
 
@@ -142,7 +146,7 @@ const currentPath = Astro.url.pathname;
   .brand-title {
     font-size: 1.05rem;
     font-weight: 800;
-    color: var(--color-secondary-black);
+    color: var(--text);
     letter-spacing: 0.5px;
     line-height: 1.1;
   }
@@ -150,7 +154,7 @@ const currentPath = Astro.url.pathname;
   .brand-subtitle {
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-primary-red);
+    color: var(--red-text);
     letter-spacing: 1px;
   }
 

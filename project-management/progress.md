@@ -162,6 +162,23 @@ Last updated: 2026-11-18
     - Expanded sitemap to **216 canonical URLs**.
     - Verified all 81 product pages, image URLs, and category listing pages return `HTTP 200 OK`.
 
+- [x] **Dark Theme Implementation (Bilingual Naseer Plywood & Hardware Website):**
+  - *Design Tokens & CSS Variables:* Defined comprehensive `:root` (light) and `:root[data-theme="dark"]` tokens in `frontend/src/styles/variables.css` (`--bg`, `--bg-alt`, `--surface`, `--border`, `--text`, `--text-muted`, `--red`, `--red-text`, `--on-red`, `--topbar`, `--btn-dark-bg`, `--btn-dark-text`, `--btn-dark-border`, `--image-bg`, `--green-whatsapp`, `--shadow-sm/md/lg`), with identical duplicate in `@media (prefers-color-scheme: dark):root:not([data-theme="light"])`.
+  - *Smooth Transitions & Component Rules:* Updated `frontend/src/styles/global.css` with non-layout color transitions (`background-color 0.2s, color 0.2s, border-color 0.2s`) wrapped in `@media (prefers-reduced-motion: no-preference)`, dark theme card hover surface (`#242424` / `#444444`), plywood banner dark surface styling with 1px border and 3px red left edge (`border-inline-start`), image area styling with `filter: brightness(0.95)`, and accessible focus rings with `--red-text`.
+  - *Accessible Theme Toggle Island:* Implemented `frontend/src/components/react/ThemeToggle.tsx` with Sun and Moon SVG icons, dynamic `aria-label` ("Switch to dark theme" / "Switch to light theme" and Urdu equivalents), `aria-pressed`, `localStorage` persistence under key `theme` (try/catch wrapped), system preference listener, and dynamic `<meta name="theme-color">` updates (`#ffffff` light, `#0e0e0e` dark). Mounted in `Header.astro` between `LanguageSwitcher` and WhatsApp action.
+  - *FOUT Prevention:* Inserted early synchronous inline execution script in `<head>` of `frontend/src/layouts/BaseLayout.astro` before stylesheets execute, applying `data-theme` immediately based on `localStorage` or `matchMedia('(prefers-color-scheme: dark)')`.
+  - *Token Replacement Across Codebase:* Replaced hardcoded color hex values and classes across all Astro templates and React components (English and Urdu) with tokens:
+    - Components: `Header.astro`, `AnnouncementBar.astro`, `ProductCard.astro`, `ProductGrid.astro`, `ShowroomLocation.astro`, `Footer.astro`, `SocialBar.astro`, `PlywoodPromoBanner.astro`, `DesktopMegaMenu.tsx`, `MobileNavDrawer.tsx`, `SearchModal.tsx`, `SearchCatalogue.tsx`, `ReviewCarousel.tsx`, `EnquiryForm.tsx`.
+    - Pages (EN & UR): `index.astro`, `[category]/index.astro`, `[category]/[subcategory].astro`, `products/[slug].astro`, `about.astro`, `contact.astro`, `search.astro`, `brands/index.astro`, `blog/index.astro`, `blog/[slug].astro`, `404.astro`.
+  - *Contrast & Accessibility Verification:* Red text on dark backgrounds uses `--red-text` (`#ff4650`), yielding > 5:1 contrast against dark surfaces. All normal text >= 4.5:1, large text >= 3:1.
+  - *Automated Headless Chrome Verification:* Automated test suite executed across 14 pages at 375px mobile and 1280px desktop in dark and light modes, verifying:
+    - OS dark preference respected by default (`data-theme="dark"`, body `rgb(14, 14, 14)`, meta `#0e0e0e`): PASS
+    - OS light preference respected by default (`data-theme="light"`, body `rgb(255, 255, 255)`, meta `#ffffff`): PASS
+    - Manual toggle switch and persistence in `localStorage`: PASS
+    - Page reload persistence with zero FOUT: PASS
+    - All 14 pages inspected: 0 horizontal overflow, 0 unstyled white blocks, 0 raw low-contrast red text: PASS
+  - *Build & Deployment:* Ran `npm run build` compiling 238 static bilingual pages in 2.68s, deployed to `frontend/deploy/current` via atomic release pointer swap (`release_20261119_202725`). All 105 backend pytest tests pass.
+
 ## In progress
 
 - Final Project Sign-off & Handover.

@@ -165,7 +165,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
         .search-header-btn {
           background: none;
           border: none;
-          color: var(--color-text-dark);
+          color: var(--text);
           cursor: pointer;
           display: flex;
           align-items: center;
@@ -176,14 +176,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
         }
 
         .search-header-btn:hover {
-          background-color: var(--color-surface-muted);
-          color: var(--color-primary-red);
+          background-color: var(--bg-alt);
+          color: var(--red-text);
         }
 
         .search-modal-backdrop {
           position: fixed;
           inset: 0;
-          background-color: rgba(0, 0, 0, 0.6);
+          background-color: rgba(0, 0, 0, 0.65);
           backdrop-filter: blur(3px);
           z-index: 99999;
           display: flex;
@@ -195,9 +195,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
         .search-modal-dialog {
           width: 90%;
           max-width: 620px;
-          background-color: #FFFFFF;
+          background-color: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 10px;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+          box-shadow: var(--shadow-lg);
           overflow: hidden;
           animation: searchSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -218,7 +219,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
           align-items: center;
           gap: 0.75rem;
           padding: 1.15rem 1.5rem;
-          border-bottom: 1px solid var(--color-border);
+          border-bottom: 1px solid var(--border);
         }
 
         .search-input-field {
@@ -226,18 +227,19 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
           font-size: 1.05rem;
           border: none;
           outline: none;
-          color: var(--color-secondary-black);
+          background: transparent;
+          color: var(--text);
           font-family: inherit;
         }
 
         .search-close-icon {
           font-size: 0.75rem;
           font-weight: 700;
-          color: #888;
-          background-color: #EEE;
+          color: var(--text-muted);
+          background-color: var(--bg-alt);
+          border: 1px solid var(--border);
           padding: 0.2rem 0.5rem;
           border-radius: 4px;
-          border: none;
           cursor: pointer;
         }
 
@@ -255,7 +257,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
           font-size: 0.8125rem;
           font-weight: 700;
           text-transform: uppercase;
-          color: #888;
+          color: var(--text-muted);
           margin-bottom: 0.75rem;
           display: block;
         }
@@ -270,16 +272,18 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
           font-size: 0.875rem;
           font-weight: 600;
           padding: 0.4rem 0.85rem;
-          background-color: var(--color-surface-muted);
-          color: var(--color-text-dark);
+          background-color: var(--bg-alt);
+          color: var(--text);
+          border: 1px solid var(--border);
           border-radius: 20px;
           text-decoration: none;
-          transition: background-color var(--transition-fast), color var(--transition-fast);
+          transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
         }
 
         .quick-pill:hover {
-          background-color: var(--color-primary-red);
-          color: #FFFFFF;
+          background-color: var(--red);
+          color: var(--on-red);
+          border-color: var(--red);
         }
 
         .search-items-list {
@@ -291,7 +295,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
         }
 
         .search-item {
-          border-bottom: 1px solid #F2F2F2;
+          border-bottom: 1px solid var(--border);
         }
 
         .search-item-link {
@@ -300,12 +304,12 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
           justify-content: space-between;
           padding: 0.85rem 0.25rem;
           text-decoration: none;
-          color: var(--color-secondary-black);
-          transition: background-color var(--transition-fast);
+          color: var(--text);
+          transition: color var(--transition-fast);
         }
 
         .search-item-link:hover {
-          color: var(--color-primary-red);
+          color: var(--red-text);
         }
 
         .item-text {
@@ -323,20 +327,21 @@ export const SearchModal: React.FC<SearchModalProps> = ({ lang }) => {
           font-size: 0.75rem;
           font-weight: 700;
           padding: 0.15rem 0.5rem;
-          background-color: #EEE;
+          background-color: var(--bg-alt);
+          border: 1px solid var(--border);
           border-radius: 4px;
-          color: #555;
+          color: var(--text-muted);
         }
 
         .item-arrow {
           font-weight: 700;
-          color: #BBB;
+          color: var(--text-muted);
         }
 
         .search-empty-state {
           padding: 2rem 0;
           text-align: center;
-          color: #777;
+          color: var(--text-muted);
           font-size: 0.95rem;
         }
       `}</style>

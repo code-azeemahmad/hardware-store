@@ -74,8 +74,8 @@ const { lang = 'en' } = Astro.props;
 <style>
   .social-bar-section {
     padding-block: 3.5rem;
-    background-color: var(--color-surface-white);
-    border-top: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border-top: 1px solid var(--border);
   }
 
   .social-wrapper {
@@ -85,7 +85,7 @@ const { lang = 'en' } = Astro.props;
   .social-heading {
     font-size: 1.35rem;
     font-weight: 800;
-    color: var(--color-secondary-black);
+    color: var(--text);
     margin-bottom: 1.5rem;
   }
 
@@ -113,7 +113,7 @@ const { lang = 'en' } = Astro.props;
   }
 
   .wa-circle {
-    background-color: var(--color-whatsapp);
+    background-color: var(--green-whatsapp);
   }
 
   .ig-circle {
@@ -125,6 +125,8 @@ const { lang = 'en' } = Astro.props;
   }
 
   .phone-circle {
-    background-color: var(--color-secondary-black);
+    background-color: var(--btn-dark-bg);
+    color: var(--btn-dark-text);
+    border: 1px solid var(--btn-dark-border, transparent);
   }
 </style>

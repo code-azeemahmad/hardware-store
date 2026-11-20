@@ -105,19 +105,19 @@ const breadcrumbs = [
     align-items: center;
     gap: 0.5rem;
     font-size: 0.95rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     margin-bottom: 2rem;
   }
   .breadcrumb a {
-    color: var(--color-surface-black);
+    color: var(--text);
     text-decoration: none;
     font-weight: 600;
   }
   .breadcrumb a:hover {
-    color: var(--color-primary-red);
+    color: var(--red-text);
   }
   .breadcrumb .sep {
-    color: var(--color-border-hover);
+    color: var(--border);
   }
   .brands-header {
     text-align: center;
@@ -128,8 +128,9 @@ const breadcrumbs = [
     display: inline-block;
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--color-primary-red);
-    background-color: #fee2e2;
+    color: var(--red-text);
+    background-color: rgba(228, 30, 38, 0.12);
+    border: 1px solid rgba(255, 70, 80, 0.25);
     padding: 0.35rem 0.85rem;
     border-radius: var(--radius-full);
     margin-bottom: 0.75rem;
@@ -137,18 +138,18 @@ const breadcrumbs = [
   .page-title {
     font-size: 2.65rem;
     font-weight: 800;
-    color: var(--color-surface-black);
+    color: var(--text);
     margin-bottom: 0.5rem;
   }
   .red-line {
     width: 60px;
     height: 3px;
-    background-color: var(--color-primary-red);
+    background-color: var(--red);
     margin: 0.75rem auto 1.5rem;
   }
   .page-subtitle {
     font-size: 1.15rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     line-height: 1.8;
   }
   .brands-grid {
@@ -168,8 +169,8 @@ const breadcrumbs = [
     }
   }
   .brand-card {
-    background-color: var(--color-surface-white);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 2rem;
     display: flex;
@@ -179,8 +180,8 @@ const breadcrumbs = [
   }
   .brand-card:hover {
     transform: translateY(-3px);
-    border-color: var(--color-primary-red);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border-color: var(--red-text);
+    box-shadow: var(--shadow-md);
   }
   .brand-card-header {
     display: flex;
@@ -191,8 +192,9 @@ const breadcrumbs = [
   .brand-avatar {
     width: 52px;
     height: 52px;
-    background-color: var(--color-surface-black);
-    color: #ffffff;
+    background-color: var(--btn-dark-bg);
+    color: var(--btn-dark-text);
+    border: 1px solid var(--border);
     font-size: 1.15rem;
     font-weight: 800;
     border-radius: var(--radius-sm);
@@ -204,18 +206,18 @@ const breadcrumbs = [
   .brand-name {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-surface-black);
+    color: var(--text);
     line-height: 1.3;
     margin-bottom: 0.25rem;
   }
   .brand-cat {
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--color-primary-red);
+    color: var(--red-text);
   }
   .brand-desc {
     font-size: 1rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     line-height: 1.7;
     margin-bottom: 1.5rem;
   }
@@ -224,17 +226,17 @@ const breadcrumbs = [
     align-items: center;
     justify-content: space-between;
     padding-top: 1rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--border);
     font-size: 0.9rem;
   }
   .brand-origin {
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
   }
   .brand-wa-link {
-    color: var(--color-whatsapp);
+    color: var(--green-whatsapp);
     font-weight: 700;
     text-decoration: none;
   }
@@ -242,8 +244,8 @@ const breadcrumbs = [
     text-decoration: underline;
   }
   .brands-trust-banner {
-    background-color: var(--color-surface-light);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 3rem 2rem;
     text-align: center;
@@ -251,19 +253,19 @@ const breadcrumbs = [
   .brands-trust-banner h2 {
     font-size: 1.85rem;
     font-weight: 800;
-    color: var(--color-surface-black);
+    color: var(--text);
     margin-bottom: 0.75rem;
   }
   .brands-trust-banner p {
     font-size: 1.1rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     max-width: 650px;
     margin: 0 auto 1.75rem;
     line-height: 1.8;
   }
   .btn-wa {
     display: inline-flex;
-    background-color: var(--color-whatsapp);
+    background-color: var(--green-whatsapp);
     color: #ffffff;
     font-weight: 700;
     padding: 0.85rem 1.75rem;

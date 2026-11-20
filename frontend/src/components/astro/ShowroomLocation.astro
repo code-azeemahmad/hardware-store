@@ -107,7 +107,7 @@ const isUrdu = lang === 'ur';
 <style>
   .showroom-map-section {
     padding-block: 4.5rem;
-    background-color: var(--color-surface-muted);
+    background-color: var(--bg-alt);
   }
 
   .showroom-header {
@@ -120,21 +120,21 @@ const isUrdu = lang === 'ur';
   .showroom-title {
     font-size: clamp(1.75rem, 3.5vw, 2.25rem);
     font-weight: 800;
-    color: var(--color-secondary-black);
+    color: var(--text);
     margin-bottom: 0.5rem;
   }
 
   .showroom-subtitle {
     font-size: 0.95rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
   }
 
   .showroom-layout {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    background-color: var(--color-surface-white);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
@@ -174,8 +174,8 @@ const isUrdu = lang === 'ur';
 
   .card-badge {
     display: inline-block;
-    background-color: var(--color-primary-red);
-    color: #FFF;
+    background-color: var(--red);
+    color: var(--on-red);
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -189,7 +189,7 @@ const isUrdu = lang === 'ur';
   .location-name {
     font-size: 1.35rem;
     font-weight: 800;
-    color: var(--color-secondary-black);
+    color: var(--text);
     margin-bottom: 1.5rem;
   }
 
@@ -203,7 +203,7 @@ const isUrdu = lang === 'ur';
 
   .detail-icon {
     font-size: 1.15rem;
-    color: var(--color-primary-red);
+    color: var(--red-text);
     flex-shrink: 0;
     margin-top: 0.15rem;
     display: inline-flex;
@@ -217,23 +217,23 @@ const isUrdu = lang === 'ur';
   }
 
   .location-detail-item strong {
-    color: var(--color-secondary-black);
+    color: var(--text);
     display: block;
     margin-bottom: 0.2rem;
   }
 
   .location-detail-item p {
-    color: #555555;
+    color: var(--text-muted);
     margin: 0;
   }
 
   .location-detail-item a {
-    color: var(--color-text-dark);
+    color: var(--text);
     font-weight: 600;
   }
 
   .location-detail-item a:hover {
-    color: var(--color-primary-red);
+    color: var(--red-text);
   }
 
   .location-actions {
@@ -257,16 +257,19 @@ const isUrdu = lang === 'ur';
   }
 
   .map-btn-primary {
-    background-color: var(--color-secondary-black);
-    color: #FFF;
+    background-color: var(--btn-dark-bg);
+    color: var(--btn-dark-text);
+    border: 1px solid var(--btn-dark-border, transparent);
   }
 
   .map-btn-primary:hover {
-    background-color: var(--color-primary-red);
+    background-color: var(--red);
+    color: var(--on-red);
+    border-color: var(--red);
   }
 
   .map-btn-whatsapp {
-    background-color: var(--color-whatsapp);
+    background-color: var(--green-whatsapp);
     color: #FFF;
   }
 
@@ -277,7 +280,10 @@ const isUrdu = lang === 'ur';
   .map-frame-wrapper {
     min-height: 380px;
     position: relative;
-    background-color: #E5E5E5;
+    background-color: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   .google-map-iframe {

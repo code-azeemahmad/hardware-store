@@ -1,18 +1,36 @@
 :root {
-  /* Brand Palette from Reference Audit */
-  --color-primary-red: #E21B23;
-  --color-primary-red-hover: #c4141b;
-  --color-secondary-black: #111111;
-  --color-surface-white: #FFFFFF;
-  --color-surface-muted: #F5F5F5;
-  --color-surface-card: #FFFFFF;
-  --color-text-dark: #333333;
-  --color-text-muted: #595959;
-  --color-border: #E8E8E8;
-  --color-border-dark: #333333;
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-alt: #f6f6f6;
+  --surface: #ffffff;
+  --border: #e5e5e5;
+  --text: #111111;
+  --text-muted: #666666;
+  --red: #e41e26;          /* filled buttons, badges (white text on top) */
+  --red-text: #e41e26;     /* red used as text, links, prices, active nav */
+  --on-red: #ffffff;
+  --topbar: #000000;
+  --btn-dark-bg: #000000;  /* the black "View all" style buttons */
+  --btn-dark-text: #ffffff;
+  --btn-dark-border: transparent;
+  --image-bg: #f1f1f1;
+  --green-whatsapp: #25d366;
 
-  /* Conversion CTA Color - WhatsApp Brand Green (#25D366) */
-  --color-whatsapp: #25D366;
+  /* Aliases for backwards compatibility with existing components */
+  --color-primary-red: var(--red);
+  --color-primary-red-hover: #c4141b;
+  --color-secondary-black: var(--text);
+  --color-surface-white: var(--surface);
+  --color-surface-muted: var(--bg-alt);
+  --color-surface-light: var(--bg-alt);
+  --color-surface-card: var(--surface);
+  --color-surface-black: var(--text);
+  --color-text-dark: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-dark: var(--border);
+  --color-border-hover: #cccccc;
+  --color-whatsapp: var(--green-whatsapp);
   --color-whatsapp-hover: #20ba5a;
 
   /* Typography */
@@ -24,12 +42,102 @@
   --header-height: 80px;
   --announcement-bar-height: 38px;
 
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
   /* Transitions */
   --transition-fast: 0.15s ease-in-out;
   --transition-normal: 0.25s ease-in-out;
+  --transition-medium: 0.3s ease-in-out;
 
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e0e0e;
+  --bg-alt: #151515;
+  --surface: #1c1c1c;
+  --border: #2e2e2e;
+  --text: #f2f2f2;
+  --text-muted: #a3a3a3;
+  --red: #e41e26;
+  --red-text: #ff4650;
+  --on-red: #ffffff;
+  --topbar: #000000;
+  --btn-dark-bg: transparent;
+  --btn-dark-text: #f2f2f2;
+  --btn-dark-border: var(--btn-dark-text);
+  --image-bg: #dcdcdc;
+  --green-whatsapp: #25d366;
+
+  /* Aliases for backwards compatibility */
+  --color-primary-red: var(--red);
+  --color-primary-red-hover: #c4141b;
+  --color-secondary-black: var(--text);
+  --color-surface-white: var(--surface);
+  --color-surface-muted: var(--bg-alt);
+  --color-surface-light: var(--bg-alt);
+  --color-surface-card: var(--surface);
+  --color-surface-black: var(--text);
+  --color-text-dark: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-dark: var(--border);
+  --color-border-hover: #444444;
+  --color-whatsapp: var(--green-whatsapp);
+  --color-whatsapp-hover: #20ba5a;
+
+  /* Reduced / elevated shadows for dark surfaces */
+  --shadow-sm: none;
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0e0e0e;
+    --bg-alt: #151515;
+    --surface: #1c1c1c;
+    --border: #2e2e2e;
+    --text: #f2f2f2;
+    --text-muted: #a3a3a3;
+    --red: #e41e26;
+    --red-text: #ff4650;
+    --on-red: #ffffff;
+    --topbar: #000000;
+    --btn-dark-bg: transparent;
+    --btn-dark-text: #f2f2f2;
+    --btn-dark-border: var(--btn-dark-text);
+    --image-bg: #dcdcdc;
+    --green-whatsapp: #25d366;
+
+    /* Aliases for backwards compatibility */
+    --color-primary-red: var(--red);
+    --color-primary-red-hover: #c4141b;
+    --color-secondary-black: var(--text);
+    --color-surface-white: var(--surface);
+    --color-surface-muted: var(--bg-alt);
+    --color-surface-light: var(--bg-alt);
+    --color-surface-card: var(--surface);
+    --color-surface-black: var(--text);
+    --color-text-dark: var(--text);
+    --color-text-muted: var(--text-muted);
+    --color-border: var(--border);
+    --color-border-dark: var(--border);
+    --color-border-hover: #444444;
+    --color-whatsapp: var(--green-whatsapp);
+    --color-whatsapp-hover: #20ba5a;
+
+    --shadow-sm: none;
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  }
 }

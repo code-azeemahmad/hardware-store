@@ -159,15 +159,15 @@ const breadcrumbs = [
     margin-bottom: 2rem;
   }
   .breadcrumb a {
-    color: var(--color-surface-black);
+    color: var(--text);
     text-decoration: none;
     font-weight: 500;
   }
   .breadcrumb a:hover {
-    color: var(--color-primary-red);
+    color: var(--red-text);
   }
   .breadcrumb .sep {
-    color: var(--color-border-hover);
+    color: var(--border);
   }
   .about-header {
     text-align: center;
@@ -179,8 +179,9 @@ const breadcrumbs = [
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: var(--color-primary-red);
-    background-color: #fee2e2;
+    color: var(--red-text);
+    background-color: rgba(228, 30, 38, 0.12);
+    border: 1px solid rgba(255, 70, 80, 0.25);
     padding: 0.35rem 0.85rem;
     border-radius: var(--radius-full);
     margin-bottom: 0.75rem;
@@ -188,19 +189,19 @@ const breadcrumbs = [
   .page-title {
     font-size: 2.65rem;
     font-weight: 800;
-    color: var(--color-surface-black);
+    color: var(--text);
     letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
   }
   .red-line {
     width: 60px;
     height: 3px;
-    background-color: var(--color-primary-red);
+    background-color: var(--red);
     margin: 0.75rem auto 1.5rem;
   }
   .lead-text {
     font-size: 1.15rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     line-height: 1.7;
   }
   .story-section {
@@ -219,12 +220,12 @@ const breadcrumbs = [
   .story-text h2 {
     font-size: 1.85rem;
     font-weight: 800;
-    color: var(--color-surface-black);
+    color: var(--text);
     margin-bottom: 1.25rem;
   }
   .story-text p {
     font-size: 1rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     line-height: 1.75;
     margin-bottom: 1.25rem;
   }
@@ -258,7 +259,7 @@ const breadcrumbs = [
   .section-title {
     font-size: 1.95rem;
     font-weight: 800;
-    color: var(--color-surface-black);
+    color: var(--text);
     text-align: center;
     margin-bottom: 2.5rem;
   }
@@ -278,31 +279,31 @@ const breadcrumbs = [
     }
   }
   .pillar-card {
-    background-color: var(--color-surface-white);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 2rem 1.5rem;
     transition: transform var(--transition-fast), border-color var(--transition-fast);
   }
   .pillar-card:hover {
     transform: translateY(-3px);
-    border-color: var(--color-primary-red);
+    border-color: var(--red-text);
   }
   .pillar-icon {
     font-size: 1.75rem;
     font-weight: 900;
-    color: var(--color-primary-red);
+    color: var(--red-text);
     margin-bottom: 1rem;
   }
   .pillar-card h3 {
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--color-surface-black);
+    color: var(--text);
     margin-bottom: 0.75rem;
   }
   .pillar-card p {
     font-size: 0.9rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     line-height: 1.6;
   }
   .shop-gallery-section {
@@ -319,8 +320,8 @@ const breadcrumbs = [
     }
   }
   .gallery-item {
-    background-color: var(--color-surface-white);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
   }
@@ -335,16 +336,17 @@ const breadcrumbs = [
   .gallery-info h4 {
     font-size: 1.05rem;
     font-weight: 700;
-    color: var(--color-surface-black);
+    color: var(--text);
     margin-bottom: 0.25rem;
   }
   .gallery-info p {
     font-size: 0.85rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
   }
   .about-cta-banner {
-    background-color: var(--color-surface-black);
-    color: #ffffff;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
     border-radius: var(--radius-lg);
     padding: 3.5rem 2rem;
     text-align: center;
@@ -352,11 +354,12 @@ const breadcrumbs = [
   .about-cta-banner h2 {
     font-size: 1.85rem;
     font-weight: 800;
+    color: var(--text);
     margin-bottom: 0.75rem;
   }
   .about-cta-banner p {
     font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto 2rem;
   }
@@ -367,7 +370,7 @@ const breadcrumbs = [
     gap: 1rem;
   }
   .btn-whatsapp {
-    background-color: var(--color-whatsapp);
+    background-color: var(--green-whatsapp);
     color: #ffffff;
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
@@ -379,9 +382,9 @@ const breadcrumbs = [
     background-color: var(--color-whatsapp-hover);
   }
   .btn-contact {
-    background-color: transparent;
-    color: #ffffff;
-    border: 1px solid #ffffff;
+    background-color: var(--btn-dark-bg);
+    color: var(--btn-dark-text);
+    border: 1px solid var(--btn-dark-border, var(--text));
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
     font-weight: 700;
@@ -389,7 +392,8 @@ const breadcrumbs = [
     transition: all var(--transition-fast);
   }
   .btn-contact:hover {
-    background-color: #ffffff;
-    color: var(--color-surface-black);
+    background-color: var(--red);
+    color: var(--on-red);
+    border-color: var(--red);
   }
 </style>

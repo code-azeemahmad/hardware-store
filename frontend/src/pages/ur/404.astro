@@ -50,19 +50,19 @@ const lang = 'ur';
   .error-code {
     font-size: 6rem;
     font-weight: 900;
-    color: var(--color-primary-red);
+    color: var(--red-text);
     line-height: 1;
     margin-bottom: 1rem;
   }
   .error-title {
     font-size: 2.35rem;
     font-weight: 800;
-    color: var(--color-surface-black);
+    color: var(--text);
     margin-bottom: 1rem;
   }
   .error-desc {
     font-size: 1.15rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     line-height: 1.8;
     margin-bottom: 2.5rem;
   }
@@ -74,28 +74,36 @@ const lang = 'ur';
     margin-bottom: 3.5rem;
   }
   .btn-primary {
-    background-color: var(--color-surface-black);
-    color: #ffffff;
+    background-color: var(--btn-dark-bg);
+    color: var(--btn-dark-text);
+    border: 1px solid var(--btn-dark-border, var(--text));
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
     font-weight: 700;
     text-decoration: none;
-    transition: background-color var(--transition-fast);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
   }
   .btn-primary:hover {
-    background-color: var(--color-primary-red);
+    background-color: var(--red);
+    color: var(--on-red);
+    border-color: var(--red);
   }
   .btn-secondary {
-    background-color: var(--color-surface-light);
-    color: var(--color-surface-black);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
     font-weight: 700;
     text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .btn-secondary:hover {
+    border-color: var(--red-text);
+    color: var(--red-text);
   }
   .btn-whatsapp {
-    background-color: var(--color-whatsapp);
+    background-color: var(--green-whatsapp);
     color: #ffffff;
     padding: 0.85rem 1.75rem;
     border-radius: var(--radius-full);
@@ -107,13 +115,13 @@ const lang = 'ur';
     background-color: var(--color-whatsapp-hover);
   }
   .quick-category-links {
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--border);
     padding-top: 2.5rem;
   }
   .quick-label {
     display: block;
     font-size: 0.95rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     margin-bottom: 1rem;
   }
   .pills-row {
@@ -124,17 +132,17 @@ const lang = 'ur';
   }
   .cat-link {
     padding: 0.45rem 1rem;
-    background-color: var(--color-surface-light);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-full);
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--color-surface-black);
+    color: var(--text);
     text-decoration: none;
     transition: all var(--transition-fast);
   }
   .cat-link:hover {
-    border-color: var(--color-primary-red);
-    color: var(--color-primary-red);
+    border-color: var(--red-text);
+    color: var(--red-text);
   }
 </style>

@@ -363,7 +363,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         .mega-nav-link {
           font-size: 0.9375rem;
           font-weight: 600;
-          color: var(--color-text-dark);
+          color: var(--text);
           padding: 0 0.5rem;
           display: inline-flex;
           align-items: center;
@@ -379,7 +379,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         .mega-nav-link:hover,
         .mega-nav-link.active,
         .mega-nav-link.open {
-          color: var(--color-primary-red);
+          color: var(--red-text);
         }
 
         .mega-nav-link.active::after,
@@ -389,7 +389,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           bottom: 0;
           inset-inline: 0;
           height: 3px;
-          background-color: var(--color-primary-red);
+          background-color: var(--red);
         }
 
         .chevron-icon {
@@ -406,10 +406,10 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           top: var(--header-height);
           inset-inline: 0;
           width: 100%;
-          background-color: var(--color-surface-white);
-          border-top: 1px solid var(--color-border);
-          border-bottom: 3px solid var(--color-primary-red);
-          box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.15);
+          background-color: var(--surface);
+          border-top: 1px solid var(--border);
+          border-bottom: 3px solid var(--red);
+          box-shadow: var(--shadow-lg);
           z-index: 1001;
           pointer-events: auto;
           animation: megaFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
@@ -453,12 +453,12 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         .mega-column-title {
           font-size: 0.95rem;
           font-weight: 700;
-          color: var(--color-secondary-black);
+          color: var(--text);
           text-transform: uppercase;
           letter-spacing: 0.5px;
           margin-bottom: 1rem;
           padding-bottom: 0.4rem;
-          border-bottom: 2px solid var(--color-surface-muted);
+          border-bottom: 2px solid var(--border);
         }
 
         .mega-sub-list {
@@ -472,7 +472,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
 
         .mega-sub-link {
           font-size: 0.875rem;
-          color: #444444;
+          color: var(--text-muted);
           text-decoration: none;
           display: block;
           padding: 0.35rem 0.5rem;
@@ -481,14 +481,14 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         }
 
         .mega-sub-link:hover {
-          color: var(--color-primary-red);
-          background-color: var(--color-surface-muted);
+          color: var(--red-text);
+          background-color: var(--bg-alt);
           padding-inline-start: 0.75rem;
         }
 
         .mega-promo-box {
-          background-color: #FAFAFA;
-          border: 1px solid var(--color-border);
+          background-color: var(--bg-alt);
+          border: 1px solid var(--border);
           border-radius: 8px;
           padding: 1.5rem;
           display: flex;
@@ -500,7 +500,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
           font-size: 0.75rem;
           font-weight: 700;
           text-transform: uppercase;
-          color: var(--color-primary-red);
+          color: var(--red-text);
           letter-spacing: 0.5px;
           margin-bottom: 0.4rem;
         }
@@ -508,21 +508,21 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ lang, currentP
         .mega-promo-box h5 {
           font-size: 1.05rem;
           font-weight: 800;
-          color: var(--color-secondary-black);
+          color: var(--text);
           margin-bottom: 0.5rem;
         }
 
         .mega-promo-box p {
           font-size: 0.8125rem;
-          color: #666666;
+          color: var(--text-muted);
           line-height: 1.5;
           margin-bottom: 1rem;
         }
 
         .mega-whatsapp-pill {
           display: inline-block;
-          background-color: var(--color-whatsapp);
-          color: #FFFFFF;
+          background-color: var(--green-whatsapp);
+          color: var(--on-red);
           padding: 0.5rem 1rem;
           border-radius: 4px;
           font-size: 0.8125rem;

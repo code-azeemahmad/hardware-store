@@ -201,41 +201,41 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           padding: 1rem 0 3rem;
         }
         .search-box-wrap {
-          background-color: var(--color-surface-white);
-          border: 1px solid var(--color-border);
+          background-color: var(--surface);
+          border: 1px solid var(--border);
           border-radius: var(--radius-lg);
           padding: 1.75rem;
           margin-bottom: 2rem;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+          box-shadow: var(--shadow-sm);
         }
         .search-input-field {
           display: flex;
           align-items: center;
           gap: 0.85rem;
-          background-color: var(--color-surface-light);
-          border: 2px solid var(--color-border);
+          background-color: var(--bg-alt);
+          border: 2px solid var(--border);
           border-radius: var(--radius-full);
           padding: 0.75rem 1.25rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           transition: border-color var(--transition-fast), background-color var(--transition-fast);
         }
         .search-input-field:focus-within {
-          border-color: var(--color-primary-red);
-          background-color: var(--color-surface-white);
+          border-color: var(--red-text);
+          background-color: var(--surface);
         }
         .search-input {
           flex: 1;
           border: none;
           background: transparent;
           font-size: 1.05rem;
-          color: var(--color-surface-black);
+          color: var(--text);
           outline: none;
         }
         .clear-query-btn {
           background: none;
           border: none;
           font-size: 1rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           cursor: pointer;
           padding: 0.25rem 0.5rem;
         }
@@ -249,17 +249,17 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: 600;
-          background-color: var(--color-surface-light);
-          border: 1px solid var(--color-border);
+          background-color: var(--bg-alt);
+          border: 1px solid var(--border);
           border-radius: var(--radius-full);
-          color: var(--color-surface-black);
+          color: var(--text);
           cursor: pointer;
           transition: all var(--transition-fast);
         }
         .cat-tab-btn.active {
-          background-color: var(--color-surface-black);
-          color: #ffffff;
-          border-color: var(--color-surface-black);
+          background-color: var(--text);
+          color: var(--bg);
+          border-color: var(--text);
         }
         .results-header {
           display: flex;
@@ -267,10 +267,10 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           align-items: center;
           margin-bottom: 1.5rem;
           font-size: 0.95rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
         }
         .results-header strong {
-          color: var(--color-surface-black);
+          color: var(--text);
         }
         .search-results-grid {
           display: grid;
@@ -293,17 +293,18 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           }
         }
         .product-card {
-          background-color: var(--color-surface-white);
-          border: 1px solid var(--color-border);
+          background-color: var(--surface);
+          border: 1px solid var(--border);
           border-radius: var(--radius-md);
           overflow: hidden;
           display: flex;
           flex-direction: column;
-          transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+          transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
         }
         .product-card:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+          box-shadow: var(--shadow-md);
+          border-color: var(--color-border-hover);
         }
         .product-media-link {
           position: relative;
@@ -312,7 +313,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
         .image-aspect-box {
           position: relative;
           aspect-ratio: 1 / 1;
-          background-color: var(--color-surface-light);
+          background-color: var(--image-bg);
           overflow: hidden;
         }
         .image-aspect-box img {
@@ -349,13 +350,13 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
         .product-card-category {
           font-size: 0.75rem;
           font-weight: 600;
-          color: var(--color-primary-red);
+          color: var(--red-text);
           margin-bottom: 0.35rem;
         }
         .product-card-title {
           font-size: 0.95rem;
           font-weight: 700;
-          color: var(--color-surface-black);
+          color: var(--text);
           line-height: 1.35;
           margin-bottom: 0.75rem;
           flex-grow: 1;
@@ -365,7 +366,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           text-decoration: none;
         }
         .product-card-title a:hover {
-          color: var(--color-primary-red);
+          color: var(--red-text);
         }
         .product-price-row {
           margin-bottom: 0.85rem;
@@ -374,8 +375,9 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           display: inline-block;
           font-size: 0.8rem;
           font-weight: 700;
-          color: var(--color-primary-red);
-          background-color: #fee2e2;
+          color: var(--red-text);
+          background-color: rgba(228, 30, 38, 0.12);
+          border: 1px solid rgba(255, 70, 80, 0.25);
           padding: 0.25rem 0.5rem;
           border-radius: var(--radius-sm);
         }
@@ -383,7 +385,7 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
           display: block;
           text-align: center;
           padding: 0.55rem;
-          background-color: var(--color-whatsapp);
+          background-color: var(--green-whatsapp);
           color: #ffffff;
           font-size: 0.825rem;
           font-weight: 700;
@@ -397,7 +399,8 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
         .no-results-box {
           text-align: center;
           padding: 4rem 2rem;
-          background-color: var(--color-surface-light);
+          background-color: var(--surface);
+          border: 1px solid var(--border);
           border-radius: var(--radius-lg);
         }
         .no-results-icon {
@@ -407,19 +410,19 @@ export const SearchCatalogue: React.FC<SearchCatalogueProps> = ({
         .no-results-box h3 {
           font-size: 1.5rem;
           font-weight: 800;
-          color: var(--color-surface-black);
+          color: var(--text);
           margin-bottom: 0.5rem;
         }
         .no-results-box p {
           font-size: 1rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           max-width: 500px;
           margin: 0 auto 1.5rem;
           line-height: 1.6;
         }
         .no-results-wa-btn {
           display: inline-flex;
-          background-color: var(--color-whatsapp);
+          background-color: var(--green-whatsapp);
           color: #ffffff;
           font-weight: 700;
           padding: 0.75rem 1.75rem;

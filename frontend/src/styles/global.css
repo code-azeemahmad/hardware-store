@@ -11,8 +11,8 @@ html {
   font-family: var(--font-family-latin);
   font-size: 16px;
   line-height: 1.5;
-  color: var(--color-text-dark);
-  background-color: var(--color-surface-white);
+  color: var(--text);
+  background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -41,10 +41,79 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 main {
   flex: 1;
+}
+
+/* Theme Smooth Transitions on Body and Major Surfaces */
+@media (prefers-reduced-motion: no-preference) {
+  body,
+  .site-header,
+  .product-card,
+  .showroom-layout,
+  .location-card,
+  .review-card,
+  .enquiry-card,
+  .method-card,
+  .showroom-card,
+  .pillar-card,
+  .search-modal-dialog,
+  .drawer-panel,
+  .mega-dropdown-panel {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+}
+
+/* Dark theme specific enhancements */
+:root[data-theme="dark"] .product-img,
+:root[data-theme="dark"] .image-aspect-box img {
+  filter: brightness(0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .product-img,
+  :root:not([data-theme="light"]) .image-aspect-box img {
+    filter: brightness(0.95);
+  }
+}
+
+:root[data-theme="dark"] .product-card:hover,
+:root[data-theme="dark"] .review-card:hover,
+:root[data-theme="dark"] .method-card:hover,
+:root[data-theme="dark"] .pillar-card:hover {
+  background-color: #242424;
+  border-color: #444444;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .product-card:hover,
+  :root:not([data-theme="light"]) .review-card:hover,
+  :root:not([data-theme="light"]) .method-card:hover,
+  :root:not([data-theme="light"]) .pillar-card:hover {
+    background-color: #242424;
+    border-color: #444444;
+  }
+}
+
+/* Plywood Banner Dark Theme Treatment */
+:root[data-theme="dark"] .plywood-card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-inline-start: 3px solid var(--red) !important;
+  box-shadow: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .plywood-card {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-inline-start: 3px solid var(--red) !important;
+    box-shadow: none !important;
+  }
 }
 
 /* Container */
@@ -81,7 +150,7 @@ button {
   background: none;
 }
 
-/* Images */
+/* Images & SVGs */
 img, svg {
   display: block;
   max-width: 100%;
@@ -90,7 +159,7 @@ img, svg {
 
 /* Focus styles for accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-primary-red);
+  outline: 2px solid var(--red-text);
   outline-offset: 2px;
 }
 
@@ -99,8 +168,8 @@ img, svg {
   position: absolute;
   top: -9999px;
   left: 1rem;
-  background-color: var(--color-primary-red);
-  color: #ffffff;
+  background-color: var(--red);
+  color: var(--on-red);
   padding: 0.75rem 1.25rem;
   font-weight: 700;
   z-index: 99999;
@@ -117,6 +186,6 @@ img, svg {
 
 .skip-to-content:focus {
   top: 1rem;
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--red-text);
   outline-offset: 2px;
 }

@@ -334,7 +334,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
         .mobile-hamburger-btn {
           background: none;
           border: none;
-          color: var(--color-secondary-black);
+          color: var(--text);
           cursor: pointer;
           display: flex;
           align-items: center;
@@ -363,9 +363,9 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           inset-inline-start: 0;
           width: 85%;
           max-width: 360px;
-          background-color: var(--color-surface-white);
+          background-color: var(--surface);
           z-index: 9999;
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
           display: flex;
           flex-direction: column;
           transform: translateX(${isUrdu ? '100%' : '-100%'});
@@ -381,7 +381,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           align-items: center;
           justify-content: space-between;
           padding: 1.25rem 1.5rem;
-          border-bottom: 1px solid var(--color-border);
+          border-bottom: 1px solid var(--border);
         }
 
         .drawer-brand {
@@ -394,14 +394,14 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           width: 34px;
           height: 34px;
           border-radius: 50%;
-          background: var(--color-secondary-black);
-          color: #FFF;
+          background: var(--surface);
+          color: var(--text);
           font-weight: 800;
           font-size: 0.875rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 2px solid var(--color-primary-red);
+          border: 2px solid var(--red);
         }
 
         .drawer-brand-text {
@@ -409,12 +409,13 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           flex-direction: column;
           font-size: 0.85rem;
           line-height: 1.2;
+          color: var(--text);
         }
 
         .drawer-close-btn {
           background: none;
           border: none;
-          color: var(--color-text-dark);
+          color: var(--text);
           cursor: pointer;
           padding: 0.25rem;
         }
@@ -436,7 +437,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
         }
 
         .drawer-item {
-          border-bottom: 1px solid #F0F0F0;
+          border-bottom: 1px solid var(--border);
         }
 
         .drawer-accordion-header {
@@ -450,7 +451,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           padding: 0.9rem 0;
           font-size: 1rem;
           font-weight: 600;
-          color: var(--color-secondary-black);
+          color: var(--text);
           text-decoration: none;
           flex: 1;
         }
@@ -459,7 +460,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           background: none;
           border: none;
           padding: 0.5rem;
-          color: #666;
+          color: var(--text-muted);
           cursor: pointer;
         }
 
@@ -483,7 +484,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
 
         .drawer-sub-link {
           font-size: 0.9rem;
-          color: #555;
+          color: var(--text-muted);
           text-decoration: none;
           display: block;
           padding-block: 0.25rem;
@@ -502,7 +503,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          background-color: var(--color-whatsapp);
+          background-color: var(--green-whatsapp);
           color: #FFF;
           padding: 0.75rem;
           border-radius: 6px;
@@ -518,13 +519,13 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ lang, currentP
           gap: 0.5rem;
           text-align: center;
           padding: 0.75rem;
-          border: 1px solid var(--color-border);
+          border: 1px solid var(--border);
           border-radius: 6px;
           font-weight: 700;
           font-size: 0.9rem;
-          color: var(--color-secondary-black);
+          color: var(--text);
           text-decoration: none;
-          background-color: var(--color-surface-muted);
+          background-color: var(--bg-alt);
         }
       `}</style>
     </div>

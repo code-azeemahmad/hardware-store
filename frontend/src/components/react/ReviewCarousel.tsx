@@ -165,7 +165,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
       <style>{`
         .reviews-section {
           padding-block: 4.5rem;
-          background-color: var(--color-surface-white);
+          background-color: var(--bg);
         }
 
         .reviews-header {
@@ -176,7 +176,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
         .reviews-title {
           font-size: clamp(1.75rem, 3.5vw, 2.25rem);
           font-weight: 800;
-          color: var(--color-secondary-black);
+          color: var(--text);
           margin-bottom: 0.5rem;
         }
 
@@ -195,7 +195,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
         .rating-text {
           font-size: 0.875rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           font-weight: 600;
         }
 
@@ -230,29 +230,30 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
           width: 42px;
           height: 42px;
           border-radius: 50%;
-          border: 1px solid var(--color-border);
-          background-color: #FFF;
+          border: 1px solid var(--border);
+          background-color: var(--surface);
           font-size: 1.5rem;
           line-height: 1;
-          color: var(--color-text-dark);
+          color: var(--text);
           cursor: pointer;
           transition: all var(--transition-fast);
           flex-shrink: 0;
         }
 
         .carousel-nav-btn:hover {
-          background-color: var(--color-surface-muted);
-          border-color: #999;
+          background-color: var(--bg-alt);
+          border-color: var(--color-border-hover);
         }
 
         .review-card {
-          background-color: #FFFFFF;
-          border: 1px solid var(--color-border);
+          background-color: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 8px;
           padding: 1.5rem;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          box-shadow: var(--shadow-sm);
           display: flex;
           flex-direction: column;
+          transition: background-color var(--transition-fast), border-color var(--transition-fast);
         }
 
         .review-card-top {
@@ -283,12 +284,12 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
         .reviewer-name {
           font-size: 0.95rem;
           font-weight: 700;
-          color: var(--color-secondary-black);
+          color: var(--text);
         }
 
         .google-badge-tag {
           font-size: 0.75rem;
-          color: #555555;
+          color: var(--text-muted);
           font-weight: 500;
         }
 
@@ -303,13 +304,13 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
         .review-date {
           font-size: 0.75rem;
-          color: #555555;
+          color: var(--text-muted);
         }
 
         .review-quote {
           font-size: 0.875rem;
           line-height: 1.6;
-          color: #444444;
+          color: var(--text-muted);
           font-style: italic;
           flex: 1;
         }
@@ -344,7 +345,7 @@ export const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ lang }) => {
 
         .sample-disclaimer-note {
           font-size: 0.8rem;
-          color: var(--color-text-muted);
+          color: var(--text-muted);
           font-style: italic;
           max-width: 600px;
           margin: 0;
