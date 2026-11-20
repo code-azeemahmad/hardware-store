@@ -5,9 +5,9 @@ Last updated: 2026-11-18
 ## Current status
 
 - Overall phase: Phase 7 — Production Launch & Live AWS Deployment (COMPLETED)
-- Overall status: Production stack deployed to AWS EC2 (`i-0886cfd21fc2cc3cb` at `13.206.230.206`) via automated GitHub Actions CI/CD with GHCR immutable container images and AWS SSM. Docker persistent media volume `hardware_media_data` populated with 78 genuine shop photographs; PostgreSQL database populated with 19 categories, 8 brands, 80 total products (including 69 photo products), and 81 product images. Nginx dual-path ingress configured for `/images/products/` and `/media/products/` aliasing `/data/media/products/`. End-to-end admin media upload verified with Pillow auto-orientation, EXIF stripping, and WebP compression. Live atomic SSG rebuild executed producing 238 bilingual pages delivering HTTP/2 200 with 0 broken links.
+- Overall status: Production stack deployed to AWS EC2 (`i-0886cfd21fc2cc3cb` at `13.206.230.206`) via automated GitHub Actions CI/CD with GHCR immutable container images and AWS SSM. Custom domain `https://naseerhadware.duckdns.org` secured with trusted Let's Encrypt TLS certificate via Certbot HTTP-01 webroot challenge; Nginx terminates TLS 1.2/1.3 with HTTP/2 and 301 canonical redirects; bi-monthly auto-renewal cron installed. Docker persistent media volume `hardware_media_data` populated with 78 genuine shop photographs; PostgreSQL database populated with 19 categories, 8 brands, 80 total products (including 69 photo products), and 81 product images. Nginx dual-path ingress configured for `/images/products/` and `/media/products/` aliasing `/data/media/products/`. End-to-end admin media upload verified with Pillow auto-orientation, EXIF stripping, and WebP compression. Live atomic SSG rebuild executed producing 238 bilingual pages delivering HTTP/2 200 with 0 broken links.
 - Current task: Production Verification & Sign-Off
-- Blockers: None. Production stack is live and fully verified.
+- Blockers: None. Production stack is live, secure over HTTPS, and fully verified.
 
 ## Completed
 
