@@ -36,7 +36,10 @@ jobs:
           cache: "pip"
 
       - name: Run Backend Pytest Suite
+        env:
+          MEDIA_STORAGE_PATH: ${{ runner.temp }}/media
         run: |
+          mkdir -p "${{ runner.temp }}/media"
           pip install -r backend/requirements.txt
           pytest backend/tests/
 

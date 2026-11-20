@@ -1,4 +1,7 @@
 import os
+import shutil
+import tempfile
+from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -10,7 +13,17 @@ os.environ["APP_ENV"] = "testing"
 os.environ["DEBUG"] = "False"
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
+# Isolate media storage to a writable temporary directory for unit testing
+# (Prevents PermissionError: [Errno 13] '/data' in non-container CI environments)
+if "MEDIA_STORAGE_PATH" not in os.environ or os.environ["MEDIA_STORAGE_PATH"] == "/data/media":
+    _test_media_dir = tempfile.mkdtemp(prefix="test_hardware_media_")
+    os.environ["MEDIA_STORAGE_PATH"] = _test_media_dir
+else:
+    _test_media_dir = os.environ["MEDIA_STORAGE_PATH"]
+
 from app.core.config import settings
+settings.MEDIA_STORAGE_PATH = _test_media_dir
+
 from app.db.base import Base
 import app.models  # noqa: F401 - Ensure all models are registered with Base.metadata
 from app.db.seed import seed_database
@@ -32,6 +45,13 @@ def setup_test_db():
     Base.metadata.create_all(bind=test_engine)
     yield
     Base.metadata.drop_all(bind=test_engine)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def cleanup_test_media():
+    yield
+    if _test_media_dir and _test_media_dir.startswith(tempfile.gettempdir()):
+        shutil.rmtree(_test_media_dir, ignore_errors=True)
 
 
 @pytest.fixture
