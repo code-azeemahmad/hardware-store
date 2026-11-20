@@ -499,7 +499,7 @@ Attached to role `arn:aws:iam::<ACCOUNT_ID>:role/GitHubActions-HardwareStore-Dep
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
         },
         "StringLike": {
-          "token.actions.githubusercontent.com:sub": "repo:OWNER/hardware-store:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:sub": "repo:code-azeemahmad/hardware-store:ref:refs/heads/main"
         }
       }
     }
@@ -508,39 +508,17 @@ Attached to role `arn:aws:iam::<ACCOUNT_ID>:role/GitHubActions-HardwareStore-Dep
 ```
 
 #### B. GitHub Actions Deployment IAM Policy (Permissions Policy)
+Attached to role `arn:aws:iam::279171431825:role/GitHubActions-HardwareStore-Deploy`:
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "ECRAuthToken",
-      "Effect": "Allow",
-      "Action": "ecr:GetAuthorizationToken",
-      "Resource": "*"
-    },
-    {
-      "Sid": "ECRPushRepositories",
-      "Effect": "Allow",
-      "Action": [
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "ecr:PutImage",
-        "ecr:InitiateLayerUpload",
-        "ecr:UploadLayerPart",
-        "ecr:CompleteLayerUpload"
-      ],
-      "Resource": [
-        "arn:aws:ecr:ap-south-1:<ACCOUNT_ID>:repository/hardware-backend",
-        "arn:aws:ecr:ap-south-1:<ACCOUNT_ID>:repository/hardware-frontend"
-      ]
-    },
-    {
       "Sid": "SSMSendDeploymentCommand",
       "Effect": "Allow",
       "Action": "ssm:SendCommand",
       "Resource": [
-        "arn:aws:ec2:ap-south-1:<ACCOUNT_ID>:instance/<PROD_EC2_INSTANCE_ID>",
+        "arn:aws:ec2:ap-south-1:279171431825:instance/i-0886cfd21fc2cc3cb",
         "arn:aws:ssm:ap-south-1::document/AWS-RunShellScript"
       ]
     },
@@ -553,23 +531,24 @@ Attached to role `arn:aws:iam::<ACCOUNT_ID>:role/GitHubActions-HardwareStore-Dep
   ]
 }
 ```
+*(Note: Because container images are built and stored in GitHub Container Registry via `GITHUB_TOKEN`, no ECR permissions are required for the GitHub Actions deployment role).*
 
 #### C. EC2 Instance Profile IAM Policy
-Attached to role `arn:aws:iam::<ACCOUNT_ID>:role/EC2-HardwareStore-Runtime`:
+Attached to role `arn:aws:iam::279171431825:role/NaseerHardwareEC2ProductionRole`:
+- Managed Policy: `AmazonSSMManagedInstanceCore`
+- Custom Permissions Policy for S3 Backups & optional private GHCR token in SSM:
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "ECRAuthAndPull",
+      "Sid": "SSMParamStoreGHCRToken",
       "Effect": "Allow",
       "Action": [
-        "ecr:GetAuthorizationToken",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage"
+        "ssm:GetParameter",
+        "ssm:GetParameters"
       ],
-      "Resource": "*"
+      "Resource": "arn:aws:ssm:ap-south-1:279171431825:parameter/hardware-store/ghcr-token"
     },
     {
       "Sid": "EncryptedBackupSync",

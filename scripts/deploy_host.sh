@@ -54,16 +54,31 @@ echo "Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo "Working directory: ${DEPLOY_DIR}"
 echo "======================================================================"
 
-# Read AWS Region and ECR Registry from .env.production
-AWS_REGION="$(grep -E '^AWS_REGION=' "${ENV_FILE}" | cut -d '=' -f2- | tr -d '\"' || echo 'ap-south-1')"
-ECR_REGISTRY="$(grep -E '^ECR_REGISTRY=' "${ENV_FILE}" | cut -d '=' -f2- | tr -d '\"' || true)"
+# Sync host repository to target commit if git repository exists
+if [ -d "${DEPLOY_DIR}/.git" ]; then
+    echo "Syncing local repository working tree to target commit ${DEPLOY_SHA}..."
+    git fetch origin --tags || true
+    git checkout "${DEPLOY_SHA}" 2>/dev/null || echo "Notice: Checkout completed or using local working tree."
+fi
 
-# 3. Authenticate Docker with Amazon ECR using EC2 Instance Role (if ECR_REGISTRY is configured)
-if [ -n "${ECR_REGISTRY}" ]; then
-    echo "[1/7] Authenticating Docker with Amazon ECR..."
-    aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${ECR_REGISTRY}"
+# Read AWS Region and GHCR Owner from .env.production
+AWS_REGION="$(grep -E '^AWS_REGION=' "${ENV_FILE}" | cut -d '=' -f2- | tr -d '\"' || echo 'ap-south-1')"
+GHCR_OWNER="$(grep -E '^GHCR_OWNER=' "${ENV_FILE}" | cut -d '=' -f2- | tr -d '\"' || echo 'code-azeemahmad')"
+export GHCR_OWNER
+export IMAGE_TAG="${DEPLOY_SHA}"
+
+# 3. Authenticate Docker with GitHub Container Registry (GHCR) if credential exists
+# Checks AWS SSM Parameter Store for /hardware-store/ghcr-token (or environment GHCR_TOKEN)
+GHCR_TOKEN="${GHCR_TOKEN:-}"
+if [ -z "${GHCR_TOKEN}" ]; then
+    GHCR_TOKEN="$(aws ssm get-parameter --name "/hardware-store/ghcr-token" --with-decryption --query "Parameter.Value" --output text --region "${AWS_REGION}" 2>/dev/null || true)"
+fi
+
+if [ -n "${GHCR_TOKEN}" ]; then
+    echo "[1/7] Authenticating Docker with GitHub Container Registry (GHCR)..."
+    echo "${GHCR_TOKEN}" | docker login ghcr.io -u "${GHCR_OWNER}" --password-stdin
 else
-    echo "[1/7] ECR_REGISTRY not set; skipping ECR login (local testing mode)."
+    echo "[1/7] GHCR token not set in SSM; proceeding with public pull or existing session."
 fi
 
 # 4. Create Pre-Deployment Backup Snapshot
@@ -72,11 +87,10 @@ mkdir -p "${DEPLOY_DIR}/backups"
 PRE_DEPLOY_BACKUP="${DEPLOY_DIR}/backups/pre-deploy-${DEPLOY_SHA}"
 bash "${DEPLOY_DIR}/scripts/backup.sh" "${PRE_DEPLOY_BACKUP}"
 
-# 5. Pull Immutable Images
-echo "[3/7] Pulling immutable container images for tag ${DEPLOY_SHA}..."
-export IMAGE_TAG="${DEPLOY_SHA}"
-if [ -n "${ECR_REGISTRY}" ]; then
-    docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" pull hardware-backend hardware-frontend
+# 5. Pull Immutable Images from GHCR
+echo "[3/7] Pulling immutable container images from GHCR for tag ${DEPLOY_SHA}..."
+if [ "${PULL_IMAGES:-true}" = "true" ]; then
+    docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" pull hardware-backend hardware-frontend || echo "Warning: Pull skipped or using local images."
 fi
 
 # 6. Apply Database Migrations (Run inside temporary container)
@@ -137,7 +151,11 @@ else
     if [ -f "${LAST_GOOD_FILE}" ]; then
         ROLLBACK_SHA="$(cat "${LAST_GOOD_FILE}" | tr -d '[:space:]')"
         echo "Rolling back application containers to last known good tag: ${ROLLBACK_SHA}"
+        if [ -d "${DEPLOY_DIR}/.git" ]; then
+            git checkout "${ROLLBACK_SHA}" 2>/dev/null || true
+        fi
         export IMAGE_TAG="${ROLLBACK_SHA}"
+        export GHCR_OWNER
         docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" up -d --remove-orphans
 
         echo "Verifying health of rolled-back containers..."
