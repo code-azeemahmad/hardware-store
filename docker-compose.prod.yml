@@ -49,7 +49,7 @@ services:
       DEBUG: "False"
       DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
       SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
-      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://naseerhardware.duckdns.org,https://naseerhadware.duckdns.org}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://naseerhardware.duckdns.org}
       MEDIA_STORAGE_PATH: /data/media
       PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://naseerhardware.duckdns.org}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-https://naseerhardware.duckdns.org/api/v1}

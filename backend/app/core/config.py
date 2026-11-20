@@ -30,7 +30,6 @@ class Settings(BaseSettings):
         "http://localhost",
         "http://127.0.0.1",
         "https://naseerhardware.duckdns.org",
-        "https://naseerhadware.duckdns.org",
     ]
 
     @field_validator("ALLOWED_ORIGINS", mode="before")
