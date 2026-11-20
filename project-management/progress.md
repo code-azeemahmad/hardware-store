@@ -179,6 +179,28 @@ Last updated: 2026-11-18
     - All 14 pages inspected: 0 horizontal overflow, 0 unstyled white blocks, 0 raw low-contrast red text: PASS
   - *Build & Deployment:* Ran `npm run build` compiling 238 static bilingual pages in 2.68s, deployed to `frontend/deploy/current` via atomic release pointer swap (`release_20261119_202725`). All 105 backend pytest tests pass.
 
+- [x] **Production CI/CD Pipeline & Live AWS EC2 Deployment via GHCR & AWS SSM (2026-11-20):**
+  - *Architectural Transition to GHCR:* Migrated container image storage from AWS ECR to GitHub Container Registry (`ghcr.io/code-azeemahmad/hardware-backend` and `hardware-frontend`) eliminating proprietary registry dependencies and AWS ECR credential expiration hurdles.
+  - *Automated CI/CD Workflow (`.github/workflows/cicd.yaml`):*
+    - Implemented 3-stage pipeline: (1) `test-and-verify` (runs backend pytest suite [113 tests passing] and Astro type diagnostics with static build [0 errors across 62 files]); (2) `build-and-publish` (builds multi-stage Docker images and pushes immutable tag `${{ github.sha }}` to GHCR); (3) `deploy-to-ec2` (authenticates via GitHub OIDC to AWS IAM, dispatches deployment via AWS SSM Run Command, and monitors live execution to completion).
+  - *AWS IAM & OIDC Federation:*
+    - Verified IAM OIDC identity provider `token.actions.githubusercontent.com`.
+    - Configured IAM Role `GitHubActions-HardwareStore-Deploy` with least-privilege trust policy and inline policy `GitHubActions-SSMDeploymentPolicy` enabling scoped `ssm:SendCommand` and `ssm:GetCommandInvocation` targeting instance `i-0886cfd21fc2cc3cb`.
+    - Verified instance IAM Role `NaseerHardwareEC2ProductionRole` with `AmazonSSMManagedInstanceCore` for Systems Manager Fleet connectivity.
+  - *Production Host Deployment Engine (`scripts/deploy_host.sh`):*
+    - Added concurrency protection via `flock`.
+    - Added automated pre-deployment backup snapshots of PostgreSQL and persistent media storage with SHA256 checksums and table manifest counts before updating running containers.
+    - Sourced environment variables, authenticated with GHCR, ensured PostgreSQL is healthy before executing Alembic migrations (`alembic upgrade head`), and rolled out updated application containers with zero-downtime recreation.
+    - Integrated automatic rollback to `.last_known_good_version` upon any health check anomaly.
+  - *Production Stack Verification on Live EC2 (`13.206.230.206`):*
+    - All 3 containers online and reporting healthy: `hardware-frontend` (Nginx reverse proxy), `hardware-backend` (FastAPI), and `hardware-postgres` (PostgreSQL 17).
+    - Database port 5432 and backend port 8000 are completely isolated from host and public internet.
+    - Verified public HTTP (80) redirection `301 Moved Permanently` to `https://naseerhardware.pk/`.
+    - Verified public HTTPS (443) returns `HTTP/2 200` with complete 238-page bilingual Astro frontend, Nginx security headers (`Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `CSP`, `Referrer-Policy`), and Urdu RTL route `/ur/`.
+    - Verified reverse proxy `/api/v1/health` returns `{"status":"ok","database":"connected","app_env":"production","version":"1.0.0"}`.
+    - Successfully bootstrapped initial super admin `admin@naseerhardware.com` and verified JWT token generation and `/api/v1/auth/me` user profile authentication.
+  - *Pipeline Verification:* All three workflow jobs (`test-and-verify`, `build-and-publish`, and `deploy-to-ec2`) successfully passed green in GitHub Actions run `44683877144`!
+
 ## In progress
 
 - Final Project Sign-off & Handover.
