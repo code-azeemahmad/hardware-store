@@ -391,7 +391,7 @@ jobs:
         run: |
           docker build \
             --file frontend/Dockerfile \
-            --build-arg PUBLIC_SITE_URL=https://naseerhardware.pk \
+            --build-arg PUBLIC_SITE_URL=https://naseerhardware.duckdns.org \
             --tag ${{ env.ECR_REGISTRY }}/hardware-frontend:${{ github.sha }} \
             ./frontend
           docker push ${{ env.ECR_REGISTRY }}/hardware-frontend:${{ github.sha }}
@@ -470,13 +470,13 @@ To guarantee restore procedures work when required:
 
 | Verification Check | Target Endpoint / Command | Execution Context | Success Criteria |
 | :--- | :--- | :--- | :--- |
-| **DNS Resolution** | `dig +short naseerhardware.pk` | External / Host | Resolves to EC2 Elastic IP |
-| **HTTP -> HTTPS 301** | `curl -sI http://naseerhardware.pk/` | External | `HTTP/1.1 301 Moved Permanently`<br>`Location: https://naseerhardware.pk/` |
-| **Apex Canonicalization** | `curl -sI https://www.naseerhardware.pk/` | External | `HTTP/2 301`<br>`Location: https://naseerhardware.pk/` |
-| **TLS Certificate** | `openssl s_client -connect naseerhardware.pk:443 -servername naseerhardware.pk` | External | Valid certificate issued by Let's Encrypt |
-| **Public Ingress Health** | `curl -sf https://naseerhardware.pk/api/v1/health` | External | `{"status":"ok","database":"connected",...}` |
+| **DNS Resolution** | `dig +short naseerhardware.duckdns.org` | External / Host | Resolves to EC2 Elastic IP |
+| **HTTP -> HTTPS 301** | `curl -sI http://naseerhardware.duckdns.org/` | External | `HTTP/1.1 301 Moved Permanently`<br>`Location: https://naseerhardware.duckdns.org/` |
+| **Apex Canonicalization** | `curl -sI https://www.naseerhardware.duckdns.org/` | External | `HTTP/2 301`<br>`Location: https://naseerhardware.duckdns.org/` |
+| **TLS Certificate** | `openssl s_client -connect naseerhardware.duckdns.org:443 -servername naseerhardware.duckdns.org` | External | Valid certificate issued by Let's Encrypt |
+| **Public Ingress Health** | `curl -sf https://naseerhardware.duckdns.org/api/v1/health` | External | `{"status":"ok","database":"connected",...}` |
 | **Internal Backend Health** | `docker compose exec hardware-backend curl -sf http://localhost:8000/api/v1/health` | EC2 Internal | `HTTP 200 OK` (Port 8000 unexposed) |
-| **Media Delivery & Headers** | `curl -sI https://naseerhardware.pk/media/sample.webp` | External | `HTTP/2 200`<br>`Content-Type: image/webp`<br>`X-Content-Type-Options: nosniff` |
+| **Media Delivery & Headers** | `curl -sI https://naseerhardware.duckdns.org/media/sample.webp` | External | `HTTP/2 200`<br>`Content-Type: image/webp`<br>`X-Content-Type-Options: nosniff` |
 | **Volume Persistence** | Recreate containers via `docker compose up -d` | EC2 Host | Database rows and media files remain 100% intact |
 | **Static SSG Rebuild** | `POST /api/v1/admin/build/trigger` | Admin UI | Build succeeds, `current` symlink swaps atomically |
 

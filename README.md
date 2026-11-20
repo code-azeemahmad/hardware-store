@@ -325,7 +325,7 @@ The production system runs on Docker Compose using three isolated containers com
    ```bash
    docker compose -f docker-compose.prod.yml exec hardware-backend alembic upgrade head
    docker compose -f docker-compose.prod.yml exec hardware-backend python -m app.cli create-admin \
-     --email admin@naseerhardware.pk \
+     --email admin@naseerhardware.duckdns.org \
      --password "SecureProductionPassword!" \
      --name "Naseer Ahmed" \
      --role super_admin
@@ -362,4 +362,4 @@ This project does not currently contain a `LICENSE` file. All rights are reserve
 - **Direct Showroom Telephone:** 0304-5030046 / 0317-7030847
 - **WhatsApp Enquiries:** +92 317 7030847
 <!-- TODO: confirm live production domain -->
-- **Production Domain Target:** `https://naseerhardware.pk`
+- **Production Domain Target:** `https://naseerhardware.duckdns.org`

@@ -40,7 +40,7 @@ const breadcrumbs = [
   { name: product.titleEn, url: `/products/${product.slug}/` },
 ];
 
-const siteBase = (process.env.PUBLIC_SITE_URL || Astro.site?.toString() || 'https://naseerhardware.pk').replace(/\/$/, '');
+const siteBase = (process.env.PUBLIC_SITE_URL || Astro.site?.toString() || 'https://naseerhardware.duckdns.org').replace(/\/$/, '');
 const absoluteImageUrl = product.imageUrl.startsWith('http') ? product.imageUrl : `${siteBase}${product.imageUrl.startsWith('/') ? '' : '/'}${product.imageUrl}`;
 
 const productSchema: Record<string, unknown> = {

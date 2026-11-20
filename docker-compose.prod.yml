@@ -49,10 +49,10 @@ services:
       DEBUG: "False"
       DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
       SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
-      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://naseerhardware.pk,https://www.naseerhardware.pk}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://naseerhardware.duckdns.org,https://naseerhadware.duckdns.org}
       MEDIA_STORAGE_PATH: /data/media
-      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://naseerhardware.pk}
-      PUBLIC_API_URL: ${PUBLIC_API_URL:-https://naseerhardware.pk/api/v1}
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://naseerhardware.duckdns.org}
+      PUBLIC_API_URL: ${PUBLIC_API_URL:-https://naseerhardware.duckdns.org/api/v1}
       FRONTEND_DIR: /frontend
     volumes:
       - ./backend:/app:ro

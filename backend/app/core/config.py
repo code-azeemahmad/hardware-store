@@ -29,8 +29,8 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: Union[List[str], str] = [
         "http://localhost",
         "http://127.0.0.1",
-        "https://naseerhardware.pk",
-        "https://www.naseerhardware.pk",
+        "https://naseerhardware.duckdns.org",
+        "https://naseerhadware.duckdns.org",
     ]
 
     @field_validator("ALLOWED_ORIGINS", mode="before")

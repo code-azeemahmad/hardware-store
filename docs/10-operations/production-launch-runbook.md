@@ -1,6 +1,6 @@
 # Naseer Plywood & Hardware — Production Launch Runbook & Operational Procedures
 
-This document provides the definitive, step-by-step production launch runbook, operational procedures, security hardening specifications, and disaster recovery procedures for **`https://naseerhardware.pk`**.
+This document provides the definitive, step-by-step production launch runbook, operational procedures, security hardening specifications, and disaster recovery procedures for **`https://naseerhardware.duckdns.org`**.
 
 ---
 
@@ -73,8 +73,8 @@ chmod 600 .env.production
 
 ### Step 3.2: Configure DNS Records
 Ensure your domain registrar / DNS provider has active A records:
-- `naseerhardware.pk` -> `[PRODUCTION_HOST_IP]`
-- `www.naseerhardware.pk` -> `[PRODUCTION_HOST_IP]`
+- `naseerhardware.duckdns.org` -> `[PRODUCTION_HOST_IP]`
+- `www.naseerhardware.duckdns.org` -> `[PRODUCTION_HOST_IP]`
 
 ### Step 3.3: Obtain Let's Encrypt TLS Certificate
 For initial certificate generation on a clean server:
@@ -83,7 +83,7 @@ docker run --rm -p 80:80 \
   -v hardware_certbot_certs:/etc/letsencrypt \
   -v hardware_certbot_webroot:/var/www/certbot \
   certbot/certbot certonly --standalone \
-  -d naseerhardware.pk -d www.naseerhardware.pk \
+  -d naseerhardware.duckdns.org -d www.naseerhardware.duckdns.org \
   --email admin@naseerhardware.com --agree-tos --non-interactive
 ```
 
@@ -130,7 +130,7 @@ Execute the following verification checks against the live domain:
 
 ### 4.1 HTTPS & Security Headers Audit
 ```bash
-curl -I https://naseerhardware.pk/
+curl -I https://naseerhardware.duckdns.org/
 ```
 **Expected Response Headers:**
 - `HTTP/2 200`
@@ -142,19 +142,19 @@ curl -I https://naseerhardware.pk/
 
 ### 4.2 HTTP to HTTPS 301 Redirect Check
 ```bash
-curl -I http://naseerhardware.pk/
-# Expected: HTTP/1.1 301 Moved Permanently -> Location: https://naseerhardware.pk/
+curl -I http://naseerhardware.duckdns.org/
+# Expected: HTTP/1.1 301 Moved Permanently -> Location: https://naseerhardware.duckdns.org/
 ```
 
 ### 4.3 Backend Health Check
 ```bash
-curl -s https://naseerhardware.pk/api/v1/health | jq .
+curl -s https://naseerhardware.duckdns.org/api/v1/health | jq .
 # Expected: {"status": "ok", "database": "connected", "app_env": "production", "version": "1.0.0"}
 ```
 
 ### 4.4 Run End-to-End Smoke Test Suite
 ```bash
-BASE_URL="https://naseerhardware.pk" node tests/e2e/e2e_smoke_test.js
+BASE_URL="https://naseerhardware.duckdns.org" node tests/e2e/e2e_smoke_test.js
 ```
 
 ---
@@ -187,7 +187,7 @@ docker compose -f docker-compose.prod.yml logs -f --tail=100
 If a static build deployment encounters an issue or unwanted content is published:
 ```bash
 # Call admin rollback endpoint (reverts symlink to previous release in <10ms)
-curl -X POST https://naseerhardware.pk/api/v1/admin/build/rollback \
+curl -X POST https://naseerhardware.duckdns.org/api/v1/admin/build/rollback \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 Or manually switch the symlink on the host:

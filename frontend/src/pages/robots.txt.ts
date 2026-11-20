@@ -5,7 +5,7 @@ declare const process: {
 };
 
 export const GET: APIRoute = async () => {
-  const siteUrl = (process.env.PUBLIC_SITE_URL || 'https://naseerhardware.pk').replace(/\/$/, '');
+  const siteUrl = (process.env.PUBLIC_SITE_URL || 'https://naseerhardware.duckdns.org').replace(/\/$/, '');
   const robots = `User-agent: *
 Allow: /
 Disallow: /api/

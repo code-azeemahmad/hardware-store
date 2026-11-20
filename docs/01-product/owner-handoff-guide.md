@@ -7,7 +7,7 @@
 **Physical Showroom Address:** Near New Cantt Hospital, Canal Road / General Bus Stand Road, Sargodha, Punjab, Pakistan  
 **Showroom Phone:** `+92-304-5030046` / `+92-317-7030847`  
 **Official WhatsApp:** `+92-304-5030046`  
-**Website Domain:** `https://naseerhardware.pk`  
+**Website Domain:** `https://naseerhardware.duckdns.org`  
 
 ### Non-Negotiable Store Policy
 - **No Cart / Checkout:** The website is strictly a digital product showcase and enquiry funnel. Visitors cannot purchase online directly.
@@ -36,7 +36,7 @@
 | **Revoke Admin Sessions** | Yes | **No** | **No** | **No** |
 
 ### 2.3 Inviting Additional Staff Members
-1. Sign in as Super Admin to the Admin Dashboard (`https://naseerhardware.pk/admin`).
+1. Sign in as Super Admin to the Admin Dashboard (`https://naseerhardware.duckdns.org/admin`).
 2. Navigate to **Admin Users & Invitations**.
 3. Enter the new staff member's email address and assign an appropriate role (`catalogue_editor` or `enquiry_handler`).
 4. A secure, single-use invitation link (valid for 72 hours) will be generated.

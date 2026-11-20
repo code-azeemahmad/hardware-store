@@ -44,7 +44,7 @@ const {
 const isRTL = lang === 'ur';
 
 // Canonical and Reciprocal Hreflang URLs
-const siteBase = (process.env.PUBLIC_SITE_URL || Astro.site?.toString() || 'https://naseerhardware.pk').replace(/\/$/, '');
+const siteBase = (process.env.PUBLIC_SITE_URL || Astro.site?.toString() || 'https://naseerhardware.duckdns.org').replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
 const effectivePath = canonicalPath || currentPath;
 
