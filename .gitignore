@@ -59,9 +59,3 @@ backups/
 .vscode/
 *.swp
 *.swo
-
-
-*.png
-*.jpg
-*.jpeg
-*.webp
