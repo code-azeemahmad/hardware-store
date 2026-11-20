@@ -57,8 +57,9 @@ echo "======================================================================"
 # Sync host repository to target commit if git repository exists
 if [ -d "${DEPLOY_DIR}/.git" ]; then
     echo "Syncing local repository working tree to target commit ${DEPLOY_SHA}..."
+    git config --global --add safe.directory "${DEPLOY_DIR}" 2>/dev/null || true
     git fetch origin --tags || true
-    git checkout "${DEPLOY_SHA}" 2>/dev/null || echo "Notice: Checkout completed or using local working tree."
+    git checkout -f "${DEPLOY_SHA}" 2>/dev/null || echo "Notice: Checkout completed or using local working tree."
 fi
 
 # Read AWS Region and GHCR Owner from .env.production
@@ -86,6 +87,9 @@ echo "[2/7] Creating pre-deployment database and media snapshot..."
 mkdir -p "${DEPLOY_DIR}/backups"
 PRE_DEPLOY_BACKUP="${DEPLOY_DIR}/backups/pre-deploy-${DEPLOY_SHA}"
 if docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" ps --services --filter "status=running" | grep -q "^hardware-postgres$"; then
+    POSTGRES_USER="$(grep -E '^POSTGRES_USER=' "${ENV_FILE}" | cut -d '=' -f2- | tr -d '\"' || echo 'hardware_prod_user')"
+    POSTGRES_DB="$(grep -E '^POSTGRES_DB=' "${ENV_FILE}" | cut -d '=' -f2- | tr -d '\"' || echo 'hardware_db')"
+    export POSTGRES_USER POSTGRES_DB
     bash "${DEPLOY_DIR}/scripts/backup.sh" "${PRE_DEPLOY_BACKUP}"
 else
     echo "Notice: hardware-postgres is not running. Skipping pre-deployment backup."

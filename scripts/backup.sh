@@ -14,6 +14,22 @@ BACKUP_DIR="${1:-${ROOT_DIR}/backups/backup_${TIMESTAMP}}"
 
 POSTGRES_CONTAINER="hardware-postgres"
 BACKEND_CONTAINER="hardware-backend"
+
+# Auto-detect database credentials from environment files if not already provided
+if [ -z "${POSTGRES_USER:-}" ] || [ -z "${POSTGRES_DB:-}" ]; then
+    if [ -f "${ROOT_DIR}/.env.production" ]; then
+        ENV_USER="$(grep -E '^POSTGRES_USER=' "${ROOT_DIR}/.env.production" | cut -d '=' -f2- | tr -d '\"' || true)"
+        ENV_DB="$(grep -E '^POSTGRES_DB=' "${ROOT_DIR}/.env.production" | cut -d '=' -f2- | tr -d '\"' || true)"
+        POSTGRES_USER="${POSTGRES_USER:-${ENV_USER}}"
+        POSTGRES_DB="${POSTGRES_DB:-${ENV_DB}}"
+    elif [ -f "${ROOT_DIR}/.env" ]; then
+        ENV_USER="$(grep -E '^POSTGRES_USER=' "${ROOT_DIR}/.env" | cut -d '=' -f2- | tr -d '\"' || true)"
+        ENV_DB="$(grep -E '^POSTGRES_DB=' "${ROOT_DIR}/.env" | cut -d '=' -f2- | tr -d '\"' || true)"
+        POSTGRES_USER="${POSTGRES_USER:-${ENV_USER}}"
+        POSTGRES_DB="${POSTGRES_DB:-${ENV_DB}}"
+    fi
+fi
+
 POSTGRES_USER="${POSTGRES_USER:-hardware_user}"
 POSTGRES_DB="${POSTGRES_DB:-hardware_db}"
 
